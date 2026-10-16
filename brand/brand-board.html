@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Michal Roučka – brand board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0E0F11; --graphite: #1B1D21; --paper: #F5F3EE;
+    --ash: #A09F99; --ash-deep: #64635E;
+    --signal: #FF6A3D; --signal-deep: #C2410C;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--ink); color: var(--paper); font-family: "Archivo", system-ui, sans-serif; font-stretch: 100%; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px 32px 96px; }
+  h1, h2, .display { font-stretch: 125%; letter-spacing: -0.01em; }
+  h1 { font-size: 48px; font-weight: 800; }
+  h2 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--ash); margin: 72px 0 20px; }
+  p.lead { color: var(--ash); font-size: 19px; max-width: 760px; margin-top: 16px; line-height: 1.5; }
+  /* round brand dot: inline-block without in-flow text sits exactly on the baseline */
+  .dot { display: inline-block; width: .23em; height: .23em; border-radius: 50%; background: var(--signal);
+         margin-left: .05em; margin-bottom: -.01em; vertical-align: baseline; }
+  .dot.deep { background: var(--signal-deep); }
+  .grid { display: grid; gap: 16px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); } .g3 { grid-template-columns: repeat(3, 1fr); } .g4 { grid-template-columns: repeat(4, 1fr); }
+  .tile { border-radius: 20px; padding: 40px; display: flex; align-items: center; justify-content: center; min-height: 260px; }
+  .tile.light { background: var(--paper); } .tile.dark { background: var(--graphite); }
+  .tile img { max-width: 100%; max-height: 180px; }
+  .cap { font-size: 13px; color: var(--ash); margin-top: 10px; }
+  .sw { border-radius: 16px; padding: 20px; min-height: 170px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 14px; line-height: 1.45; }
+  .sw b { font-size: 17px; font-stretch: 125%; }
+  .type-specimen { background: var(--graphite); border-radius: 20px; padding: 40px; }
+  .scale div { display: flex; align-items: baseline; gap: 24px; border-bottom: 1px solid #2a2d32; padding: 10px 0; }
+  .scale span { width: 90px; color: var(--ash); font-size: 13px; flex: none; }
+  /* mockups */
+  .hero { background: var(--ink); border: 1px solid #23262b; border-radius: 20px; overflow: hidden; }
+  .hero nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 40px; }
+  .hero nav img { height: 34px; }
+  .hero nav ul { display: flex; gap: 28px; list-style: none; padding: 0; color: var(--ash); font-size: 15px; }
+  .hero .body { padding: 80px 40px 96px; }
+  .hero .eyebrow { color: var(--ash); font-size: 15px; margin-bottom: 20px; }
+  .hero .display { font-size: 72px; font-weight: 800; line-height: 1.02; max-width: 900px; }
+  .hero .sub { color: var(--ash); font-size: 20px; max-width: 620px; margin-top: 24px; line-height: 1.5; }
+  .btn { display: inline-block; margin-top: 36px; background: var(--signal); color: var(--ink); font-weight: 700; padding: 16px 26px; border-radius: 999px; font-size: 16px; }
+  .btn.ghost { background: transparent; color: var(--paper); border: 1px solid #3a3d43; margin-left: 10px; }
+  .card { aspect-ratio: 85 / 55; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
+  .card.front { background: var(--ink); border: 1px solid #23262b; align-items: center; justify-content: center; }
+  .card.front img { width: 46%; }
+  .card.back { background: var(--paper); color: var(--ink); }
+  .card.back .n { font-stretch: 125%; font-weight: 800; font-size: 22px; }
+  .card.back .r { color: var(--ash-deep); font-size: 14px; margin-top: 4px; }
+  .card.back .c { font-size: 13px; line-height: 1.6; }
+  .avatar { width: 180px; height: 180px; border-radius: 50%; background: var(--ink); border: 1px solid #23262b; display: flex; align-items: center; justify-content: center; }
+  .avatar img { width: 74%; }
+  .frames img { width: 100%; border-radius: 14px; border: 1px solid #23262b; display: block; }
+  ul.rules { color: var(--ash); line-height: 1.8; padding-left: 20px; }
+  ul.rules b { color: var(--paper); }
+  @media (max-width: 900px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } .hero .display { font-size: 44px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Michal Roučka<span class="dot" aria-hidden="true"></span></h1>
+  <p class="lead">Pro malé firmy z Plzně a okolí je Michal Roučka vývojář, který jim postaví web i aplikaci na míru –
+    srozumitelně, osobně a se spolehlivostí, jakou čekají od profesionála.</p>
+
+  <h2>Logo</h2>
+  <div class="grid g2">
+    <div><div class="tile dark"><img src="logo/mr-symbol-negative.svg" alt="Logo mr. – negativ"></div><p class="cap">Symbol – negativ (výchozí, tmavý web). Řez 770, tečka 44 % x-výšky.</p></div>
+    <div><div class="tile light"><img src="logo/mr-symbol-positive.svg" alt="Logo mr. – pozitiv"></div><p class="cap">Symbol – pozitiv (světlé téma, tisk). Řez 800, tečka 44 % x-výšky.</p></div>
+    <div><div class="tile dark"><img src="logo/mr-horizontal-negative.svg" alt=""></div><p class="cap">Horizontální lockup – hlavička webu, e-mailový podpis.</p></div>
+    <div><div class="tile light"><img src="logo/mr-stacked-positive.svg" alt=""></div><p class="cap">Stacked lockup – čtvercové formáty, vizitka, sociální sítě.</p></div>
+  </div>
+  <div class="grid g4" style="margin-top:16px">
+    <div><div class="tile dark" style="min-height:160px"><img src="logo/mr-symbol-negative-mono.svg" alt="" style="max-height:110px"></div><p class="cap">Jednobarevný negativ</p></div>
+    <div><div class="tile light" style="min-height:160px"><img src="logo/mr-symbol-positive-mono.svg" alt="" style="max-height:110px"></div><p class="cap">Jednobarevný pozitiv</p></div>
+    <div><div class="tile light" style="min-height:160px; gap:18px">
+      <img src="web/favicon.svg" alt="" style="width:64px"><img src="web/favicon.svg" alt="" style="width:32px"><img src="web/favicon.svg" alt="" style="width:16px">
+    </div><p class="cap">Favicon 64 / 32 / 16 px</p></div>
+    <div><div class="tile dark" style="min-height:160px"><div class="avatar" style="width:120px;height:120px"><img src="logo/mr-symbol-negative.svg" alt=""></div></div><p class="cap">Profilový obrázek</p></div>
+  </div>
+
+  <h2>Barvy</h2>
+  <div class="grid g4">
+    <div class="sw" style="background:var(--ink); border:1px solid #2a2d32"><b>Ink</b>#0E0F11<br>Pozadí tmavého tématu, text světlého (17,3 : 1 na Paper)</div>
+    <div class="sw" style="background:var(--graphite)"><b>Graphite</b>#1B1D21<br>Plochy, karty a sekce na tmavém pozadí</div>
+    <div class="sw" style="background:var(--paper); color:var(--ink)"><b>Paper</b>#F5F3EE<br>Pozadí světlého tématu, text tmavého (15,2 : 1 na Graphite)</div>
+    <div class="sw" style="background:var(--signal); color:var(--ink)"><b>Signal</b>#FF6A3D<br>Akcent: tečka v logu, CTA, odkazy na tmavém (6,7 : 1 na Ink)</div>
+  </div>
+  <div class="grid g4" style="margin-top:16px">
+    <div class="sw" style="background:var(--ash); color:var(--ink); min-height:120px"><b>Ash</b>#A09F99<br>Vedlejší text na tmavém (7,2 : 1 na Ink)</div>
+    <div class="sw" style="background:var(--ash-deep); min-height:120px"><b>Ash Deep</b>#64635E<br>Vedlejší text na světlém (5,4 : 1 na Paper)</div>
+    <div class="sw" style="background:var(--signal-deep); min-height:120px"><b>Signal Deep</b>#C2410C<br>Akcent ve světlém tématu (4,7 : 1 na Paper)</div>
+    <div class="sw" style="background:transparent; border:1px dashed #3a3d43; color:var(--ash); min-height:120px">Ash Deep a Signal Deep jsou
+      světlé protějšky Ash a Signal – stejná role, jen upravený tón kvůli kontrastu.</div>
+  </div>
+
+  <h2>Typografie – jedna rodina, dvě šířky</h2>
+  <div class="type-specimen">
+    <div class="display" style="font-size:56px; font-weight:800; line-height:1.05">Weby, které pracují za vás<span class="dot" aria-hidden="true"></span></div>
+    <p style="font-size:18px; line-height:1.6; color:var(--ash); max-width:680px; margin-top:20px">Archivo Expanded (šířka 125) na nadpisy, Archivo (šířka 100) na text.
+      Jeden variabilní soubor písma s osami šířky a váhy, licence SIL Open Font License, plná podpora češtiny.</p>
+    <div class="scale" style="margin-top:28px">
+      <div><span>H1 · 61 px</span><b class="display" style="font-size:61px; font-weight:800">Aa Čč</b></div>
+      <div><span>H2 · 39 px</span><b class="display" style="font-size:39px; font-weight:700">Jak spolupráce probíhá</b></div>
+      <div><span>H3 · 25 px</span><b class="display" style="font-size:25px; font-weight:700">Prezentační web</b></div>
+      <div><span>Text · 16–18 px</span><span style="width:auto; color:var(--paper); font-size:17px">Navrhnu, postavím a spustím web, který vám přivede zákazníky.</span></div>
+      <div><span>Malý · 13 px</span><span style="width:auto; font-size:13px">Odesláním souhlasíte se zpracováním osobních údajů.</span></div>
+    </div>
+    <p class="cap" style="margin-top:16px">Modulární škála 1,25 (16 → 20 → 25 → 31 → 39 → 49 → 61). Fallback: system-ui, sans-serif.</p>
+  </div>
+
+  <h2>Mockup – hero webu (tmavé téma)</h2>
+  <div class="hero">
+    <nav><img src="logo/mr-horizontal-negative.svg" alt="Michal Roučka"><ul><li>Služby</li><li>Projekty</li><li>O mně</li><li>Kontakt</li></ul></nav>
+    <div class="body">
+      <div class="eyebrow">Tvorba webů a aplikací · Plzeň</div>
+      <div class="display">Weby a aplikace pro malé firmy<span class="dot" aria-hidden="true"></span></div>
+      <p class="sub">Od prezentačního webu po rezervační systém na míru. Osobně, srozumitelně a bez agenturních přirážek.</p>
+      <span class="btn">Nezávazná konzultace</span><span class="btn ghost">Ukázky práce</span>
+    </div>
+  </div>
+  <p class="cap">Tečka na konci nadpisu v barvě Signal je opakující se prvek značky – stejná tečka jako v logu.</p>
+
+  <h2>Mockup – vizitka a profilovka</h2>
+  <div class="grid g3" style="align-items:center">
+    <div class="card front"><img src="logo/mr-symbol-negative.svg" alt=""></div>
+    <div class="card back">
+      <div><div class="n">Michal Roučka<span class="dot deep" aria-hidden="true"></span></div><div class="r">Weby a webové aplikace na míru</div></div>
+      <div class="c">michroucka7@gmail.com<br>linkedin.com/in/michroucka<br>Plzeň</div>
+    </div>
+    <div style="display:flex; justify-content:center"><div class="avatar"><img src="logo/mr-symbol-negative.svg" alt=""></div></div>
+  </div>
+
+  <h2>Pohyb – tečka se mění v kurzor</h2>
+  <div class="grid g4 frames">
+    <div><img src="motion/frame-1-tecka.svg" alt=""><p class="cap">0 ms – výchozí stav, tečka.</p></div>
+    <div><img src="motion/frame-2-morph.svg" alt=""><p class="cap">0–280 ms – tečka se roztáhne a zploští (ease-out).</p></div>
+    <div><img src="motion/frame-3-kurzor.svg" alt=""><p class="cap">280 ms – podtržítko na účaří, šířka 46 % x-výšky.</p></div>
+    <div><img src="motion/frame-4-blik.svg" alt=""><p class="cap">Bliká v rytmu ~530 ms, po 3 bliknutích se vrátí do tečky.</p></div>
+  </div>
+  <ul class="rules" style="margin-top:20px">
+    <li><b>Kde:</b> jen v hero sekci, jednou po načtení (a případně při hoveru na logo v hlavičce). Ne v každém výskytu loga.</li>
+    <li><b>Přístupnost:</b> při <code>prefers-reduced-motion: reduce</code> zůstává statická tečka.</li>
+    <li><b>Konec:</b> animace vždy končí v tečce – logo v klidu je „mr.“, nikdy „mr_“.</li>
+  </ul>
+
+  <h2>Pravidla</h2>
+  <ul class="rules">
+    <li><b>Ochranná zóna</b> = 1 × průměr tečky na všech stranách.</li>
+    <li><b>Minimální velikost:</b> symbol 16 px (favicon soubor), horizontální lockup 120 px šířky.</li>
+    <li><b>Negativ vs. pozitiv:</b> na tmavém pozadí vždy <i>negative</i> soubory, na světlém <i>positive</i> – nikdy jen přebarvit.</li>
+    <li><b>Téma webu:</b> výchozí tmavé, světlé podle <code>prefers-color-scheme</code>, ruční přepínač v patičce.</li>
+    <li><b>Nedělat:</b> nedeformovat a neotáčet · nebarvit písmena akcentem, akcent patří jen tečce · nepřidávat stíny, obrysy a přechody · nepřestavovat lockup · nepsat logo písmem ručně.</li>
+  </ul>
+
+</div>
+</body>
+</html>
