@@ -1,0 +1,6 @@
+.claude/
+.agents/
+brand/
+package-lock.json
+docs/
+skills-lock.json
