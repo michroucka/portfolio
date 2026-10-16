@@ -23,7 +23,8 @@ Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `pre
 - Odkazy nikdy ručně skládanými stringy – vždy přes mapu cest / `getRelativeLocaleUrl`.
 - Komponenty `.astro`, žádný React ani UI knihovna. Klientský JS jen: Turnstile, mobilní menu, přepínač tématu, animace loga.
 - Barvy jen z palety: Ink `#0E0F11`, Graphite `#1B1D21`, Paper `#F5F3EE`, Ash `#A09F99`, Ash Deep `#64635E`,
-  Signal `#FF6A3D`, Signal Deep `#C2410C`. Signal na Paper se nepoužívá.
+  Signal `#FF6A3D`, Signal Deep `#C2410C`, Chalk `#FCFBF8` (plocha ve světlém), Line `#2A2D32` / Line Light `#DDD9D0`
+  (okraje). Signal na Paper se nepoužívá. Okraje formulářových polí Ash / Ash Deep (≥ 3 : 1).
 - Písmo: Archivo (variabilní, osy `wdth`, `wght`), self-hosted, `font-display: swap`; nadpisy `wdth` 125, text `wdth` 100.
 - Téma: výchozí tmavé, světlé podle `prefers-color-scheme`, ruční přepínač v patičce.
 - Logo: tmavé téma → `brand/logo/*-negative.svg`, světlé → `*-positive.svg`.

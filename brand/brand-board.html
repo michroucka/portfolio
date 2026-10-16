@@ -12,6 +12,7 @@
     --ink: #0E0F11; --graphite: #1B1D21; --paper: #F5F3EE;
     --ash: #A09F99; --ash-deep: #64635E;
     --signal: #FF6A3D; --signal-deep: #C2410C;
+    --chalk: #FCFBF8; --line: #2A2D32; --line-light: #DDD9D0;
   }
   * { box-sizing: border-box; margin: 0; }
   body { background: var(--ink); color: var(--paper); font-family: "Archivo", system-ui, sans-serif; font-stretch: 100%; }
@@ -33,10 +34,10 @@
   .sw { border-radius: 16px; padding: 20px; min-height: 170px; display: flex; flex-direction: column; justify-content: flex-end; font-size: 14px; line-height: 1.45; }
   .sw b { font-size: 17px; font-stretch: 125%; }
   .type-specimen { background: var(--graphite); border-radius: 20px; padding: 40px; }
-  .scale div { display: flex; align-items: baseline; gap: 24px; border-bottom: 1px solid #2a2d32; padding: 10px 0; }
+  .scale div { display: flex; align-items: baseline; gap: 24px; border-bottom: 1px solid var(--line); padding: 10px 0; }
   .scale span { width: 90px; color: var(--ash); font-size: 13px; flex: none; }
   /* mockups */
-  .hero { background: var(--ink); border: 1px solid #23262b; border-radius: 20px; overflow: hidden; }
+  .hero { background: var(--ink); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
   .hero nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 40px; }
   .hero nav img { height: 34px; }
   .hero nav ul { display: flex; gap: 28px; list-style: none; padding: 0; color: var(--ash); font-size: 15px; }
@@ -45,17 +46,17 @@
   .hero .display { font-size: 72px; font-weight: 800; line-height: 1.02; max-width: 900px; }
   .hero .sub { color: var(--ash); font-size: 20px; max-width: 620px; margin-top: 24px; line-height: 1.5; }
   .btn { display: inline-block; margin-top: 36px; background: var(--signal); color: var(--ink); font-weight: 700; padding: 16px 26px; border-radius: 999px; font-size: 16px; }
-  .btn.ghost { background: transparent; color: var(--paper); border: 1px solid #3a3d43; margin-left: 10px; }
+  .btn.ghost { background: transparent; color: var(--paper); border: 1px solid var(--line); margin-left: 10px; }
   .card { aspect-ratio: 85 / 55; border-radius: 14px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; }
-  .card.front { background: var(--ink); border: 1px solid #23262b; align-items: center; justify-content: center; }
+  .card.front { background: var(--ink); border: 1px solid var(--line); align-items: center; justify-content: center; }
   .card.front img { width: 46%; }
   .card.back { background: var(--paper); color: var(--ink); }
   .card.back .n { font-stretch: 125%; font-weight: 800; font-size: 22px; }
   .card.back .r { color: var(--ash-deep); font-size: 14px; margin-top: 4px; }
   .card.back .c { font-size: 13px; line-height: 1.6; }
-  .avatar { width: 180px; height: 180px; border-radius: 50%; background: var(--ink); border: 1px solid #23262b; display: flex; align-items: center; justify-content: center; }
+  .avatar { width: 180px; height: 180px; border-radius: 50%; background: var(--ink); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; }
   .avatar img { width: 74%; }
-  .frames img { width: 100%; border-radius: 14px; border: 1px solid #23262b; display: block; }
+  .frames img { width: 100%; border-radius: 14px; border: 1px solid var(--line); display: block; }
   ul.rules { color: var(--ash); line-height: 1.8; padding-left: 20px; }
   ul.rules b { color: var(--paper); }
   @media (max-width: 900px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } .hero .display { font-size: 44px; } }
@@ -86,7 +87,7 @@
 
   <h2>Barvy</h2>
   <div class="grid g4">
-    <div class="sw" style="background:var(--ink); border:1px solid #2a2d32"><b>Ink</b>#0E0F11<br>Pozadí tmavého tématu, text světlého (17,3 : 1 na Paper)</div>
+    <div class="sw" style="background:var(--ink); border:1px solid var(--line)"><b>Ink</b>#0E0F11<br>Pozadí tmavého tématu, text světlého (17,3 : 1 na Paper)</div>
     <div class="sw" style="background:var(--graphite)"><b>Graphite</b>#1B1D21<br>Plochy, karty a sekce na tmavém pozadí</div>
     <div class="sw" style="background:var(--paper); color:var(--ink)"><b>Paper</b>#F5F3EE<br>Pozadí světlého tématu, text tmavého (15,2 : 1 na Graphite)</div>
     <div class="sw" style="background:var(--signal); color:var(--ink)"><b>Signal</b>#FF6A3D<br>Akcent: tečka v logu, CTA, odkazy na tmavém (6,7 : 1 na Ink)</div>
@@ -95,8 +96,14 @@
     <div class="sw" style="background:var(--ash); color:var(--ink); min-height:120px"><b>Ash</b>#A09F99<br>Vedlejší text na tmavém (7,2 : 1 na Ink)</div>
     <div class="sw" style="background:var(--ash-deep); min-height:120px"><b>Ash Deep</b>#64635E<br>Vedlejší text na světlém (5,4 : 1 na Paper)</div>
     <div class="sw" style="background:var(--signal-deep); min-height:120px"><b>Signal Deep</b>#C2410C<br>Akcent ve světlém tématu (4,7 : 1 na Paper)</div>
-    <div class="sw" style="background:transparent; border:1px dashed #3a3d43; color:var(--ash); min-height:120px">Ash Deep a Signal Deep jsou
+    <div class="sw" style="background:transparent; border:1px dashed var(--line); color:var(--ash); min-height:120px">Ash Deep a Signal Deep jsou
       světlé protějšky Ash a Signal – stejná role, jen upravený tón kvůli kontrastu.</div>
+  </div>
+  <div class="grid g4" style="margin-top:16px">
+    <div class="sw" style="background:var(--chalk); color:var(--ink); border:1px solid var(--line-light); min-height:120px"><b>Chalk</b>#FCFBF8<br>Plochy a karty ve světlém tématu (Signal Deep 5,0 : 1, Ash Deep 5,8 : 1)</div>
+    <div class="sw" style="background:var(--ink); border:1px solid var(--line); min-height:120px"><b>Line</b>#2A2D32<br>Oddělovače a okraje karet v tmavém tématu</div>
+    <div class="sw" style="background:var(--paper); color:var(--ink); border:1px solid var(--line-light); min-height:120px"><b>Line Light</b>#DDD9D0<br>Oddělovače a okraje karet ve světlém tématu</div>
+    <div class="sw" style="background:transparent; border:1px dashed var(--line); color:var(--ash); min-height:120px">Okraje formulářových polí potřebují 3 : 1 – použij Ash (tmavé) / Ash Deep (světlé), ne Line.</div>
   </div>
 
   <h2>Typografie – jedna rodina, dvě šířky</h2>
