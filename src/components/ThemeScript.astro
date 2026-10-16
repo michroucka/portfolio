@@ -1,0 +1,28 @@
+---
+import { isTheme, resolveTheme, themeKey } from "../lib/theme.ts";
+
+// Inline skript musí běžet před prvním vykreslením (jinak problikne špatné téma),
+// takže nemůže importovat moduly. Funkce z theme.ts se proto vkládají jako zdrojový
+// text – v prohlížeči běží přesně ten kód, který ověřují testy v theme.test.ts.
+// IIFE drží isTheme/resolveTheme mimo globální scope.
+const themeScript = `(() => {
+	${isTheme.toString()}
+	${resolveTheme.toString()}
+
+	let stored = null;
+	try {
+		stored = localStorage.getItem(${JSON.stringify(themeKey)});
+	} catch {
+		// localStorage nemusí být dostupný (anonymní okno, blokovaná data) – rozhodne systém.
+	}
+
+	// Dotaz na "light": bez systémové preference vychází false → výchozí tmavé téma.
+	const system = window.matchMedia("(prefers-color-scheme: light)").matches
+		? "light"
+		: "dark";
+
+	document.documentElement.dataset.theme = resolveTheme({ stored, system });
+})();`;
+---
+
+<script is:inline set:html={themeScript} />

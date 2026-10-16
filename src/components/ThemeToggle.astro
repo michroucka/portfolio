@@ -1,0 +1,60 @@
+---
+import Moon from "./icons/Moon.astro";
+import Sun from "./icons/Sun.astro";
+interface Props {
+	// Přístupný popisek tlačítka. Zatím ho předává rodič, po Úkolu 3 přijde ze slovníku.
+	label: string;
+	size?: string;
+}
+
+const { label, size } = Astro.props;
+---
+
+<!-- TODO (hover): jemná změna barvy/pozadí tlačítka přes transition + hover:/focus-visible: -->
+<!-- TODO (přepnutí): obě ikony vrstvit přes sebe (grid, stejná buňka) a místo hidden/block
+     přepínat opacity + transform (rotace/scale); délka a easing podle brand/README.md § 5 -->
+<!-- TODO: všechny pohyby jen pro motion-safe: (prefers-reduced-motion → okamžitá změna) -->
+<button type="button" class="group" data-theme-toggle aria-label={label}>
+	<Sun class="hidden light:block" size={size} fillOnHover />
+	<Moon class="light:hidden block" size={size} fillOnHover />
+</button>
+
+<script>
+	import { isTheme, themeKey, toggleTheme, type Theme } from "../lib/theme";
+
+	function readCurrentTheme(): Theme {
+		const attr = document.documentElement.getAttribute("data-theme");
+
+		return isTheme(attr) ? attr : "dark";
+	}
+
+	function applyTheme(theme: Theme): void {
+		document.documentElement.dataset.theme = theme;
+		const toggles = document.querySelectorAll("[data-theme-toggle]");
+
+		for (const toggle of toggles) {
+			toggle.setAttribute(
+				"aria-pressed",
+				theme === "light" ? "true" : "false",
+			);
+		}
+	}
+
+	function saveTheme(theme: Theme): void {
+		try {
+			localStorage.setItem(themeKey, theme);
+		} catch {
+			// selhání nesmí rozbít přepnutí
+		}
+	}
+
+	const toggles = document.querySelectorAll("[data-theme-toggle]");
+	applyTheme(readCurrentTheme());
+	for (const toggle of toggles) {
+		toggle.addEventListener("click", () => {
+			const newTheme = toggleTheme(readCurrentTheme());
+			applyTheme(newTheme);
+			saveTheme(newTheme);
+		});
+	}
+</script>

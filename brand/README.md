@@ -48,7 +48,8 @@ na světlém vždy `positive`.
 **Plochy:** v obou tématech platí totéž pravidlo – karta je o krok blíž ke světlu než pozadí (Ink → Graphite, Paper → Chalk) a má okraj v barvě Line / Line Light.
 **Okraje formulářových polí** musí mít kontrast ≥ 3 : 1 (WCAG 1.4.11) – použij Ash (tmavé) / Ash Deep (světlé), ne Line.
 
-Tlačítko CTA: pozadí Signal, text Ink (6,7 : 1). Signal na Paper (2,6 : 1) **nepoužívat** – na světlém vždy Signal Deep.
+Tlačítko CTA: na tmavém pozadí Signal, text Ink (6,7 : 1); na světlém pozadí Signal Deep, text Paper (4,7 : 1) – Ink na Signal Deep má jen 3,7 : 1, nepoužívat.
+Signal na Paper (2,6 : 1) **nepoužívat** – na světlém vždy Signal Deep.
 Pro tisk nech CMYK/Pantone převést a nátiskovat v tiskárně.
 
 ## 3. Typografie
