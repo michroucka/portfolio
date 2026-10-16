@@ -10,17 +10,35 @@ interface Props {
 const { label, size } = Astro.props;
 ---
 
-<!-- TODO (hover): jemná změna barvy/pozadí tlačítka přes transition + hover:/focus-visible: -->
-<!-- TODO (přepnutí): obě ikony vrstvit přes sebe (grid, stejná buňka) a místo hidden/block
-     přepínat opacity + transform (rotace/scale); délka a easing podle brand/README.md § 5 -->
-<!-- TODO: všechny pohyby jen pro motion-safe: (prefers-reduced-motion → okamžitá změna) -->
-<button type="button" class="group" data-theme-toggle aria-label={label}>
-	<Sun class="hidden light:block" size={size} fillOnHover />
-	<Moon class="light:hidden block" size={size} fillOnHover />
+<!-- *: = přímí potomci (obě ikony): stejná buňka gridu (překryv) a společný přechod.
+     Na ikonách zůstávají jen jejich stavy pro tmavé/světlé téma. -->
+<button
+	type="button"
+	class="group grid cursor-pointer *:col-start-1 *:row-start-1 motion-safe:*:transition-[opacity,rotate,scale]"
+	data-theme-toggle
+	aria-label={label}
+>
+	<Sun
+		class="opacity-0 rotate-45 scale-90 light:opacity-100 light:rotate-0 light:scale-100"
+		size={size}
+		fillOnHover
+	/>
+	<Moon
+		class="opacity-100 rotate-0 scale-100 light:opacity-0 light:-rotate-45 light:scale-90"
+		size={size}
+		fillOnHover
+	/>
 </button>
 
 <script>
-	import { isTheme, themeKey, toggleTheme, type Theme } from "../lib/theme";
+	import {
+		isTheme,
+		resolveTheme,
+		systemLightQuery,
+		themeKey,
+		toggleTheme,
+		type Theme,
+	} from "../lib/theme";
 
 	function readCurrentTheme(): Theme {
 		const attr = document.documentElement.getAttribute("data-theme");
@@ -37,6 +55,14 @@ const { label, size } = Astro.props;
 				"aria-pressed",
 				theme === "light" ? "true" : "false",
 			);
+		}
+	}
+
+	function readStoredTheme(): string | null {
+		try {
+			return localStorage.getItem(themeKey);
+		} catch {
+			return null;
 		}
 	}
 
@@ -57,4 +83,15 @@ const { label, size } = Astro.props;
 			saveTheme(newTheme);
 		});
 	}
+
+	// Změna systémového tématu za běhu (např. automatické přepínání podle denní doby).
+	// Uložená ruční volba má přednost – resolveTheme ji vrátí a systém se ignoruje.
+	window.matchMedia(systemLightQuery).addEventListener("change", (event) => {
+		applyTheme(
+			resolveTheme({
+				stored: readStoredTheme(),
+				system: event.matches ? "light" : "dark",
+			}),
+		);
+	});
 </script>

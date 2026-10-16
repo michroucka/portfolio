@@ -2,6 +2,9 @@ export type Theme = "light" | "dark";
 
 export const themeKey = "theme";
 
+// Dotaz na světlé téma: bez systémové preference vychází false → výchozí tmavé téma.
+export const systemLightQuery = "(prefers-color-scheme: light)";
+
 export function resolveTheme({
 	stored,
 	system,
