@@ -1,9 +1,13 @@
 ---
+import ThemeScript from "../components/ThemeScript.astro";
+import "../styles/global.css";
+import ThemeToggle from "../components/ThemeToggle.astro";
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<ThemeScript />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
@@ -12,5 +16,6 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<ThemeToggle label="Světlé téma" size="1.5em" />
 	</body>
 </html>
