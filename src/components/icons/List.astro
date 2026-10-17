@@ -1,0 +1,80 @@
+---
+// Phosphor Icons – "list" (regular), MIT License, https://phosphoricons.com
+// Dekorativní ikona: přístupné jméno musí nést rodičovský prvek.
+// Původní jedna cesta je rozdělená na tři čáry, aby šla každá animovat zvlášť.
+interface Props {
+	class?: string;
+	size?: string;
+	morphOnDialogOpen?: boolean;
+}
+
+const {
+	class: className,
+	size = "1em",
+	morphOnDialogOpen = false,
+} = Astro.props;
+---
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 256 256"
+	width={size}
+	height={size}
+	fill="currentColor"
+	aria-hidden="true"
+	focusable="false"
+	class={className}
+	data-morph={morphOnDialogOpen || undefined}
+>
+	<!-- horní čára -->
+	<path
+		d="M40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16Z"
+		data-line="top"
+	></path>
+	<!-- prostřední čára -->
+	<path
+		d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"
+		data-line="middle"
+	></path>
+	<!-- dolní čára -->
+	<path
+		d="M216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"
+		data-line="bottom"
+	></path>
+</svg>
+
+<style>
+	svg[data-morph] path[data-line] {
+		transform-box: fill-box;
+		transform-origin: center;
+	}
+	:global(dialog[open]) svg[data-morph] path[data-line="top"] {
+		transform: translateY(64px) rotate(45deg) scaleX(1.25);
+	}
+	:global(dialog[open]) svg[data-morph] path[data-line="bottom"] {
+		transform: translateY(-64px) rotate(-45deg) scaleX(1.25);
+	}
+	:global(dialog[open]) svg[data-morph] path[data-line="middle"] {
+		opacity: 0;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		svg[data-morph] path[data-line] {
+			transition-property: opacity, transform;
+			transition-timing-function: var(
+				--default-transition-timing-function
+			);
+			transition-duration: var(--default-transition-duration);
+		}
+	}
+	@starting-style {
+		:global(dialog[open]) svg[data-morph] path[data-line="top"],
+		:global(dialog[open]) svg[data-morph] path[data-line="bottom"] {
+			transform: none;
+		}
+	}
+	@starting-style {
+		:global(dialog[open]) svg[data-morph] path[data-line="middle"] {
+			opacity: 1;
+		}
+	}
+</style>

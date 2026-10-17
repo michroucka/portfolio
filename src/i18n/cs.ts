@@ -7,10 +7,23 @@ export const cs = {
 		about: "O mně",
 		contact: "Kontakt",
 	},
+	header: {
+		menuOpen: "Otevřít menu",
+		menuClose: "Zavřít menu",
+		navigation: "Hlavní navigace",
+		menu: "Menu",
+	},
 	footer: {
 		lightThemeToggle: "Světlé téma",
 		privacy: "Ochrana osobních údajů",
 		language: "Čeština",
+	},
+	layout: {
+		skipToMain: "Přeskočit na obsah",
+	},
+	home: {
+		title: "Domovská stránka",
+		description: "Vítejte na mém webu",
 	},
 };
 

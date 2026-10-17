@@ -1,0 +1,57 @@
+---
+import logoDarkTheme from "../../brand/logo/mr-horizontal-negative.svg?raw";
+import logoLightTheme from "../../brand/logo/mr-horizontal-positive.svg?raw";
+
+interface Props {
+	class?: string;
+}
+
+function removeTitleAndAttributes(svg: string): string {
+	return svg
+		.replace(/<title[^>]*>[^<]*<\/title>/, "")
+		.replace(/\s(?:width|height|role|aria-labelledby)="[^"]*"/g, "");
+}
+
+// SVG v brand/ mají kolem kresby ochrannou zónu = průměr tečky (brand/source/build_final.py).
+// Ořízneme ji z viewBoxu, aby okraj loga byl okraj kresby a zarovnání s layoutem sedělo
+// při jakékoli šířce. Ochrannou zónu pak musí zajistit odsazení v layoutu.
+function cropProtectiveZone(svg: string): string {
+	const viewBox = svg.match(/viewBox="([^"]+)"/);
+	const dotRadius = svg.match(/<circle[^>]*\sr="([^"]+)"/);
+
+	if (!viewBox?.[1] || !dotRadius?.[1]) {
+		throw new Error("Logo SVG is missing viewBox or the dot circle");
+	}
+
+	const [x, y, width, height] = viewBox[1].split(/\s+/).map(Number);
+	const padding = Number(dotRadius[1]) * 2;
+
+	if (
+		x === undefined ||
+		y === undefined ||
+		width === undefined ||
+		height === undefined ||
+		[x, y, width, height, padding].some(Number.isNaN)
+	) {
+		throw new Error(`Logo SVG has an invalid viewBox: ${viewBox[1]}`);
+	}
+
+	const cropped = [
+		x + padding,
+		y + padding,
+		width - 2 * padding,
+		height - 2 * padding,
+	].join(" ");
+
+	return svg.replace(viewBox[0], `viewBox="${cropped}"`);
+}
+
+const { class: className } = Astro.props;
+const logoLight = cropProtectiveZone(removeTitleAndAttributes(logoLightTheme));
+const logoDark = cropProtectiveZone(removeTitleAndAttributes(logoDarkTheme));
+---
+
+<div class={className} role="img" aria-label="Michal Roučka">
+	<span set:html={logoLight} class="hidden light:block" />
+	<span set:html={logoDark} class="block light:hidden" />
+</div>

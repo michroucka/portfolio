@@ -1,0 +1,16 @@
+---
+import type { Locale } from "../i18n";
+import type { Page, RouteParams } from "../i18n/routes";
+
+interface Props {
+	locale: Locale;
+	page: Page;
+	params?: RouteParams;
+}
+
+// TODO: cesty pro oba jazyky z getAlternates
+---
+
+<!-- TODO: <nav> s přístupným popiskem, obyčejné <a> pro každý jazyk -->
+<!-- TODO: aktuální jazyk: aria-current="page" -->
+<!-- TODO: hreflang + lang na odkazu (čtečka přečte „English“ anglicky) -->

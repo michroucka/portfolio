@@ -1,0 +1,113 @@
+---
+import { getDictionary, type Locale } from "../i18n";
+import { type Page, type RouteParams, getPath } from "../i18n/routes";
+import Logo from "./Logo.astro";
+import { sections } from "../lib/sections";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import List from "./icons/List.astro";
+import CaretRight from "./icons/CaretRight.astro";
+import ArrowRight from "./icons/ArrowRight.astro";
+
+interface Props {
+	locale: Locale;
+	page: Page;
+	params?: RouteParams;
+}
+
+const { locale, page } = Astro.props;
+const homePath = getPath("home", locale);
+const dictionary = getDictionary(locale);
+
+const headerClasses = "flex items-center justify-between px-6 py-2";
+const logoClasses = "w-44 md:w-60";
+const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.25em)]";
+const menuIconSize = "1.75em";
+---
+
+<header class={headerClasses}>
+	<a href={homePath}>
+		<Logo class={logoClasses} />
+	</a>
+
+	<!-- Desktop: navigace v řádku, na mobilu skrytá -->
+	<nav aria-label={dictionary.header.navigation} class="hidden md:flex gap-4">
+		{sections.map((section) => (
+			<a href={`${homePath}#${section}`}>{dictionary.nav[section]}</a>
+		))}
+	</nav>
+
+	<!-- Mobil: tlačítko, které otevře dialog; od md skryté -->
+	<button
+		type="button"
+		data-menu-open
+		aria-label={dictionary.header.menuOpen}
+		class={menuButtonClasses}
+	>
+		<List size={menuIconSize} />
+	</button>
+
+	<dialog data-menu aria-label={dictionary.header.menu} class="w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none">
+		<div class={headerClasses}>
+			<a href={homePath}>
+				<Logo class={logoClasses} />
+			</a>
+			<button
+				type="button"
+				data-menu-close
+				aria-label={dictionary.header.menuClose}
+				class={menuButtonClasses}
+			>
+				<List size={menuIconSize} morphOnDialogOpen />
+			</button>
+		</div>
+		<nav aria-label={dictionary.header.navigation} class="flex flex-col px-6 text-2xl font-stretch-expanded font-bold">
+			{sections.map((section) => (
+				<a href={`${homePath}#${section}`} class="flex items-center justify-between py-4">
+					{dictionary.nav[section]}
+					<span aria-hidden="true" class="text-3xl">›</span>
+				</a>
+			))}
+		</nav>
+	</dialog>
+</header>
+
+<script>
+	const menu = document.querySelector<HTMLDialogElement>("[data-menu]");
+	const openButton = document.querySelector("[data-menu-open]");
+	const closeButton = document.querySelector("[data-menu-close]");
+
+	if (!menu || !openButton || !closeButton) {
+		throw new Error("Menu elements not found");
+	}
+
+	const openMenu = (): void => {
+		menu.showModal();
+	};
+
+	const closeMenu = (): void => {
+		menu.close();
+	};
+
+	openButton.addEventListener("click", openMenu);
+	closeButton.addEventListener("click", closeMenu);
+
+	menu.addEventListener("click", (event) => {
+		if (!(event.target instanceof Element)) {
+			return;
+		}
+
+		const link = event.target.closest("a");
+
+		if (link) {
+			closeMenu();
+		}
+	});
+
+	const desktopQuery = window.matchMedia("(min-width: 48rem)"); // = Tailwind md:
+
+	desktopQuery.addEventListener("change", (event) => {
+		if (event.matches) {
+			closeMenu();
+		}
+	});
+</script>
