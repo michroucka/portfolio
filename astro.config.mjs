@@ -12,6 +12,17 @@ export default defineConfig({
 
 	site: "https://example.com",
 
+	// Jedna kanonická podoba URL – všechny cesty končí lomítkem.
+	trailingSlash: "always",
+
+	i18n: {
+		defaultLocale: "cs",
+		locales: ["cs", "en"],
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
+
 	vite: {
 		plugins: [tailwindcss()],
 	},
