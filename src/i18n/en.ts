@@ -17,7 +17,6 @@ export const en: Dictionary = {
 	footer: {
 		lightThemeToggle: "Light theme",
 		privacy: "Privacy policy",
-		language: "English",
 	},
 	layout: {
 		skipToMain: "Skip to content",
@@ -25,5 +24,8 @@ export const en: Dictionary = {
 	home: {
 		title: "Homepage",
 		description: "Welcome to my website",
+	},
+	languageSwitcher: {
+		label: "Language",
 	},
 };

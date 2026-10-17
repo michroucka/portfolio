@@ -12,11 +12,11 @@ interface Props {
 	params?: RouteParams;
 }
 
-const { locale, page } = Astro.props;
+const { locale, page, params } = Astro.props;
 const homePath = getPath("home", locale);
 const dictionary = getDictionary(locale);
 
-const headerClasses = "flex items-center justify-between px-6 py-2";
+const headerClasses = "flex items-center justify-between px-6 py-2 md:py-4";
 const logoClasses = "w-44 md:w-60";
 const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.16em)]";
 const menuIconSize = "1.75em";
@@ -27,12 +27,27 @@ const menuIconSize = "1.75em";
 		<Logo class={logoClasses} />
 	</a>
 
-	<!-- Desktop: navigace v řádku, na mobilu skrytá -->
-	<nav aria-label={dictionary.header.navigation} class="hidden md:flex gap-4">
-		{sections.map((section) => (
-			<a href={`${homePath}#${section}`}>{dictionary.nav[section]}</a>
-		))}
-	</nav>
+	<!-- Desktop: navigace a přepínač jazyka v řádku, na mobilu skryté -->
+	<div class="hidden md:flex items-center gap-6">
+		<nav
+			aria-label={dictionary.header.navigation}
+			class="flex gap-6 text-lg font-stretch-expanded font-semibold"
+		>
+			{sections.map((section) => (
+				<a href={`${homePath}#${section}`}>{dictionary.nav[section]}</a>
+			))}
+		</nav>
+		<!-- Oddělovač navigace a přepínače jazyka (barva Line = oddělovače podle manuálu) -->
+		<span aria-hidden="true" class="h-5 w-px bg-line"></span>
+		<!-- -mx-2 = padding odkazů na desktopu (md:px-2):
+		     vpravo „EN“ končí na hraně obsahu, vlevo je mezera od čáry stejná jako gap-6 před ní -->
+		<LanguageSwitcher
+			locale={locale}
+			page={page}
+			params={params}
+			class="-mx-2 text-sm"
+		/>
+	</div>
 
 	<!-- Mobil: tlačítko, které otevře dialog; od md skryté -->
 	<button
@@ -47,7 +62,7 @@ const menuIconSize = "1.75em";
 	<dialog
 		data-menu
 		aria-label={dictionary.header.menu}
-		class="w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
+		class="open:flex open:flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
 	>
 		<div class={headerClasses}>
 			<a href={homePath}>
@@ -64,7 +79,7 @@ const menuIconSize = "1.75em";
 		</div>
 		<nav
 			aria-label={dictionary.header.navigation}
-			class="flex flex-col px-6 text-2xl font-stretch-expanded font-bold"
+			class="flex flex-col px-6 text-2xl font-stretch-expanded font-semibold"
 		>
 			{sections.map((section, index) => (
 				<a
@@ -79,6 +94,13 @@ const menuIconSize = "1.75em";
 				</a>
 			))}
 		</nav>
+		<!-- Dole vpravo na dosah palce. pr-3 + padding odkazů (px-3) = 24 px = px-6 → „EN“ v linii s chevrony. -->
+		<LanguageSwitcher
+			locale={locale}
+			page={page}
+			params={params}
+			class="mt-auto ms-auto pr-3 pb-8"
+		/>
 	</dialog>
 </header>
 

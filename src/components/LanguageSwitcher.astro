@@ -1,16 +1,43 @@
 ---
-import type { Locale } from "../i18n";
-import type { Page, RouteParams } from "../i18n/routes";
+import { getDictionary, languageNames, type Locale, locales } from "../i18n";
+import { getAlternates, type Page, type RouteParams } from "../i18n/routes";
 
 interface Props {
 	locale: Locale;
 	page: Page;
 	params?: RouteParams;
+	class?: string;
 }
 
-// TODO: cesty pro oba jazyky z getAlternates
+const { locale, page, params, class: className } = Astro.props;
+const alternates = getAlternates(page, params);
+const dictionary = getDictionary(locale);
 ---
 
-<!-- TODO: <nav> s přístupným popiskem, obyčejné <a> pro každý jazyk -->
-<!-- TODO: aktuální jazyk: aria-current="page" -->
-<!-- TODO: hreflang + lang na odkazu (čtečka přečte „English“ anglicky) -->
+<nav
+	aria-label={dictionary.languageSwitcher.label}
+	class:list={["flex items-center", className]}
+>
+	{locales.map((lang, index) => (
+		<>
+			{index > 0 && (
+				<span
+					aria-hidden="true"
+					class="font-semibold font-stretch-expanded"
+				>
+					·
+				</span>
+			)}
+			<a
+				href={alternates[lang]}
+				hreflang={lang}
+				lang={lang}
+				aria-label={`${lang.toUpperCase()} – ${languageNames[lang]}`}
+				aria-current={lang === locale ? "page" : undefined}
+				class="px-3 md:px-2 py-2 font-semibold font-stretch-expanded text-muted hover:text-foreground aria-[current=page]:text-foreground motion-safe:transition-colors"
+			>
+				{lang.toUpperCase()}
+			</a>
+		</>
+	))}
+</nav>

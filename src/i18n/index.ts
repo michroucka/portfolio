@@ -7,6 +7,11 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale: Locale = "cs";
 
+export const languageNames: Record<Locale, string> = {
+	cs: "Čeština",
+	en: "English",
+};
+
 const dictionaries: Record<Locale, Dictionary> = {
 	cs,
 	en,

@@ -16,7 +16,6 @@ export const cs = {
 	footer: {
 		lightThemeToggle: "Světlé téma",
 		privacy: "Ochrana osobních údajů",
-		language: "Čeština",
 	},
 	layout: {
 		skipToMain: "Přeskočit na obsah",
@@ -24,6 +23,9 @@ export const cs = {
 	home: {
 		title: "Domovská stránka",
 		description: "Vítejte na mém webu",
+	},
+	languageSwitcher: {
+		label: "Jazyk",
 	},
 };
 
