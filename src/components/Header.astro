@@ -4,9 +4,7 @@ import { type Page, type RouteParams, getPath } from "../i18n/routes";
 import Logo from "./Logo.astro";
 import { sections } from "../lib/sections";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import List from "./icons/List.astro";
-import CaretRight from "./icons/CaretRight.astro";
-import ArrowRight from "./icons/ArrowRight.astro";
+import MenuIcon from "./icons/MenuIcon.astro";
 
 interface Props {
 	locale: Locale;
@@ -20,7 +18,7 @@ const dictionary = getDictionary(locale);
 
 const headerClasses = "flex items-center justify-between px-6 py-2";
 const logoClasses = "w-44 md:w-60";
-const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.25em)]";
+const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.16em)]";
 const menuIconSize = "1.75em";
 ---
 
@@ -43,7 +41,7 @@ const menuIconSize = "1.75em";
 		aria-label={dictionary.header.menuOpen}
 		class={menuButtonClasses}
 	>
-		<List size={menuIconSize} />
+		<MenuIcon size={menuIconSize} />
 	</button>
 
 	<dialog data-menu aria-label={dictionary.header.menu} class="w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none">
@@ -57,7 +55,7 @@ const menuIconSize = "1.75em";
 				aria-label={dictionary.header.menuClose}
 				class={menuButtonClasses}
 			>
-				<List size={menuIconSize} morphOnDialogOpen />
+				<MenuIcon size={menuIconSize} morphOnDialogOpen />
 			</button>
 		</div>
 		<nav aria-label={dictionary.header.navigation} class="flex flex-col px-6 text-2xl font-stretch-expanded font-bold">
