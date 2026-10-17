@@ -44,7 +44,11 @@ const menuIconSize = "1.75em";
 		<MenuIcon size={menuIconSize} />
 	</button>
 
-	<dialog data-menu aria-label={dictionary.header.menu} class="w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none">
+	<dialog
+		data-menu
+		aria-label={dictionary.header.menu}
+		class="w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
+	>
 		<div class={headerClasses}>
 			<a href={homePath}>
 				<Logo class={logoClasses} />
@@ -58,16 +62,75 @@ const menuIconSize = "1.75em";
 				<MenuIcon size={menuIconSize} morphOnDialogOpen />
 			</button>
 		</div>
-		<nav aria-label={dictionary.header.navigation} class="flex flex-col px-6 text-2xl font-stretch-expanded font-bold">
-			{sections.map((section) => (
-				<a href={`${homePath}#${section}`} class="flex items-center justify-between py-4">
+		<nav
+			aria-label={dictionary.header.navigation}
+			class="flex flex-col px-6 text-2xl font-stretch-expanded font-bold"
+		>
+			{sections.map((section, index) => (
+				<a
+					href={`${homePath}#${section}`}
+					style={{ "--index": index }}
+					class="flex items-center justify-between py-4"
+				>
 					{dictionary.nav[section]}
-					<span aria-hidden="true" class="text-3xl">›</span>
+					<span aria-hidden="true" class="text-3xl">
+						›
+					</span>
 				</a>
 			))}
 		</nav>
 	</dialog>
 </header>
+
+<style>
+	:global(html:has(dialog[open])) {
+		overflow: hidden;
+	}
+
+	/* --- Animace dialogu menu --- */
+	dialog[data-menu] {
+		opacity: 0;
+	}
+
+	dialog[data-menu] nav a {
+		opacity: 0;
+		translate: 0 -1rem;
+	}
+
+	dialog[data-menu][open] {
+		opacity: 1;
+	}
+
+	dialog[data-menu][open] nav a {
+		opacity: 1;
+		translate: 0;
+	}
+
+	@starting-style {
+		dialog[data-menu][open] {
+			opacity: 0;
+		}
+		dialog[data-menu][open] nav a {
+			opacity: 0;
+			translate: 0 -1rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		dialog[data-menu],
+		dialog[data-menu] nav a {
+			transition-property: opacity, translate, display, overlay;
+			transition-behavior: allow-discrete;
+			transition-duration: var(--default-transition-duration);
+			transition-timing-function: var(
+				--default-transition-timing-function
+			);
+		}
+		dialog[data-menu][open] nav a {
+			transition-delay: calc(var(--index) * 40ms);
+		}
+	}
+</style>
 
 <script>
 	const menu = document.querySelector<HTMLDialogElement>("[data-menu]");
