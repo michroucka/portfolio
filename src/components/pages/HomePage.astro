@@ -1,0 +1,16 @@
+---
+import { getDictionary, type Locale } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = getDictionary(locale);
+const { title, description } = dictionary.home;
+---
+
+<BaseLayout locale={locale} page="home" title={title} description={description}>
+	<h1>{title}</h1>
+</BaseLayout>

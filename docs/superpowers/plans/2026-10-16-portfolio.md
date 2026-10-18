@@ -113,17 +113,33 @@ přepínač tématu.
 
 **Konzumuje:** tokeny a `ThemeScript`/`ThemeToggle` (Úkol 2), slovníky a mapu cest (Úkol 3).
 
-- [ ] `BaseLayout` přijímá jazyk, titulek, popis, logickou stránku + parametry (kvůli alternativám) a volitelný OG obrázek. Nastaví `lang` na `<html>`, vloží `ThemeScript`, skip link „Přeskočit na obsah“, `Header`, `<main id="…">`, `Footer`.
-- [ ] `Seo.astro`: `<title>`, `meta description`, `canonical`, `hreflang` pro oba jazyky + `x-default` → CZ, Open Graph (`og:title`, `og:description`, `og:image`, `og:locale`). Docs: https://developers.google.com/search/docs/specialty/international/localized-versions
-- [ ] `Logo.astro`: inline SVG z `brand/logo/` – negativ pro tmavé, pozitiv pro světlé téma (přepínání přes CSS podle atributu tématu, ne přes JS). Přístupný název „Michal Roučka“.
-- [ ] `LanguageSwitcher`: obyčejné odkazy z funkce alternativ, aktuální jazyk označený `aria-current`.
-- [ ] `Header`: logo (odkaz na home v aktuálním jazyce), navigace na sekce homepage (kotvy), přepínač jazyka, mobilní menu (`<details>` nebo malý skript).
-- [ ] `Footer`: kontakt, odkaz na GDPR stránku, `ThemeToggle`, místo pro IČO (zatím skryté / prázdné).
-- [ ] Tenké stránky `index.astro` a `en/index.astro` – jen určí jazyk a vykreslí `HomePage` (zatím jen nadpis).
-- [ ] `404.astro` – jednoduchá dvojjazyčná stránka s odkazem domů v obou jazycích.
-- [ ] Favicon a ikony: zkopíruj `brand/web/*` do `public/` a obsah `head-snippet.html` vlož do layoutu.
-- [ ] **Ověření:** `npm run build`, v `dist/` zkontroluj u `/` i `/en/`: správné `lang`, canonical a hreflang ukazují na sebe navzájem, přepínač vede na protějšek. Klávesnicí projdi hlavičku (viditelný focus, skip link funguje).
-- [ ] Commit: `feat: base layout with SEO head, header, footer and 404`
+- [x] `BaseLayout` přijímá jazyk, titulek, popis, logickou stránku + parametry (kvůli alternativám) a volitelný OG obrázek. Nastaví `lang` na `<html>`, vloží `ThemeScript`, skip link „Přeskočit na obsah“, `Header`, `<main id="…">`, `Footer`.
+- [x] `Seo.astro`: `<title>`, `meta description`, `canonical`, `hreflang` pro oba jazyky + `x-default` → CZ, Open Graph (`og:title`, `og:description`, `og:image`, `og:locale`). Docs: https://developers.google.com/search/docs/specialty/international/localized-versions
+- [x] `Logo.astro`: inline SVG z `brand/logo/` – negativ pro tmavé, pozitiv pro světlé téma (přepínání přes CSS podle atributu tématu, ne přes JS). Přístupný název „Michal Roučka“.
+- [x] `LanguageSwitcher`: obyčejné odkazy z funkce alternativ, aktuální jazyk označený `aria-current`.
+- [x] `Header`: logo (odkaz na home v aktuálním jazyce), navigace na sekce homepage (kotvy), přepínač jazyka, mobilní menu (`<details>` nebo malý skript).
+- [x] `Footer`: kontakt, odkaz na GDPR stránku, `ThemeToggle`, místo pro IČO (zatím skryté / prázdné).
+- [x] Tenké stránky `index.astro` a `en/index.astro` – jen určí jazyk a vykreslí `HomePage` (zatím jen nadpis).
+- [x] `404.astro` – jednoduchá dvojjazyčná stránka s odkazem domů v obou jazycích.
+- [x] Favicon a ikony: zkopíruj `brand/web/*` do `public/` a obsah `head-snippet.html` vlož do layoutu.
+- [x] **Ověření:** `npm run build`, v `dist/` zkontroluj u `/` i `/en/`: správné `lang`, canonical a hreflang ukazují na sebe navzájem, přepínač vede na protějšek. Klávesnicí projdi hlavičku (viditelný focus, skip link funguje).
+- [x] Commit: `feat: base layout with SEO head, header, footer and 404`
+
+**Poznámky k provedení** (větev `feat/layout`):
+
+- *Rozhodnutí:*
+  - Mobilní menu je `<dialog>` přes celou obrazovku (`showModal()` – fokus zůstane v menu, Escape zavře). Zavírací animace přes `transition-behavior: allow-discrete` na `display`/`overlay`; poloha a layout dialogu proto nesmí záviset na `[open]` (`fixed inset-0`, `flex-col` napořád, jen `open:flex`). Odkazy v menu naskakují postupně (`--index` + `transition-delay` jen při otevírání).
+  - Ikona menu `MenuIcon.astro` je vlastní (dvě hranaté čáry, spodní kratší), morf do křížku jen přes CSS uvnitř otevřeného dialogu.
+  - Přepínač jazyka: zkratky „CS · EN“ (ne vlajky), autonyma v `languageNames` (`i18n/index.ts`). Je v hlavičce (desktop, oddělený svislou čárou), v mobilním menu i v patičce. Bez `page` (404) se nevykreslí.
+  - `page` je v `BaseLayout`/`Seo`/`Header`/`Footer` volitelné – bez něj žádný canonical/hreflang/`og:url`, přidá se `noindex`. Využívá 404.
+  - Logo: `viewBox` oříznutý o ochrannou zónu (zarovnání s layoutem), ochrannou zónu drží odsazení `pagePaddingX`.
+  - Rok v © je napevno (`siteDetails.launchYear`) – v © se píše rok prvního zveřejnění, nemusí se aktualizovat.
+- *Nad rámec plánu:*
+  - `src/lib/site.ts` – údaje o webu (e-mail, telefon, IČO, rok) a `pagePaddingX` (sdílený vodorovný okraj).
+  - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
+  - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
+  - Logo v hlavičce: při hoveru se tečka promění v blikající kurzor a jméno mu ustoupí (`dot-cursor-hover`, `name-push-hover` v `global.css`).
+- *Odchylka od manuálu (§ 5):* při hoveru na logo kurzor bliká, dokud je na něm myš (ne jen 3×) – tvar je přes `transition`, aby se po odjetí plynule vrátil do tečky. „3 bliknutí a zpět“ platí pro hero (Úkol 9). Rytmus blikání je 530 ms svítí / 530 ms zhasnuto.
 
 ### Úkol 5: Content collections – služby a case studies
 
@@ -222,6 +238,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 **Soubory:** `src/components/sections/Hero.astro` (nebo samostatná `HeroMark.astro`), CSS v komponentě.
 
 - [ ] Velká značka „mr.“ v hero jako inline SVG, kde tečka je samostatný element, který jde animovat.
+- [ ] *(Připraveno v Úkolu 4: `@keyframes dot-cursor` a třída `animate-dot-cursor` v `global.css` – tečka jako `<rect>` s `--dot`/`--baseline`, převod kruhu viz `dotToRect` v `Logo.astro`. V hero ji stačí spustit po načtení.)*
 - [ ] Animace podle `brand/README.md` § 5: 0–280 ms tečka → podtržítko (ease-out), blikání ~530 ms, 3 bliknutí, návrat do tečky. Jednou po načtení. Nastuduj CSS `@keyframes` a animovatelné vlastnosti SVG (u `<rect>` jdou animovat `width`, `height`, `rx` přes CSS v moderních prohlížečích; alternativa je `transform: scale`). **Než začneš, projdeme koncept spolu.**
 - [ ] `@media (prefers-reduced-motion: reduce)` → žádná animace, statická tečka.
 - [ ] Klidový stav je vždy tečka (i když animace neproběhne nebo se přeruší).

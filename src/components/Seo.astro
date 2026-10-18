@@ -1,0 +1,61 @@
+---
+import { defaultLocale, type Locale, resolveOgLocale } from "../i18n";
+import {
+	getAlternates,
+	getPath,
+	type Page,
+	type RouteParams,
+} from "../i18n/routes";
+
+interface Props {
+	locale: Locale;
+	title: string;
+	description: string;
+	page?: Page;
+	params?: RouteParams;
+	ogImage?: string;
+	noindex?: boolean;
+}
+
+function buildUrl(path: string): URL {
+	if (!Astro.site) {
+		throw new Error(
+			"Astro.site is not defined, set it in astro.config.mjs",
+		);
+	}
+	return new URL(path, Astro.site);
+}
+
+const { locale, title, description, page, params, ogImage, noindex } =
+	Astro.props;
+const canonical = page ? buildUrl(getPath(page, locale, params)) : undefined;
+const alternates = page ? getAlternates(page, params) : undefined;
+const ogLocale = resolveOgLocale(locale);
+const ogImageAbsolute = ogImage ? buildUrl(ogImage) : undefined;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex" />}
+
+{canonical && <link rel="canonical" href={canonical} />}
+
+{alternates && (
+	<>
+		{Object.entries(alternates).map(([lang, href]) => (
+			<link rel="alternate" hreflang={lang} href={buildUrl(href)} />
+		))}
+		<link
+			rel="alternate"
+			hreflang="x-default"
+			href={buildUrl(alternates[defaultLocale])}
+		/>
+	</>
+)}
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{ogImageAbsolute && <meta property="og:image" content={ogImageAbsolute} />}
+<meta property="og:locale" content={ogLocale} />
+{canonical && <meta property="og:url" content={canonical} />}
+<meta property="og:type" content="website" />

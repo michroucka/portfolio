@@ -2,19 +2,22 @@
 import Moon from "./icons/Moon.astro";
 import Sun from "./icons/Sun.astro";
 interface Props {
-	// Přístupný popisek tlačítka. Zatím ho předává rodič, po Úkolu 3 přijde ze slovníku.
 	label: string;
 	size?: string;
+	class?: string;
 }
 
-const { label, size } = Astro.props;
+const { label, size = "1.75em", class: className } = Astro.props;
 ---
 
 <!-- *: = přímí potomci (obě ikony): stejná buňka gridu (překryv) a společný přechod.
      Na ikonách zůstávají jen jejich stavy pro tmavé/světlé téma. -->
 <button
 	type="button"
-	class="group grid cursor-pointer *:col-start-1 *:row-start-1 motion-safe:*:transition-[opacity,rotate,scale]"
+	class:list={[
+		className,
+		"group grid cursor-pointer *:col-start-1 *:row-start-1 motion-safe:*:transition-[opacity,rotate,scale]",
+	]}
 	data-theme-toggle
 	aria-label={label}
 >
@@ -35,6 +38,8 @@ const { label, size } = Astro.props;
 		isTheme,
 		resolveTheme,
 		systemLightQuery,
+		themeColors,
+		themeColorSelector,
 		themeKey,
 		toggleTheme,
 		type Theme,
@@ -48,6 +53,9 @@ const { label, size } = Astro.props;
 
 	function applyTheme(theme: Theme): void {
 		document.documentElement.dataset.theme = theme;
+		document
+			.querySelector(themeColorSelector)
+			?.setAttribute("content", themeColors[theme]);
 		const toggles = document.querySelectorAll("[data-theme-toggle]");
 
 		for (const toggle of toggles) {

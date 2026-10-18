@@ -1,0 +1,68 @@
+---
+import "../styles/global.css";
+import { getDictionary, type Locale } from "../i18n";
+import type { Page, RouteParams } from "../i18n/routes";
+import ThemeScript from "../components/ThemeScript.astro";
+import Seo from "../components/Seo.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { pagePaddingX } from "../lib/site.ts";
+
+type BaseProps = {
+	locale: Locale;
+	title: string;
+	description: string;
+	// Cesta k OG obrázku (relativní k webu). Seo z ní udělá absolutní URL.
+	ogImage?: string;
+};
+
+// Indexovaná stránka musí mít logickou stránku (+ parametry) – z nich Seo spočítá
+// canonical/hreflang a Header/Footer přepínač jazyka. Bez ní jde jen stránka s noindex (404),
+// takže zapomenuté `page` je chyba TypeScriptu, ne tiše vyřazená stránka z vyhledávání.
+type PageProps =
+	| { page: Page; params?: RouteParams; noindex?: false }
+	| { page?: never; params?: never; noindex: true };
+
+type Props = BaseProps & PageProps;
+
+const { locale, title, description, page, params, ogImage, noindex } =
+	Astro.props;
+const dictionary = getDictionary(locale);
+---
+
+<html lang={locale}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<!-- Před ThemeScript: skript barvu přepíše podle tématu (tady výchozí tmavé = bez JS). -->
+		<meta name="theme-color" content="#0E0F11" />
+		<ThemeScript />
+		<Seo
+			locale={locale}
+			title={title}
+			description={description}
+			page={page}
+			params={params}
+			ogImage={ogImage}
+			noindex={noindex}
+		/>
+		<!-- Favicony a manifest – zdroj brand/web/head-snippet.html, soubory v public/ -->
+		<link rel="icon" href="/favicon.ico" sizes="48x48" />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+	</head>
+	<body class="min-h-dvh flex flex-col">
+		<a
+			href="#main"
+			class="sr-only focus:not-sr-only focus:absolute focus:bg-accent focus:text-accent-foreground focus:z-50 focus:text-center focus:p-4"
+		>
+			{dictionary.layout.skipToMain}
+		</a>
+		<Header locale={locale} page={page} params={params} />
+		<main id="main" class:list={[pagePaddingX, "flex-1"]}>
+			<slot />
+		</main>
+		<Footer locale={locale} page={page} params={params} />
+	</body>
+</html>

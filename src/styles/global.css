@@ -69,12 +69,168 @@
 
 	--font-sans: "Archivo", system-ui, sans-serif;
 
+	/* Typografická škála 1,25 (brand/README.md § 3): 16 · 20 · 25 · 31 · 39 · 49 · 61 px.
+	   Výchozí velikosti Tailwindu vypnuté, aby se nedaly omylem použít mimo škálu.
+	   sm (12,8 px) je krok pod základem – jen pro drobný text (patička, IČO). */
+	--text-*: initial;
+
+	--text-sm: 0.8rem;
+	--text-sm--line-height: 1.5;
+	--text-base: 1rem;
+	--text-base--line-height: 1.5;
+	--text-lg: 1.25rem;
+	--text-lg--line-height: 1.5;
+	--text-xl: 1.5625rem;
+	--text-xl--line-height: 1.4;
+	--text-2xl: 1.9375rem;
+	--text-2xl--line-height: 1.3;
+	--text-3xl: 2.4375rem;
+	--text-3xl--line-height: 1.2;
+	--text-4xl: 3.0625rem;
+	--text-4xl--line-height: 1.1;
+	--text-5xl: 3.8125rem;
+	--text-5xl--line-height: 1.1;
+
 	/* Výchozí délka a easing pro všechny transition-* třídy (rytmus značky, brand/README.md § 5). */
 	--default-transition-duration: 280ms;
 	--default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* Tečka → kurzor „_“ → 3 bliknutí → tečka (brand/README.md § 5, storyboard brand/motion/).
+	   Rytmus jako skutečný kurzor: 530 ms svítí, 530 ms zhasnuto (výchozí kurzor ve Windows).
+	   Časová osa (3740 ms):
+	     0–280 morf do kurzoru · 280–810 svítí · 810–1340 zhasnuto · 1340–1870 svítí
+	     1870–2400 zhasnuto · 2400–2930 svítí · 2930–3460 zhasnuto · 3460–3740 návrat do tečky
+	   Prvek musí být <rect> s proměnnými --dot (průměr tečky) a --baseline (y spodní hrany).
+	   Jednorázová animace (hero, Úkol 9). Hover v hlavičce řeší utility dot-cursor-hover níž. */
+	--animate-dot-cursor: dot-cursor 3740ms;
+
+	@keyframes dot-cursor {
+		/* klid – tečka; do snímku 2 a 3 s ease-out */
+		0%,
+		100% {
+			width: var(--dot);
+			height: var(--dot);
+			rx: calc(var(--dot) / 2);
+			y: calc(var(--baseline) - var(--dot));
+			animation-timing-function: ease-out;
+		}
+		/* snímek 2 – zaoblený mezistav (140 ms tam, 3600 ms zpátky) */
+		3.74%,
+		96.26% {
+			width: calc(var(--dot) * 1.466);
+			height: calc(var(--dot) * 0.6);
+			rx: calc(var(--dot) * 0.3);
+			y: calc(var(--baseline) - var(--dot) * 0.6);
+			animation-timing-function: ease-out;
+		}
+		/* snímek 3 – ostrý kurzor, drží se od 280 do 3460 ms */
+		7.49%,
+		92.51% {
+			width: calc(var(--dot) * 1.933);
+			height: calc(var(--dot) * 0.63);
+			rx: 0px;
+			y: calc(var(--baseline) - var(--dot) * 0.63);
+		}
+		/* blikání: steps(1, end) = hodnota drží do dalšího snímku a pak skočí (jako kurzor v terminálu) */
+		7.49%,
+		35.83%,
+		64.17% {
+			opacity: 1;
+			animation-timing-function: steps(1, end);
+		}
+		/* snímek 4 – zhasnutý kurzor (810, 1870, 2930 ms) */
+		21.66%,
+		50%,
+		78.34% {
+			opacity: 0.12;
+			animation-timing-function: steps(1, end);
+		}
+		/* po třetím bliknutí rozsvítit a ease-out zpátky do tečky */
+		92.51% {
+			opacity: 1;
+			animation-timing-function: ease-out;
+		}
+	}
 }
 
 body {
 	background-color: var(--color-background);
 	color: var(--color-foreground);
+}
+
+/* Podtržení odkazu, které při hoveru/fokusu přijede zleva a při odchodu odjede doprava.
+   Použití: class="link-underline" na <a>. */
+@utility link-underline {
+	--underline-thickness: 0.08em;
+
+	background-image: linear-gradient(currentColor, currentColor);
+	background-repeat: no-repeat;
+
+	background-origin: content-box;
+
+	background-position: right bottom;
+	background-size: 0 var(--underline-thickness);
+
+	&:hover,
+	&:focus-visible {
+		background-position: left bottom;
+		background-size: 100% var(--underline-thickness);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		transition-property: background-size, color;
+		transition-duration: var(--default-transition-duration);
+		transition-timing-function: var(--default-transition-timing-function);
+	}
+}
+
+/* Hover varianta tečky v logu (hlavička): tvar přes transition, takže se při odjetí myši
+   plynule vrátí do tečky (i uprostřed morfu). Kurzor bliká, dokud je myš na logu.
+   Prvek: <rect> s --dot a --baseline (viz Logo.astro), rodič odkazu má třídu `group`. */
+@utility dot-cursor-hover {
+	@media (prefers-reduced-motion: no-preference) {
+		transition-property: width, height, rx, y;
+		transition-duration: var(--default-transition-duration);
+		transition-timing-function: ease-out;
+
+		:where(.group):hover &,
+		:where(.group):focus-visible & {
+			width: calc(var(--dot) * 1.933);
+			height: calc(var(--dot) * 0.63);
+			rx: 0px;
+			y: calc(var(--baseline) - var(--dot) * 0.63);
+			/* blikání začne až po dokončení morfu (delay = délka přechodu) */
+			animation: cursor-blink 1060ms var(--default-transition-duration)
+				infinite;
+		}
+	}
+}
+
+/* Jméno v horizontálním logu ustoupí kurzoru o 0,433 průměru tečky – kurzor zabere 0,933
+   z mezery 1 průměru, zbude mezera půl průměru. CSS vlastnost translate (ne transform),
+   aby zůstal SVG atribut transform="translate(…)" na cestě. Prvek potřebuje --dot. */
+@utility name-push-hover {
+	@media (prefers-reduced-motion: no-preference) {
+		transition-property: translate;
+		transition-duration: var(--default-transition-duration);
+		transition-timing-function: ease-out;
+
+		:where(.group):hover &,
+		:where(.group):focus-visible & {
+			translate: calc(var(--dot) * 0.433) 0;
+		}
+	}
+}
+
+/* Rytmus skutečného kurzoru: 530 ms svítí, 530 ms zhasnuto, skokem (steps). */
+@keyframes cursor-blink {
+	0% {
+		opacity: 1;
+		animation-timing-function: steps(1, end);
+	}
+	50%,
+	100% {
+		opacity: 0.12;
+		animation-timing-function: steps(1, end);
+	}
 }

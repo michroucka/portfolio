@@ -62,8 +62,21 @@ async function findHtmlFiles(dir) {
 		.map((entry) => join(entry.parentPath, entry.name));
 }
 
+// Barvy lišty prohlížeče – musí odpovídat themeColors v src/lib/theme.ts.
+const THEME_COLORS = { dark: "#0E0F11", light: "#F5F3EE" };
+
 function runScenario(code, { stored, light, throws }) {
-	const document = { documentElement: { dataset: {} } };
+	const meta = {
+		content: undefined,
+		setAttribute(name, value) {
+			if (name === "content") this.content = value;
+		},
+	};
+	const document = {
+		documentElement: { dataset: {} },
+		querySelector: (selector) =>
+			selector === 'meta[name="theme-color"]' ? meta : null,
+	};
 	const localStorage = {
 		getItem() {
 			if (throws) throw new Error("blocked");
@@ -76,7 +89,10 @@ function runScenario(code, { stored, light, throws }) {
 		localStorage,
 		window,
 	);
-	return document.documentElement.dataset.theme;
+	return {
+		theme: document.documentElement.dataset.theme,
+		color: meta.content,
+	};
 }
 
 const files = await findHtmlFiles(DIST);
@@ -98,10 +114,15 @@ for (const file of files) {
 
 	for (const scenario of scenarios) {
 		try {
-			const result = runScenario(scripts[0], scenario);
-			if (result !== scenario.expected) {
+			const { theme, color } = runScenario(scripts[0], scenario);
+			if (theme !== scenario.expected) {
 				failures.push(
-					`${file} – ${scenario.name}: čekáno ${scenario.expected}, dostali jsme ${result}`,
+					`${file} – ${scenario.name}: čekáno ${scenario.expected}, dostali jsme ${theme}`,
+				);
+			}
+			if (color !== THEME_COLORS[scenario.expected]) {
+				failures.push(
+					`${file} – ${scenario.name}: theme-color ${color}, čekáno ${THEME_COLORS[scenario.expected]}`,
 				);
 			}
 		} catch (error) {

@@ -1,0 +1,70 @@
+---
+import { getDictionary, type Locale } from "../i18n";
+import { getPath, type Page, type RouteParams } from "../i18n/routes";
+import { pagePaddingX, siteDetails } from "../lib/site";
+import ThemeToggle from "./ThemeToggle.astro";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+interface Props {
+	locale: Locale;
+	page?: Page;
+	params?: RouteParams;
+}
+
+const { locale, page, params } = Astro.props;
+const privacyPath = getPath("privacy", locale);
+const email = siteDetails.email;
+const dictionary = getDictionary(locale);
+const year = siteDetails.launchYear;
+
+// Mobil: pod sebou, zarovnané vlevo – nastavení, kontakt, právní údaje.
+// Desktop: právní údaje vlevo, kontakt + nastavení vpravo (pořadí přes md:order-*).
+const footerClasses = `${pagePaddingX} py-8 md:py-6 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between border-t border-line text-muted text-sm font-stretch-expanded font-semibold`;
+
+const linkClasses = "py-3 -my-3 hover:text-foreground link-underline";
+---
+
+<footer class={footerClasses}>
+	<!-- Kontakt + nastavení: na mobilu nahoře, na desktopu vpravo -->
+	<div class="flex flex-col items-start gap-6 md:order-last md:flex-row md:items-center md:gap-8">
+		<!-- Nastavení: na mobilu nad kontaktem, na desktopu za ním -->
+		<div class="flex items-center gap-6 md:order-last">
+			<!-- Záporné okraje = padding odkazů přepínače: na mobilu „CS“ začíná na hraně obsahu
+			     a řádek není vyšší než ostatní (-my-2), na desktopu jsou mezery k sousedům stejné -->
+			{page && (
+				<LanguageSwitcher
+					locale={locale}
+					page={page}
+					params={params}
+					class="-ml-3 -my-2 md:-mx-2"
+					landmark={false}
+				/>
+			)}
+			<!-- p-3 -m-3: dotyková plocha ≥ 44 px, ikona zůstane na místě (na desktopu u hrany obsahu) -->
+			<ThemeToggle
+				label={dictionary.footer.lightThemeToggle}
+				class="p-3 -m-3 hover:text-foreground motion-safe:transition-colors"
+				size="2em"
+			/>
+		</div>
+		<a href={`mailto:${email}`} class={linkClasses}>
+			{email}
+		</a>
+	</div>
+
+	<!-- Právní údaje: na mobilu dole, na desktopu vlevo -->
+	<div class="flex flex-col items-start gap-6 md:order-first md:flex-row md:items-center md:gap-8">
+		<!-- Mobil: GDPR, IČO, © (klikací odkaz nahoře). Desktop: ©, IČO, GDPR (přes md:order-*). -->
+		<a href={privacyPath} class:list={[linkClasses, "md:order-last"]}>
+			{dictionary.footer.privacy}
+		</a>
+		{siteDetails.ico && (
+			<span>
+				{dictionary.footer.companyId} {siteDetails.ico}
+			</span>
+		)}
+		<span class="md:order-first">
+			© {year} {siteDetails.name}
+		</span>
+	</div>
+</footer>

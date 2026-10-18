@@ -1,0 +1,44 @@
+---
+import { getDictionary, languageNames, type Locale, locales } from "../i18n";
+import { getAlternates, type Page, type RouteParams } from "../i18n/routes";
+
+interface Props {
+	locale: Locale;
+	page: Page;
+	params?: RouteParams;
+	class?: string;
+	// false = obyčejná skupina místo <nav> – druhý přepínač na stránce (patička) by jinak
+	// vytvořil druhou navigaci „Jazyk“ a čtečka by v orientačních bodech viděla dvě stejné.
+	landmark?: boolean;
+}
+
+const { locale, page, params, class: className, landmark = true } = Astro.props;
+const Tag = landmark ? "nav" : "div";
+const alternates = getAlternates(page, params);
+const dictionary = getDictionary(locale);
+---
+
+<Tag
+	role={landmark ? undefined : "group"}
+	aria-label={dictionary.languageSwitcher.label}
+	class:list={[
+		"flex items-center font-semibold font-stretch-expanded",
+		className,
+	]}
+>
+	{locales.map((lang, index) => (
+		<>
+			{index > 0 && <span aria-hidden="true">·</span>}
+			<a
+				href={alternates[lang]}
+				hreflang={lang}
+				lang={lang}
+				aria-label={`${lang.toUpperCase()} – ${languageNames[lang]}`}
+				aria-current={lang === locale ? "page" : undefined}
+				class="px-3 md:px-2 py-2 text-muted hover:text-foreground aria-[current=page]:text-foreground link-underline"
+			>
+				{lang.toUpperCase()}
+			</a>
+		</>
+	))}
+</Tag>
