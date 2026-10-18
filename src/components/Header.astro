@@ -24,8 +24,8 @@ const menuIconSize = "1.75em";
 ---
 
 <header class={headerClasses}>
-	<a href={homePath}>
-		<Logo class={logoClasses} />
+	<a href={homePath} class="group">
+		<Logo class={logoClasses} animateDotOnHover />
 	</a>
 
 	<!-- Desktop: navigace a přepínač jazyka v řádku, na mobilu skryté -->
@@ -47,7 +47,7 @@ const menuIconSize = "1.75em";
 			locale={locale}
 			page={page}
 			params={params}
-			class="-mx-2 text-sm"
+			class="-mx-2"
 		/>
 	</div>
 

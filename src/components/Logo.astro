@@ -4,6 +4,8 @@ import logoLightTheme from "../../brand/logo/mr-horizontal-positive.svg?raw";
 
 interface Props {
 	class?: string;
+	// Tečka se při hoveru/fokusu rodiče s třídou `group` promění v blikající kurzor (brand/README.md § 5).
+	animateDotOnHover?: boolean;
 }
 
 function removeTitleAndAttributes(svg: string): string {
@@ -46,12 +48,87 @@ function cropProtectiveZone(svg: string): string {
 	return svg.replace(viewBox[0], `viewBox="${cropped}"`);
 }
 
-const { class: className } = Astro.props;
-const logoLight = cropProtectiveZone(removeTitleAndAttributes(logoLightTheme));
-const logoDark = cropProtectiveZone(removeTitleAndAttributes(logoDarkTheme));
+type Dot = { tag: string; fill: string; cx: number; cy: number; r: number };
+
+function findDot(svg: string): Dot {
+	const circle = svg.match(/<circle\s[^>]*\/>/);
+	const attr = (name: string): string | undefined =>
+		circle?.[0].match(new RegExp(`\\s${name}="([^"]+)"`))?.[1];
+
+	const fill = attr("fill");
+	const [cx, cy, r] = [attr("cx"), attr("cy"), attr("r")].map(Number);
+
+	if (
+		!circle ||
+		!fill ||
+		cx === undefined ||
+		cy === undefined ||
+		r === undefined ||
+		[cx, cy, r].some(Number.isNaN)
+	) {
+		throw new Error("Logo SVG is missing the dot circle");
+	}
+
+	return { tag: circle[0], fill, cx, cy, r };
+}
+
+// Kruhovou tečku nahradí <rect> se zaoblením = poloměr (vypadá stejně jako kruh).
+// U <rect> jde animovat width/height/rx/y, takže se z tečky plynule stane kurzor „_“.
+// --dot (průměr) a --baseline (spodní hrana tečky) používají dot-cursor-hover a @keyframes dot-cursor v global.css.
+function dotToRect(svg: string, className: string): string {
+	const { tag, fill, cx, cy, r } = findDot(svg);
+	const d = 2 * r;
+	const rect =
+		`<rect fill="${fill}" x="${cx - r}" y="${cy - r}" width="${d}" height="${d}" rx="${r}"` +
+		` style="--dot: ${d}px; --baseline: ${cy + r}px" class="${className}" />`;
+
+	return svg.replace(tag, rect);
+}
+
+// Jméno je cesta hned za skupinou se symbolem (<g>…</g><path …>, viz build_final.py).
+// Kurzor je o 0,93 průměru tečky delší než tečka a mezi tečkou a jménem je jen jeden průměr,
+// proto jméno během animace ustoupí doprava (utility name-push-hover v global.css, potřebuje --dot).
+function prepareName(svg: string, className: string): string {
+	const { r } = findDot(svg);
+	const namePath = "</g><path ";
+
+	if (!svg.includes(namePath)) {
+		throw new Error(
+			"Logo SVG is missing the name path after the symbol group",
+		);
+	}
+
+	return svg.replace(
+		namePath,
+		`</g><path style="--dot: ${2 * r}px" class="${className}" `,
+	);
+}
+
+const { class: className, animateDotOnHover = false } = Astro.props;
+
+// Třídy musí být v souboru celé (ne skládané), aby je Tailwind našel.
+const dotClasses = animateDotOnHover ? "dot-cursor-hover" : "";
+const nameClasses = animateDotOnHover ? "name-push-hover" : "";
+
+// prepareName čte poloměr z <circle>, takže musí proběhnout před dotToRect.
+const prepare = (svg: string): string =>
+	dotToRect(
+		prepareName(
+			cropProtectiveZone(removeTitleAndAttributes(svg)),
+			nameClasses,
+		),
+		dotClasses,
+	);
+const logoLight = prepare(logoLightTheme);
+const logoDark = prepare(logoDarkTheme);
 ---
 
-<div class={className} role="img" aria-label="Michal Roučka">
+<!-- overflow-visible: při animaci ustoupí jméno doprava za okraj ořezaného viewBoxu a nesmí se uříznout -->
+<div
+	class:list={[className, animateDotOnHover && "[&_svg]:overflow-visible"]}
+	role="img"
+	aria-label="Michal Roučka"
+>
 	<span set:html={logoLight} class="hidden light:block" />
 	<span set:html={logoDark} class="block light:hidden" />
 </div>
