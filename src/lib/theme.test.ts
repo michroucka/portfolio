@@ -17,10 +17,10 @@ describe("resolveTheme", () => {
 	});
 
 	describe("bez platné uložené volby rozhoduje systém", () => {
-		// Každá neplatná hodnota se zkouší s oběma systémy, aby neprošla implementace,
-		// která pro neplatnou hodnotu vrací napevno jedno téma.
+		// Each invalid value is tried with both systems, so an implementation that returns
+		// a hard-coded theme for invalid values cannot pass.
 		const invalidStored = [null, "", "invalid", "Dark"];
-		// label: JSON.stringify odliší ve výpisu "" od null (bez něj by "" zmizelo).
+		// label: JSON.stringify tells "" apart from null in the output ("" would vanish otherwise).
 		const cases = invalidStored.flatMap((stored) =>
 			systems.map((system) => ({
 				stored,

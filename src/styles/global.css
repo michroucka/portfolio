@@ -1,7 +1,7 @@
-/* Třídy hledat jen v src/ – jinak Tailwind prochází i .claude/, .agents/, docs/ a brand/ a generuje nepoužité CSS. */
+/* Scan only src/ – otherwise Tailwind also scans .claude/, .agents/, docs/ and brand/ and emits unused CSS. */
 @import "tailwindcss" source("../");
 
-/* Archivo (variabilní, osy wdth 62–125 % a wght 100–900), self-hosted. Zdroj: Fontsource, licence public/fonts/OFL.txt. */
+/* Archivo (variable: wdth 62–125 %, wght 100–900), self-hosted. Source: Fontsource, licence public/fonts/OFL.txt. */
 @font-face {
 	font-family: "Archivo";
 	font-style: normal;
@@ -29,7 +29,7 @@
 }
 
 :root {
-	/* Nativní prvky (posuvníky, pole formulářů, autofill) ve stejném tématu jako stránka. */
+	/* Native UI (scrollbars, form fields, autofill) follows the page theme. */
 	color-scheme: dark;
 	--theme-background: #0e0f11;
 	--theme-foreground: #f5f3ee;
@@ -69,9 +69,9 @@
 
 	--font-sans: "Archivo", system-ui, sans-serif;
 
-	/* Typografická škála 1,25 (brand/README.md § 3): 16 · 20 · 25 · 31 · 39 · 49 · 61 px.
-	   Výchozí velikosti Tailwindu vypnuté, aby se nedaly omylem použít mimo škálu.
-	   sm (12,8 px) je krok pod základem – jen pro drobný text (patička, IČO). */
+	/* Type scale 1.25 (brand/README.md § 3): 16 · 20 · 25 · 31 · 39 · 49 · 61 px.
+	   Tailwind's default sizes are disabled so nothing off-scale can be used by accident.
+	   sm (12.8 px) is one step below the base – for small print only (footer). */
 	--text-*: initial;
 
 	--text-sm: 0.8rem;
@@ -91,21 +91,21 @@
 	--text-5xl: 3.8125rem;
 	--text-5xl--line-height: 1.1;
 
-	/* Výchozí délka a easing pro všechny transition-* třídy (rytmus značky, brand/README.md § 5). */
+	/* Default duration and easing for all transition-* classes (brand rhythm, brand/README.md § 5). */
 	--default-transition-duration: 280ms;
 	--default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-	/* Tečka → kurzor „_“ → 3 bliknutí → tečka (brand/README.md § 5, storyboard brand/motion/).
-	   Rytmus jako skutečný kurzor: 530 ms svítí, 530 ms zhasnuto (výchozí kurzor ve Windows).
-	   Časová osa (3740 ms):
-	     0–280 morf do kurzoru · 280–810 svítí · 810–1340 zhasnuto · 1340–1870 svítí
-	     1870–2400 zhasnuto · 2400–2930 svítí · 2930–3460 zhasnuto · 3460–3740 návrat do tečky
-	   Prvek musí být <rect> s proměnnými --dot (průměr tečky) a --baseline (y spodní hrany).
-	   Jednorázová animace (hero, Úkol 9). Hover v hlavičce řeší utility dot-cursor-hover níž. */
+	/* Dot → "_" cursor → 3 blinks → dot (brand/README.md § 5, storyboard brand/motion/).
+	   Real cursor rhythm: 530 ms on, 530 ms off (Windows default caret).
+	   Timeline (3740 ms):
+	     0–280 morph · 280–810 on · 810–1340 off · 1340–1870 on
+	     1870–2400 off · 2400–2930 on · 2930–3460 off · 3460–3740 back to the dot
+	   Needs a <rect> with --dot (dot diameter) and --baseline (y of its bottom edge).
+	   One-off animation (hero); the header hover uses the dot-cursor-hover utility below. */
 	--animate-dot-cursor: dot-cursor 3740ms;
 
 	@keyframes dot-cursor {
-		/* klid – tečka; do snímku 2 a 3 s ease-out */
+		/* rest – the dot; ease-out into frames 2 and 3 */
 		0%,
 		100% {
 			width: var(--dot);
@@ -114,7 +114,7 @@
 			y: calc(var(--baseline) - var(--dot));
 			animation-timing-function: ease-out;
 		}
-		/* snímek 2 – zaoblený mezistav (140 ms tam, 3600 ms zpátky) */
+		/* frame 2 – rounded in-between (140 ms in, 3600 ms out) */
 		3.74%,
 		96.26% {
 			width: calc(var(--dot) * 1.466);
@@ -123,7 +123,7 @@
 			y: calc(var(--baseline) - var(--dot) * 0.6);
 			animation-timing-function: ease-out;
 		}
-		/* snímek 3 – ostrý kurzor, drží se od 280 do 3460 ms */
+		/* frame 3 – sharp cursor, held from 280 to 3460 ms */
 		7.49%,
 		92.51% {
 			width: calc(var(--dot) * 1.933);
@@ -131,21 +131,21 @@
 			rx: 0px;
 			y: calc(var(--baseline) - var(--dot) * 0.63);
 		}
-		/* blikání: steps(1, end) = hodnota drží do dalšího snímku a pak skočí (jako kurzor v terminálu) */
+		/* blinking: steps(1, end) holds the value until the next keyframe, then jumps (like a terminal caret) */
 		7.49%,
 		35.83%,
 		64.17% {
 			opacity: 1;
 			animation-timing-function: steps(1, end);
 		}
-		/* snímek 4 – zhasnutý kurzor (810, 1870, 2930 ms) */
+		/* frame 4 – cursor off (810, 1870, 2930 ms) */
 		21.66%,
 		50%,
 		78.34% {
 			opacity: 0.12;
 			animation-timing-function: steps(1, end);
 		}
-		/* po třetím bliknutí rozsvítit a ease-out zpátky do tečky */
+		/* after the third blink: on, then ease-out back to the dot */
 		92.51% {
 			opacity: 1;
 			animation-timing-function: ease-out;
@@ -158,8 +158,8 @@ body {
 	color: var(--color-foreground);
 }
 
-/* Podtržení odkazu, které při hoveru/fokusu přijede zleva a při odchodu odjede doprava.
-   Použití: class="link-underline" na <a>. */
+/* Underline that slides in from the left on hover/focus and out to the right on leave.
+   Only background-size is transitioned – the position flips instantly, which creates the pass-through. */
 @utility link-underline {
 	--underline-thickness: 0.08em;
 
@@ -184,9 +184,9 @@ body {
 	}
 }
 
-/* Hover varianta tečky v logu (hlavička): tvar přes transition, takže se při odjetí myši
-   plynule vrátí do tečky (i uprostřed morfu). Kurzor bliká, dokud je myš na logu.
-   Prvek: <rect> s --dot a --baseline (viz Logo.astro), rodič odkazu má třídu `group`. */
+/* Header hover version of the logo dot: the shape uses transitions, so it returns to the dot
+   smoothly when the pointer leaves (even mid-morph); the cursor blinks while hovered.
+   Needs a <rect> with --dot and --baseline (see Logo.astro) inside a `group` link. */
 @utility dot-cursor-hover {
 	@media (prefers-reduced-motion: no-preference) {
 		transition-property: width, height, rx, y;
@@ -199,16 +199,16 @@ body {
 			height: calc(var(--dot) * 0.63);
 			rx: 0px;
 			y: calc(var(--baseline) - var(--dot) * 0.63);
-			/* blikání začne až po dokončení morfu (delay = délka přechodu) */
+			/* blinking starts once the morph is done (delay = transition duration) */
 			animation: cursor-blink 1060ms var(--default-transition-duration)
 				infinite;
 		}
 	}
 }
 
-/* Jméno v horizontálním logu ustoupí kurzoru o 0,433 průměru tečky – kurzor zabere 0,933
-   z mezery 1 průměru, zbude mezera půl průměru. CSS vlastnost translate (ne transform),
-   aby zůstal SVG atribut transform="translate(…)" na cestě. Prvek potřebuje --dot. */
+/* The name in the horizontal logo moves aside by 0.433 dot diameters: the cursor takes 0.933
+   of the one-diameter gap, leaving half a diameter. Uses the translate property (not transform)
+   so the path's SVG transform="translate(…)" attribute survives. Needs --dot. */
 @utility name-push-hover {
 	@media (prefers-reduced-motion: no-preference) {
 		transition-property: translate;
@@ -222,7 +222,7 @@ body {
 	}
 }
 
-/* Rytmus skutečného kurzoru: 530 ms svítí, 530 ms zhasnuto, skokem (steps). */
+/* Real cursor rhythm: 530 ms on, 530 ms off, stepped. */
 @keyframes cursor-blink {
 	0% {
 		opacity: 1;

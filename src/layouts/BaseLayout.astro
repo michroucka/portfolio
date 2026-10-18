@@ -12,13 +12,13 @@ type BaseProps = {
 	locale: Locale;
 	title: string;
 	description: string;
-	// Cesta k OG obrázku (relativní k webu). Seo z ní udělá absolutní URL.
+	// Site-relative path; Seo turns it into an absolute URL.
 	ogImage?: string;
 };
 
-// Indexovaná stránka musí mít logickou stránku (+ parametry) – z nich Seo spočítá
-// canonical/hreflang a Header/Footer přepínač jazyka. Bez ní jde jen stránka s noindex (404),
-// takže zapomenuté `page` je chyba TypeScriptu, ne tiše vyřazená stránka z vyhledávání.
+// An indexable page needs its logical page (+ params) for canonical/hreflang and the language
+// switcher. Only a noindex page (404) may omit it, so a forgotten `page` is a type error
+// instead of a page silently dropped from search results.
 type PageProps =
 	| { page: Page; params?: RouteParams; noindex?: false }
 	| { page?: never; params?: never; noindex: true };
@@ -34,7 +34,7 @@ const dictionary = getDictionary(locale);
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
-		<!-- Před ThemeScript: skript barvu přepíše podle tématu (tady výchozí tmavé = bez JS). -->
+		<!-- Before ThemeScript, which updates it to the active theme (dark = no-JS default). -->
 		<meta name="theme-color" content="#0E0F11" />
 		<ThemeScript />
 		<Seo
@@ -46,7 +46,7 @@ const dictionary = getDictionary(locale);
 			ogImage={ogImage}
 			noindex={noindex}
 		/>
-		<!-- Favicony a manifest – zdroj brand/web/head-snippet.html, soubory v public/ -->
+		<!-- From brand/web/head-snippet.html; the files live in public/ -->
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />

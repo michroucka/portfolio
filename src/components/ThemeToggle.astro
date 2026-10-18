@@ -10,8 +10,8 @@ interface Props {
 const { label, size = "1.75em", class: className } = Astro.props;
 ---
 
-<!-- *: = přímí potomci (obě ikony): stejná buňka gridu (překryv) a společný přechod.
-     Na ikonách zůstávají jen jejich stavy pro tmavé/světlé téma. -->
+<!-- *: targets both icons: same grid cell (stacked) and a shared transition.
+     The icons themselves only carry their dark/light theme states. -->
 <button
 	type="button"
 	class:list={[
@@ -78,7 +78,7 @@ const { label, size = "1.75em", class: className } = Astro.props;
 		try {
 			localStorage.setItem(themeKey, theme);
 		} catch {
-			// selhání nesmí rozbít přepnutí
+			// A storage failure must not break the toggle.
 		}
 	}
 
@@ -92,8 +92,8 @@ const { label, size = "1.75em", class: className } = Astro.props;
 		});
 	}
 
-	// Změna systémového tématu za běhu (např. automatické přepínání podle denní doby).
-	// Uložená ruční volba má přednost – resolveTheme ji vrátí a systém se ignoruje.
+	// System theme changes at runtime (e.g. automatic day/night switching).
+	// A stored manual choice wins – resolveTheme returns it and ignores the system.
 	window.matchMedia(systemLightQuery).addEventListener("change", (event) => {
 		applyTheme(
 			resolveTheme({
