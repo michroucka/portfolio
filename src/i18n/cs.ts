@@ -28,6 +28,11 @@ export const cs = {
 	languageSwitcher: {
 		label: "Jazyk",
 	},
+	notFound: {
+		title: "Stránka nenalezena",
+		description: "Omlouvám se, ale stránka, kterou hledáte, neexistuje.",
+		linkHome: "Vrátit se na domovskou stránku",
+	},
 };
 
 export type Dictionary = typeof cs;

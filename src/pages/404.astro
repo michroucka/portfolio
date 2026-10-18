@@ -1,8 +1,34 @@
 ---
-// TODO: 404 nemá logickou stránku v mapě cest ani protějšek v druhém jazyce.
-//       Rozhodni, jak to sladit s BaseLayoutem (page je teď povinný) – viz možnosti v chatu.
-// TODO: canonical/hreflang tu nedávej; zvaž <meta name="robots" content="noindex">
+// 404 nemá logickou stránku v mapě cest ani protějšek v druhém jazyce – Cloudflare ji vrátí
+// pro jakoukoli neexistující adresu (českou i /en/…), proto je dvojjazyčná.
+// Bez `page` vynechá BaseLayout canonical/hreflang a přepínač jazyka a přidá noindex.
+import { getDictionary } from "../i18n";
+import { getPath } from "../i18n/routes";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const cs = getDictionary("cs").notFound;
+const en = getDictionary("en").notFound;
+
+// Jeden <title> a description pro obě jazykové verze.
+const title = `${cs.title} / ${en.title}`;
+const description = `${cs.description} ${en.description}`;
 ---
 
-<!-- TODO: dvojjazyčný text (cs + en, každý s vlastním lang) -->
-<!-- TODO: odkaz domů v obou jazycích přes getPath("home", …) -->
+<BaseLayout locale="cs" title={title} description={description}>
+	<section>
+		<h1>{cs.title}</h1>
+		<p>{cs.description}</p>
+		<a href={getPath("home", "cs")} class="link-underline">
+			{cs.linkHome}
+		</a>
+	</section>
+
+	<!-- lang="en": čtečka přečte anglickou část anglicky -->
+	<section lang="en">
+		<h2>{en.title}</h2>
+		<p>{en.description}</p>
+		<a href={getPath("home", "en")} class="link-underline">
+			{en.linkHome}
+		</a>
+	</section>
+</BaseLayout>

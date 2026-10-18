@@ -7,7 +7,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 interface Props {
 	locale: Locale;
-	page: Page;
+	page?: Page;
 	params?: RouteParams;
 }
 
@@ -31,12 +31,14 @@ const linkClasses = "py-3 -my-3 hover:text-foreground link-underline";
 		<div class="flex items-center gap-6 md:order-last">
 			<!-- Záporné okraje = padding odkazů přepínače: na mobilu „CS“ začíná na hraně obsahu
 			     a řádek není vyšší než ostatní (-my-2), na desktopu jsou mezery k sousedům stejné -->
-			<LanguageSwitcher
-				locale={locale}
-				page={page}
-				params={params}
-				class="-ml-3 -my-2 md:-mx-2"
-			/>
+			{page && (
+				<LanguageSwitcher
+					locale={locale}
+					page={page}
+					params={params}
+					class="-ml-3 -my-2 md:-mx-2"
+				/>
+			)}
 			<!-- p-3 -m-3: dotyková plocha ≥ 44 px, ikona zůstane na místě (na desktopu u hrany obsahu) -->
 			<ThemeToggle
 				label={dictionary.footer.lightThemeToggle}

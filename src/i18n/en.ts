@@ -29,4 +29,9 @@ export const en: Dictionary = {
 	languageSwitcher: {
 		label: "Language",
 	},
+	notFound: {
+		title: "Page not found",
+		description: "Sorry, the page you are looking for doesn’t exist.",
+		linkHome: "Return to home page",
+	},
 };

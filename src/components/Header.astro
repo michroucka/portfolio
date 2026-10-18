@@ -9,7 +9,7 @@ import { pagePaddingX } from "../lib/site";
 
 interface Props {
 	locale: Locale;
-	page: Page;
+	page?: Page;
 	params?: RouteParams;
 }
 
@@ -41,14 +41,18 @@ const menuIconSize = "1.75em";
 			))}
 		</nav>
 
-		<span aria-hidden="true" class="h-5 w-px bg-line"></span>
-
-		<LanguageSwitcher
-			locale={locale}
-			page={page}
-			params={params}
-			class="-mx-2"
-		/>
+		<!-- Oddělovač patří k přepínači – bez přepínače (např. 404) by visel na konci řádku -->
+		{page && (
+			<>
+				<span aria-hidden="true" class="h-5 w-px bg-line"></span>
+				<LanguageSwitcher
+					locale={locale}
+					page={page}
+					params={params}
+					class="-mx-2"
+				/>
+			</>
+		)}
 	</div>
 
 	<!-- Mobil: tlačítko, které otevře dialog; od md skryté -->
@@ -101,12 +105,14 @@ const menuIconSize = "1.75em";
 				</a>
 			))}
 		</nav>
-		<LanguageSwitcher
-			locale={locale}
-			page={page}
-			params={params}
-			class="mt-auto ms-auto pr-3 pb-8"
-		/>
+		{page && (
+			<LanguageSwitcher
+				locale={locale}
+				page={page}
+				params={params}
+				class="mt-auto ms-auto pr-3 pb-8"
+			/>
+		)}
 	</dialog>
 </header>
 

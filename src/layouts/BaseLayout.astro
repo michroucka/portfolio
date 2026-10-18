@@ -13,7 +13,7 @@ interface Props {
 	title: string;
 	description: string;
 	// Logická stránka + parametry: z nich Seo spočítá canonical/hreflang a Header přepínač jazyka.
-	page: Page;
+	page?: Page;
 	params?: RouteParams;
 	// Cesta k OG obrázku (relativní k webu). Seo z ní udělá absolutní URL.
 	ogImage?: string;
