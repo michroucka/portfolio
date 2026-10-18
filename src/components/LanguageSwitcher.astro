@@ -30,7 +30,7 @@ const dictionary = getDictionary(locale);
 				lang={lang}
 				aria-label={`${lang.toUpperCase()} – ${languageNames[lang]}`}
 				aria-current={lang === locale ? "page" : undefined}
-				class="px-3 md:px-2 py-2 text-muted hover:text-foreground aria-[current=page]:text-foreground motion-safe:transition-colors"
+				class="px-3 md:px-2 py-2 text-muted hover:text-foreground aria-[current=page]:text-foreground link-underline"
 			>
 				{lang.toUpperCase()}
 			</a>

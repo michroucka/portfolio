@@ -100,3 +100,29 @@ body {
 	background-color: var(--color-background);
 	color: var(--color-foreground);
 }
+
+/* Podtržení odkazu, které při hoveru/fokusu přijede zleva a při odchodu odjede doprava.
+   Použití: class="link-underline" na <a>. */
+@utility link-underline {
+	--underline-thickness: 0.08em;
+
+	background-image: linear-gradient(currentColor, currentColor);
+	background-repeat: no-repeat;
+
+	background-origin: content-box;
+
+	background-position: right bottom;
+	background-size: 0 var(--underline-thickness);
+
+	&:hover,
+	&:focus-visible {
+		background-position: left bottom;
+		background-size: 100% var(--underline-thickness);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		transition-property: background-size, color;
+		transition-duration: var(--default-transition-duration);
+		transition-timing-function: var(--default-transition-timing-function);
+	}
+}
