@@ -17,6 +17,7 @@ export const en: Dictionary = {
 	footer: {
 		lightThemeToggle: "Light theme",
 		privacy: "Privacy policy",
+		companyId: "Company ID",
 	},
 	layout: {
 		skipToMain: "Skip to content",

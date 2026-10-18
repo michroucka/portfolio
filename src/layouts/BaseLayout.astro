@@ -6,6 +6,7 @@ import ThemeScript from "../components/ThemeScript.astro";
 import Seo from "../components/Seo.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { pagePaddingX } from "../lib/site.ts";
 
 interface Props {
 	locale: Locale;
@@ -42,7 +43,7 @@ const dictionary = getDictionary(locale);
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="theme-color" content="#0E0F11" />
 	</head>
-	<body>
+	<body class="min-h-dvh flex flex-col">
 		<a
 			href="#main"
 			class="sr-only focus:not-sr-only focus:absolute focus:bg-accent focus:text-accent-foreground focus:z-50 focus:text-center focus:p-4"
@@ -50,9 +51,9 @@ const dictionary = getDictionary(locale);
 			{dictionary.layout.skipToMain}
 		</a>
 		<Header locale={locale} page={page} params={params} />
-		<main id="main">
+		<main id="main" class:list={[pagePaddingX, "flex-1"]}>
 			<slot />
 		</main>
-		<Footer locale={locale} />
+		<Footer locale={locale} page={page} params={params} />
 	</body>
 </html>

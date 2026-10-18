@@ -5,6 +5,7 @@ import Logo from "./Logo.astro";
 import { sections } from "../lib/sections";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import MenuIcon from "./icons/MenuIcon.astro";
+import { pagePaddingX } from "../lib/site";
 
 interface Props {
 	locale: Locale;
@@ -15,8 +16,8 @@ interface Props {
 const { locale, page, params } = Astro.props;
 const homePath = getPath("home", locale);
 const dictionary = getDictionary(locale);
-
-const headerClasses = "flex items-center justify-between px-6 py-2 md:py-4";
+// Sdílí hlavička i horní řádek mobilního menu – tlačítko „Menu“ a křížek musí sedět na pixel stejně.
+const headerClasses = `${pagePaddingX} py-2 md:py-4 flex items-center justify-between`;
 const logoClasses = "w-44 md:w-60";
 const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.16em)]";
 const menuIconSize = "1.75em";
@@ -37,10 +38,9 @@ const menuIconSize = "1.75em";
 				<a href={`${homePath}#${section}`}>{dictionary.nav[section]}</a>
 			))}
 		</nav>
-		<!-- Oddělovač navigace a přepínače jazyka (barva Line = oddělovače podle manuálu) -->
+
 		<span aria-hidden="true" class="h-5 w-px bg-line"></span>
-		<!-- -mx-2 = padding odkazů na desktopu (md:px-2):
-		     vpravo „EN“ končí na hraně obsahu, vlevo je mezera od čáry stejná jako gap-6 před ní -->
+
 		<LanguageSwitcher
 			locale={locale}
 			page={page}
@@ -59,10 +59,12 @@ const menuIconSize = "1.75em";
 		<MenuIcon size={menuIconSize} />
 	</button>
 
+	<!-- Při zavírání dialog ztratí [open] hned, ale díky allow-discrete je ještě chvíli vidět.
+	     Tvar a poloha proto nesmí záviset na [open] (fixed inset-0, flex-col napořád) – jen display (open:flex). -->
 	<dialog
 		data-menu
 		aria-label={dictionary.header.menu}
-		class="open:flex open:flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
+		class="fixed inset-0 open:flex flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
 	>
 		<div class={headerClasses}>
 			<a href={homePath}>
@@ -79,7 +81,10 @@ const menuIconSize = "1.75em";
 		</div>
 		<nav
 			aria-label={dictionary.header.navigation}
-			class="flex flex-col px-6 text-2xl font-stretch-expanded font-semibold"
+			class:list={[
+				"flex flex-col text-2xl font-stretch-expanded font-semibold",
+				pagePaddingX,
+			]}
 		>
 			{sections.map((section, index) => (
 				<a
@@ -94,7 +99,6 @@ const menuIconSize = "1.75em";
 				</a>
 			))}
 		</nav>
-		<!-- Dole vpravo na dosah palce. pr-3 + padding odkazů (px-3) = 24 px = px-6 → „EN“ v linii s chevrony. -->
 		<LanguageSwitcher
 			locale={locale}
 			page={page}

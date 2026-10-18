@@ -16,6 +16,7 @@ export const cs = {
 	footer: {
 		lightThemeToggle: "Světlé téma",
 		privacy: "Ochrana osobních údajů",
+		companyId: "IČO",
 	},
 	layout: {
 		skipToMain: "Přeskočit na obsah",
