@@ -7,8 +7,8 @@ interface Props {
 	page: Page;
 	params?: RouteParams;
 	class?: string;
-	// false = obyčejná skupina místo <nav> – druhý přepínač na stránce (patička) by jinak
-	// vytvořil druhou navigaci „Jazyk“ a čtečka by v orientačních bodech viděla dvě stejné.
+	// false renders a plain group instead of <nav>: a second switcher (footer) would otherwise add
+	// a second identical "Language" landmark for screen readers.
 	landmark?: boolean;
 }
 

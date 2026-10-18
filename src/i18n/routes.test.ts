@@ -40,9 +40,9 @@ describe("getPath", () => {
 	);
 
 	describe("project bez platného slugu vyhodí chybu", () => {
-		// Prázdný slug musí taky selhat, jinak by vznikla cesta /projekty//.
+		// An empty slug must fail too, otherwise the path would be /projekty//.
 		const missingSlug = [undefined, {}, { slug: "" }];
-		// label: JSON.stringify odliší ve výpisu {} od { slug: "" } i od undefined.
+		// label: JSON.stringify tells {} apart from { slug: "" } and undefined in the output.
 		const cases = missingSlug.flatMap((params) =>
 			locales.map((locale) => ({
 				locale,
@@ -54,7 +54,7 @@ describe("getPath", () => {
 		it.each(cases)(
 			"$locale, params $label -> chyba",
 			({ locale, params }) => {
-				// Regex na zprávu ověří, že chyba vznikla kvůli slugu, ne kvůli něčemu jinému.
+				// Matching the message ensures the error is about the slug, not something else.
 				expect(() => getPath("project", locale, params)).toThrow(
 					/slug/,
 				);
@@ -63,8 +63,8 @@ describe("getPath", () => {
 	});
 
 	describe("každá cesta končí lomítkem (trailingSlash: always)", () => {
-		// Kombinace se generují z `pages` × `locales`, takže nová stránka se otestuje sama.
-		// Slug se předává vždy – stránky bez parametrů ho mají ignorovat.
+		// Combinations come from `pages` × `locales`, so a new page is tested automatically.
+		// The slug is always passed – pages without parameters must ignore it.
 		const cases = pages.flatMap((page) =>
 			locales.map((locale) => ({ page, locale })),
 		);

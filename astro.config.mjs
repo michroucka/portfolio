@@ -12,7 +12,7 @@ export default defineConfig({
 
 	site: "https://example.com",
 
-	// Jedna kanonická podoba URL – všechny cesty končí lomítkem.
+	// One canonical URL form: every path ends with a slash.
 	trailingSlash: "always",
 
 	i18n: {

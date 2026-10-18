@@ -8,11 +8,11 @@ import {
 	themeKey,
 } from "../lib/theme.ts";
 
-// Inline skript musí běžet před prvním vykreslením (jinak problikne špatné téma),
-// takže nemůže importovat moduly. Funkce z theme.ts se proto vkládají jako zdrojový
-// text. Testy v theme.test.ts ověřují zdrojové funkce; že je výsledný skript po buildu
-// spustitelný (bundler nepřejmenoval isTheme apod.), hlídá scripts/verify-theme-script.mjs.
-// IIFE drží isTheme/resolveTheme mimo globální scope.
+// The inline script must run before the first paint (otherwise the wrong theme flashes),
+// so it cannot import modules – the functions from theme.ts are inlined as source text.
+// theme.test.ts tests the source functions; scripts/verify-theme-script.mjs checks that the
+// built script still runs (e.g. the bundler did not rename isTheme).
+// The IIFE keeps isTheme/resolveTheme out of the global scope.
 const themeScript = `(() => {
 	${isTheme.toString()}
 	${resolveTheme.toString()}
@@ -21,7 +21,7 @@ const themeScript = `(() => {
 	try {
 		stored = localStorage.getItem(${JSON.stringify(themeKey)});
 	} catch {
-		// localStorage nemusí být dostupný (anonymní okno, blokovaná data) – rozhodne systém.
+		// localStorage may be unavailable (private window, blocked storage) – fall back to the system.
 	}
 
 	const system = window.matchMedia(${JSON.stringify(systemLightQuery)}).matches
@@ -31,12 +31,12 @@ const themeScript = `(() => {
 	const theme = resolveTheme({ stored, system });
 	document.documentElement.dataset.theme = theme;
 
-	// Lišta prohlížeče v barvě tématu – meta tag musí být v <head> před tímto skriptem.
+	// Browser UI in the theme colour – the meta tag must come before this script in <head>.
 	document
 		.querySelector(${JSON.stringify(themeColorSelector)})
 		?.setAttribute("content", ${JSON.stringify(themeColors)}[theme]);
 })();`;
 ---
 
-<!-- data-theme-script: podle něj skript najde scripts/verify-theme-script.mjs -->
+<!-- data-theme-script: lets scripts/verify-theme-script.mjs find this script -->
 <script is:inline data-theme-script set:html={themeScript} />

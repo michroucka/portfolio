@@ -2,8 +2,8 @@ export type Theme = "light" | "dark";
 
 export const themeKey = "theme";
 
-// Barva lišty prohlížeče (<meta name="theme-color">) = pozadí tématu.
-// Musí odpovídat --theme-background v global.css (CSS proměnné nejdou v inline skriptu před CSS přečíst).
+// Browser UI colour (<meta name="theme-color">) = theme background.
+// Must match --theme-background in global.css (the inline script runs before CSS, so it cannot read it).
 export const themeColors: Record<Theme, string> = {
 	dark: "#0E0F11",
 	light: "#F5F3EE",
@@ -11,7 +11,7 @@ export const themeColors: Record<Theme, string> = {
 
 export const themeColorSelector = 'meta[name="theme-color"]';
 
-// Dotaz na světlé téma: bez systémové preference vychází false → výchozí tmavé téma.
+// Without a system preference this is false → dark is the default.
 export const systemLightQuery = "(prefers-color-scheme: light)";
 
 export function resolveTheme({

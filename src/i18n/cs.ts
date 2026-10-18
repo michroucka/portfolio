@@ -1,4 +1,4 @@
-// Zdroj pravdy pro tvar slovníku – en.ts se musí shodovat klíč po klíči.
+// Source of truth for the dictionary shape – en.ts must match it key by key.
 export const cs = {
 	nav: {
 		services: "Služby",

@@ -1,8 +1,8 @@
 ---
-// Vlastní ikona menu: dvě hranaté čáry, spodní kratší a zarovnaná doprava
-// (sedí k Archivu v řezu bold a připomíná kurzor „_“ z animace loga).
-// Dekorativní ikona: přístupné jméno musí nést rodičovský prvek.
-// S morphOnDialogOpen se uvnitř otevřeného <dialog> čáry složí do křížku.
+// Custom menu icon: two square-ended bars, the lower one shorter and right-aligned
+// (matches bold Archivo and echoes the "_" cursor of the logo animation).
+// Decorative: the parent must provide the accessible name.
+// With morphOnDialogOpen the bars fold into a close icon inside an open <dialog>.
 interface Props {
 	class?: string;
 	size?: string;
@@ -27,7 +27,7 @@ const {
 	class={className}
 	data-morph={morphOnDialogOpen || undefined}
 >
-	<!-- 224 × 32 (16–240) a 144 × 32 (96–240), středy na y 80 a 176 -->
+	<!-- 224 × 32 (16–240) and 144 × 32 (96–240), centred at y 80 and 176 -->
 	<rect x="16" y="64" width="224" height="32" data-line="top"></rect>
 	<rect x="96" y="160" width="144" height="32" data-line="bottom"></rect>
 </svg>
@@ -38,12 +38,12 @@ const {
 		transform-origin: center;
 	}
 
-	/* Křížek: obě čáry se posunou do středu ikony (128, 128), otočí o ±45°
-	   a mají délku 238 – kompromis mezi délkou horní čáry (224) a šířkou ikony. */
+	/* Close icon: both bars move to the icon centre (128, 128), rotate by ±45° and become
+	   238 long – a compromise between the top bar (224) and the icon width. */
 	:global(dialog[open]) svg[data-morph] rect[data-line="top"] {
 		transform: translateY(48px) rotate(45deg) scaleX(1.0625);
 	}
-	/* Spodní má střed v (168, 176) → posun (-40, -48); délka 144 → 238 = scaleX(1.653). */
+	/* The lower bar is centred at (168, 176) → translate (-40, -48); length 144 → 238 = scaleX(1.653). */
 	:global(dialog[open]) svg[data-morph] rect[data-line="bottom"] {
 		transform: translate(-40px, -48px) rotate(-45deg) scaleX(1.653);
 	}

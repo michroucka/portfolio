@@ -1,14 +1,14 @@
-// Ověří inline skript z ThemeScript.astro v hotovém buildu (dist/).
-// Skript vzniká z isTheme/resolveTheme přes toString(), takže jeho správnost závisí na tom,
-// co vyprodukoval bundler. Testy v src/lib/theme.test.ts tohle nepokrývají.
-// Spouštět po `npm run build`: `npm run verify:dist`.
+// Verifies the inline script from ThemeScript.astro in the built output (dist/).
+// The script is assembled from isTheme/resolveTheme via toString(), so whether it works depends
+// on what the bundler produced – src/lib/theme.test.ts cannot cover that.
+// Run after `npm run build`: `npm run verify:dist`.
 
 import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
 
 const DIST = "dist";
-// Skript tématu se pozná podle atributu data-theme-script (viz ThemeScript.astro),
-// ne podle obsahu – ten se může objevit i v jiných skriptech.
+// Identified by the data-theme-script attribute (see ThemeScript.astro), not by its content,
+// which may appear in other scripts too.
 const THEME_SCRIPT =
 	/<script\b[^>]*\bdata-theme-script\b[^>]*>([\s\S]*?)<\/script>/g;
 
@@ -62,7 +62,7 @@ async function findHtmlFiles(dir) {
 		.map((entry) => join(entry.parentPath, entry.name));
 }
 
-// Barvy lišty prohlížeče – musí odpovídat themeColors v src/lib/theme.ts.
+// Must match themeColors in src/lib/theme.ts.
 const THEME_COLORS = { dark: "#0E0F11", light: "#F5F3EE" };
 
 function runScenario(code, { stored, light, throws }) {
@@ -103,7 +103,7 @@ for (const file of files) {
 	const html = await readFile(file, "utf8");
 	const scripts = [...html.matchAll(THEME_SCRIPT)].map((match) => match[1]);
 
-	// Stránka bez skriptu tématu je v pořádku (např. přesměrování) – kontroluje se jen to, co tam je.
+	// A page without the theme script is fine (e.g. a redirect) – only check what is there.
 	if (scripts.length === 0) continue;
 	if (scripts.length > 1) {
 		failures.push(
