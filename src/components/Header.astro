@@ -151,10 +151,17 @@ const menuIconSize = "1.75em";
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
-		dialog[data-menu],
-		dialog[data-menu] nav a {
-			transition-property: opacity, translate, display, overlay;
+		/* display + overlay (allow-discrete): dialog zůstane vidět, dokud nedoběhne zavírání */
+		dialog[data-menu] {
+			transition-property: opacity, display, overlay;
 			transition-behavior: allow-discrete;
+			transition-duration: var(--default-transition-duration);
+			transition-timing-function: var(
+				--default-transition-timing-function
+			);
+		}
+		dialog[data-menu] nav a {
+			transition-property: opacity, translate;
 			transition-duration: var(--default-transition-duration);
 			transition-timing-function: var(
 				--default-transition-timing-function

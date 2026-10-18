@@ -3,6 +3,8 @@ import {
 	isTheme,
 	resolveTheme,
 	systemLightQuery,
+	themeColors,
+	themeColorSelector,
 	themeKey,
 } from "../lib/theme.ts";
 
@@ -26,7 +28,13 @@ const themeScript = `(() => {
 		? "light"
 		: "dark";
 
-	document.documentElement.dataset.theme = resolveTheme({ stored, system });
+	const theme = resolveTheme({ stored, system });
+	document.documentElement.dataset.theme = theme;
+
+	// Lišta prohlížeče v barvě tématu – meta tag musí být v <head> před tímto skriptem.
+	document
+		.querySelector(${JSON.stringify(themeColorSelector)})
+		?.setAttribute("content", ${JSON.stringify(themeColors)}[theme]);
 })();`;
 ---
 

@@ -1,8 +1,7 @@
 export const siteDetails = {
 	name: "Michal Roučka",
 	email: "michroucka7@gmail.com",
-	phone: "+420 774 739 180",
-	ico: "12345678", // TODO
+	ico: undefined as string | undefined, // TODO
 	launchYear: 2026,
 };
 

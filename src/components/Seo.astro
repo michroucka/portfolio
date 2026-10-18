@@ -1,5 +1,5 @@
 ---
-import { type Locale, resolveOgLocale } from "../i18n";
+import { defaultLocale, type Locale, resolveOgLocale } from "../i18n";
 import {
 	getAlternates,
 	getPath,
@@ -14,6 +14,7 @@ interface Props {
 	page?: Page;
 	params?: RouteParams;
 	ogImage?: string;
+	noindex?: boolean;
 }
 
 function buildUrl(path: string): URL {
@@ -25,7 +26,8 @@ function buildUrl(path: string): URL {
 	return new URL(path, Astro.site);
 }
 
-const { locale, title, description, page, params, ogImage } = Astro.props;
+const { locale, title, description, page, params, ogImage, noindex } =
+	Astro.props;
 const canonical = page ? buildUrl(getPath(page, locale, params)) : undefined;
 const alternates = page ? getAlternates(page, params) : undefined;
 const ogLocale = resolveOgLocale(locale);
@@ -34,7 +36,7 @@ const ogImageAbsolute = ogImage ? buildUrl(ogImage) : undefined;
 
 <title>{title}</title>
 <meta name="description" content={description} />
-{!page && <meta name="robots" content="noindex" />}
+{noindex && <meta name="robots" content="noindex" />}
 
 {canonical && <link rel="canonical" href={canonical} />}
 
@@ -46,7 +48,7 @@ const ogImageAbsolute = ogImage ? buildUrl(ogImage) : undefined;
 		<link
 			rel="alternate"
 			hreflang="x-default"
-			href={buildUrl(alternates.cs)}
+			href={buildUrl(alternates[defaultLocale])}
 		/>
 	</>
 )}

@@ -1,7 +1,7 @@
 ---
 // 404 nemá logickou stránku v mapě cest ani protějšek v druhém jazyce – Cloudflare ji vrátí
 // pro jakoukoli neexistující adresu (českou i /en/…), proto je dvojjazyčná.
-// Bez `page` vynechá BaseLayout canonical/hreflang a přepínač jazyka a přidá noindex.
+// Bez `page` vynechá BaseLayout canonical/hreflang a přepínač jazyka; noindex ji vyřadí z vyhledávání.
 import { getDictionary } from "../i18n";
 import { getPath } from "../i18n/routes";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -14,7 +14,7 @@ const title = `${cs.title} / ${en.title}`;
 const description = `${cs.description} ${en.description}`;
 ---
 
-<BaseLayout locale="cs" title={title} description={description}>
+<BaseLayout locale="cs" title={title} description={description} noindex>
 	<section>
 		<h1>{cs.title}</h1>
 		<p>{cs.description}</p>
