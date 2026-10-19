@@ -4,19 +4,19 @@ import { isTheme, resolveTheme, toggleTheme } from "./theme";
 const systems = ["light", "dark"] as const;
 
 describe("resolveTheme", () => {
-	describe("platná uložená volba přebije systém", () => {
+	describe("a valid stored choice overrides the system", () => {
 		it.each([
 			{ stored: "dark", system: "light" },
 			{ stored: "light", system: "dark" },
 		] as const)(
-			"uloženo $stored, systém $system -> $stored",
+			"stored $stored, system $system -> $stored",
 			({ stored, system }) => {
 				expect(resolveTheme({ stored, system })).toBe(stored);
 			},
 		);
 	});
 
-	describe("bez platné uložené volby rozhoduje systém", () => {
+	describe("without a valid stored choice the system decides", () => {
 		// Each invalid value is tried with both systems, so an implementation that returns
 		// a hard-coded theme for invalid values cannot pass.
 		const invalidStored = [null, "", "invalid", "Dark"];
@@ -30,7 +30,7 @@ describe("resolveTheme", () => {
 		);
 
 		it.each(cases)(
-			"uloženo $label, systém $system -> $system",
+			"stored $label, system $system -> $system",
 			({ stored, system }) => {
 				expect(resolveTheme({ stored, system })).toBe(system);
 			},
@@ -39,15 +39,15 @@ describe("resolveTheme", () => {
 });
 
 describe("isTheme", () => {
-	describe("vrátí true pokud je hodnota light nebo dark", () => {
-		it.each(["light", "dark"] as const)("hodnota %j -> true", (value) => {
+	describe("returns true for light or dark", () => {
+		it.each(["light", "dark"] as const)("value %j -> true", (value) => {
 			expect(isTheme(value)).toBe(true);
 		});
 	});
 
-	describe("vrátí false pokud hodnota není light nebo dark", () => {
+	describe("returns false for anything else", () => {
 		it.each([null, "", "invalid", "Dark", "Light"] as const)(
-			"hodnota %j -> false",
+			"value %j -> false",
 			(value) => {
 				expect(isTheme(value)).toBe(false);
 			},
@@ -56,9 +56,9 @@ describe("isTheme", () => {
 });
 
 describe("toggleTheme", () => {
-	describe("vrátí opačné téma k `current`", () => {
+	describe("returns the opposite of `current`", () => {
 		it.each(["light", "dark"] as const)(
-			"current téma %j -> opačné téma",
+			"current %j -> the other theme",
 			(current) => {
 				expect(toggleTheme(current)).toBe(
 					current === "light" ? "dark" : "light",
