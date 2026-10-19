@@ -124,17 +124,17 @@ a vykreslí sdílenou komponentu stránky. Žádná duplikace obsahu ani markupu
 
 ### Schéma služby
 - `title`, `description` – lokalizované (`{ cs, en }`)
-- `priceFrom` – číslo (Kč)
+- `priceFrom` – kladné celé číslo (Kč)
 - `features` – lokalizovaný seznam toho, co služba obsahuje
-- `order` – pořadí zobrazení
+- `order` – pořadí zobrazení (celé číslo)
 
 ### Schéma case study (frontmatter)
 - `title`, `summary` (jedna věta pro kartu)
 - `cover` – obrázek přes `image()` (optimalizace při buildu)
 - `type` – `web` | `web-app` | `app`
 - `tags` – technologie
-- `liveUrl?`, `repoUrl?`
-- `featured: boolean`, `order: number`
+- `liveUrl?`, `repoUrl?` – jen `http(s)` URL
+- `featured: boolean` (výchozí `false`), `order` – celé číslo
 - `testimonial?: { quote, author }`
 
 Tělo MDX má pevnou kostru: **problém → řešení → výsledek → screenshoty → technologie**.
@@ -143,6 +143,8 @@ Screenshoty admin rozhraní pouze s dummy daty.
 
 ### Kontrola párování
 Při buildu se ověří, že každá case study existuje v obou jazycích. Pokud ne, build selže.
+Kontrola běží tam, kde se generují stránky case studies (`getStaticPaths`, Úkol 7 plánu);
+funkce `findMissingTranslations` je v `src/lib/projects.ts`.
 
 ---
 

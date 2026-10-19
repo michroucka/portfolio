@@ -1,0 +1,54 @@
+---
+title: Nohy v cajku
+summary: A pedicurist swapped her paper diary for a clear booking app, and customers now book online.
+cover: ../../../assets/projects/nohy-v-cajku/calendar.png
+type: web-app
+tags:
+    - Next.js
+    - TypeScript
+    - PostgreSQL
+    - Tailwind CSS
+    - PWA
+liveUrl: https://www.pedikurakralovice.cz
+repoUrl: https://github.com/michroucka/pedicure-web
+featured: true
+order: 1
+---
+
+## The problem
+
+Nohy v cajku is a small pedicure business that had no website. Customers booked by phone, or arranged their next visit in person. Everything went into a paper diary.
+
+The diary had to be at hand all the time and mistakes were easy to make: an appointment never got written down, ended up on the wrong day, or stayed in the diary after it was cancelled. Names were often missing a phone number, so when an appointment had to move, there was no one to call. And now and then, someone simply didn't show up.
+
+## The solution
+
+I built a website with a booking system that fully replaced the diary.
+
+- **The business's first website.** Customers find prices, contact details and directions.
+- **Visible on Google.** I set up a Google Business Profile with a link to the website. Searching for “pedikúra Kralovice” shows the profile right at the top and the website as the first result.
+- **Online booking, no sign-up.** Customers pick a free slot themselves, any time, even for several people at once. Two people can never book the same time.
+- **Cancel or reschedule with one link.** The link comes in the confirmation email, nothing else needed.
+- **SMS reminder on the day.** Far fewer forgotten appointments.
+- **A calendar instead of the diary.** On the tablet in the salon and on her phone, with contact details on every booking. Appointments made in person go straight in here too.
+- **Morning overview.** A notification with the day's schedule every morning, and another one for every new booking.
+
+## The result
+
+The paper diary went into a drawer. All appointments are in one place, nothing gets lost and every one has contact details. Bookings come in outside opening hours too, with no phone calls in the middle of work.
+
+## Screenshots
+
+The admin panel runs on its own login-protected subdomain. The screenshots show sample data.
+
+![Weekly calendar with bookings](../../../assets/projects/nohy-v-cajku/calendar.png)
+
+![Day view on a phone](../../../assets/projects/nohy-v-cajku/calendar-phone.png)
+
+![Exceptions to opening hours](../../../assets/projects/nohy-v-cajku/availability.png)
+
+![Notification settings and Apple Calendar sync](../../../assets/projects/nohy-v-cajku/settings.png)
+
+## Technology
+
+Next.js and TypeScript, a PostgreSQL database (Prisma), Tailwind CSS. Confirmation emails via Resend, text messages through an SMS gateway, push notifications via Web Push. The admin panel installs as an app (PWA). Structured data (LocalBusiness) and a sitemap for search engines. Hosted on Vercel, database on Neon.

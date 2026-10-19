@@ -1,0 +1,71 @@
+# Prices are placeholders until spec § 10 is resolved.
+- id: presentation-website
+  title:
+      cs: Prezentační web
+      en: Business website
+  description:
+      cs: Web, který vás představí, ukáže, co nabízíte, a usnadní zákazníkům ozvat se. Pro řemeslníky, salony, kavárny a malé firmy, které chtějí být k nalezení.
+      en: A website that introduces you, shows what you offer and makes it easy for customers to get in touch. For tradespeople, salons, cafés and small businesses that want to be found.
+  priceFrom: 9900
+  features:
+      cs:
+          - Design na míru vaší značce, žádná šablona
+          - Funguje na mobilu i počítači
+          - Rychlé načítání a dobrá pozice ve vyhledávání
+          - Profil na Google Mapách, aby vás zákazníci našli
+          - Kontaktní formulář, mapa a otevírací doba
+          - Česky i anglicky, pokud to potřebujete
+      en:
+          - Custom design that fits your brand, no template
+          - Works on phones and computers
+          - Fast loading and good search visibility
+          - A Google Business Profile so customers can find you
+          - Contact form, map and opening hours
+          - Czech and English, if you need it
+  order: 1
+
+- id: website-with-system
+  title:
+      cs: Web s rezervacemi
+      en: Website with bookings
+  description:
+      cs: Prezentační web doplněný o systém, který za vás udělá rutinní práci. Zákazníci si sami zarezervují termín a vy ho hned vidíte v kalendáři.
+      en: A business website with a system that takes routine work off your hands. Customers book an appointment themselves and you see it in your calendar right away.
+  priceFrom: 24900
+  features:
+      cs:
+          - Online rezervace bez telefonování
+          - Přehledný kalendář pro vás i na mobilu
+          - Upozornění na nové rezervace
+          - Nastavení otevírací doby, dovolené a výjimek
+          - Všechno z prezentačního webu
+      en:
+          - Online bookings without phone calls
+          - A clear calendar for you, on your phone too
+          - Notifications about new bookings
+          - Opening hours, holidays and exceptions in one place
+          - Everything from the business website
+  order: 2
+
+- id: custom-application
+  title:
+      cs: Aplikace na míru
+      en: Custom application
+  description:
+      cs: Když vám tabulky a papírky přestávají stačit. Navrhnu a postavím aplikaci přesně pro to, jak vaše firma funguje.
+      en: For when spreadsheets and paper notes are no longer enough. I design and build an application around the way your business actually works.
+  priceFrom: 49900
+  features:
+      cs:
+          - Společný rozbor toho, co potřebujete
+          - Aplikace v prohlížeči i jako ikona na telefonu
+          - Přihlášení a role pro vás i vaše kolegy
+          - Napojení na nástroje, které už používáte
+          - Podpora a úpravy i po spuštění
+      en:
+          - We work out together what you need
+          - Runs in the browser and as an icon on your phone
+          - Sign-in and roles for you and your team
+          - Connections to tools you already use
+          - Support and changes after launch
+  order: 3
