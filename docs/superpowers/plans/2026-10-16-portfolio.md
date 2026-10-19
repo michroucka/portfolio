@@ -14,6 +14,7 @@ v content collections, UI texty ve typovaných slovnících.
 Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `prettier-plugin-astro`.
 
 **Spec:** `docs/superpowers/specs/2026-10-16-portfolio-design.md`
+**Issues:** úkoly 5–11 a otevřené body jsou GitHub issues `michroucka/portfolio`, texty v `docs/superpowers/issues.md`
 **Značka:** `brand/README.md`, `brand/brand-board.html`
 
 ## Globální omezení
@@ -43,20 +44,24 @@ Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `pre
 
 ### Úkol 1: Repozitář, kostra projektu a nástroje
 
+**Stav:** hotovo – PR #1
+
 **Soubory:** vytvořit kostru Astra v kořeni `portfolio/`, `.gitignore`, `.prettierrc`, `eslint.config.js`,
 `vitest.config.ts`, `.github/workflows/ci.yml`.
 
-- [ ] `git init`, první commit se stávajícím `docs/` a `brand/` (předtím zkontroluj `.gitignore` – `.DS_Store`, `.idea/`, `node_modules/`, `dist/`, `.wrangler/`, `.env*`).
-- [ ] Vytvoř Astro projekt (`npm create astro@latest`, šablona „minimal“, TypeScript **strict**) do existující složky.
-- [ ] Přidej integrace `@astrojs/mdx`, `@astrojs/sitemap` a Tailwind v4 přes `npx astro add` (Tailwind se v Astru přidává jako Vite plugin). Docs: https://docs.astro.build/en/guides/styling/#tailwind
-- [ ] Nastav Prettier + `prettier-plugin-astro`, ESLint s `eslint-plugin-astro`.
-- [ ] Nastav Vitest přes `getViteConfig` z `astro/config` (https://docs.astro.build/en/guides/testing/#vitest). Napiš jeden triviální test, ať vidíš, že běh funguje.
-- [ ] Skripty v `package.json`: `dev`, `build`, `preview`, `check` (`astro check`), `lint`, `format`, `test`.
-- [ ] CI workflow: na každý PR spustit `check`, `lint`, `test`, `build`.
-- [ ] **Ověření:** `npm run check && npm run lint && npm test && npm run build` projde.
-- [ ] Commit: `chore: scaffold Astro project with tooling and CI`
+- [x] `git init`, první commit se stávajícím `docs/` a `brand/` (předtím zkontroluj `.gitignore` – `.DS_Store`, `.idea/`, `node_modules/`, `dist/`, `.wrangler/`, `.env*`).
+- [x] Vytvoř Astro projekt (`npm create astro@latest`, šablona „minimal“, TypeScript **strict**) do existující složky.
+- [x] Přidej integrace `@astrojs/mdx`, `@astrojs/sitemap` a Tailwind v4 přes `npx astro add` (Tailwind se v Astru přidává jako Vite plugin). Docs: https://docs.astro.build/en/guides/styling/#tailwind
+- [x] Nastav Prettier + `prettier-plugin-astro`, ESLint s `eslint-plugin-astro`.
+- [x] Nastav Vitest přes `getViteConfig` z `astro/config` (https://docs.astro.build/en/guides/testing/#vitest). Napiš jeden triviální test, ať vidíš, že běh funguje.
+- [x] Skripty v `package.json`: `dev`, `build`, `preview`, `check` (`astro check`), `lint`, `format`, `test`.
+- [x] CI workflow: na každý PR spustit `check`, `lint`, `test`, `build`.
+- [x] **Ověření:** `npm run check && npm run lint && npm test && npm run build` projde.
+- [x] Commit: `chore: scaffold Astro project with tooling and CI`
 
 ### Úkol 2: Design tokeny, písmo a témata
+
+**Stav:** hotovo – PR #3 (plocha a okraje pro světlé téma: PR #2)
 
 **Soubory:** `src/styles/global.css`, `public/fonts/` (Archivo woff2 + `OFL.txt`), `src/lib/theme.ts`,
 `src/lib/theme.test.ts`, `src/components/ThemeScript.astro`, `src/components/ThemeToggle.astro`.
@@ -64,22 +69,24 @@ Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `pre
 **Produkuje:** CSS tokeny barev a písma pro obě témata; funkci, která z uloženého výběru a systémové preference určí téma;
 přepínač tématu.
 
-- [ ] Test `theme.test.ts` – funkce pro určení tématu:
+- [x] Test `theme.test.ts` – funkce pro určení tématu:
   - bez uložené volby a se systémovou preferencí tmavou → `dark`
   - bez uložené volby a se systémovou preferencí světlou → `light`
   - uložená volba `dark` přebije světlý systém → `dark` (a obráceně)
   - neplatná uložená hodnota (např. `"blue"`) se ignoruje → rozhoduje systém
-- [ ] Spusť test, ověř, že selže.
-- [ ] Implementuj funkci v `src/lib/theme.ts` (vstup: uložená hodnota nebo nic + boolean „systém chce světlé“; výstup: `"dark" | "light"`).
-- [ ] Test projde.
-- [ ] Tokeny v `global.css` přes `@theme` (https://tailwindcss.com/docs/theme): sémantické názvy (pozadí, plocha, text, text vedlejší, akcent), hodnoty pro tmavé téma jako výchozí, přepsání pro světlé přes atribut na `<html>` (např. `data-theme="light"`). Hodnoty viz `brand/README.md` § 2.
-- [ ] `@font-face` pro Archivo z `public/fonts/` s rozsahy os `wdth 62 125` a `wght 100 900`, `font-display: swap`. Zvaž subset na latin + latin-ext.
-- [ ] `ThemeScript.astro`: malý **inline** skript v `<head>`, který před prvním vykreslením nastaví atribut tématu (jinak hrozí bliknutí – viz Review bod 2). Musí používat stejnou logiku jako `theme.ts`.
-- [ ] `ThemeToggle.astro`: tlačítko (s přístupným popiskem v obou jazycích), které přepne téma a uloží volbu do `localStorage` (obal do `try/catch`).
-- [ ] **Ověření:** dočasná testovací stránka – přepni systém na světlý, obnov stránku: žádné bliknutí tmavé; přepínač funguje a přežije reload.
-- [ ] Commit: `feat: design tokens, self-hosted Archivo and theme switching`
+- [x] Spusť test, ověř, že selže.
+- [x] Implementuj funkci v `src/lib/theme.ts` (vstup: uložená hodnota nebo nic + boolean „systém chce světlé“; výstup: `"dark" | "light"`).
+- [x] Test projde.
+- [x] Tokeny v `global.css` přes `@theme` (https://tailwindcss.com/docs/theme): sémantické názvy (pozadí, plocha, text, text vedlejší, akcent), hodnoty pro tmavé téma jako výchozí, přepsání pro světlé přes atribut na `<html>` (např. `data-theme="light"`). Hodnoty viz `brand/README.md` § 2.
+- [x] `@font-face` pro Archivo z `public/fonts/` s rozsahy os `wdth 62 125` a `wght 100 900`, `font-display: swap`. Zvaž subset na latin + latin-ext.
+- [x] `ThemeScript.astro`: malý **inline** skript v `<head>`, který před prvním vykreslením nastaví atribut tématu (jinak hrozí bliknutí – viz Review bod 2). Musí používat stejnou logiku jako `theme.ts`.
+- [x] `ThemeToggle.astro`: tlačítko (s přístupným popiskem v obou jazycích), které přepne téma a uloží volbu do `localStorage` (obal do `try/catch`).
+- [x] **Ověření:** dočasná testovací stránka – přepni systém na světlý, obnov stránku: žádné bliknutí tmavé; přepínač funguje a přežije reload.
+- [x] Commit: `feat: design tokens, self-hosted Archivo and theme switching`
 
 ### Úkol 3: i18n jádro – konfigurace, slovníky, mapa cest
+
+**Stav:** hotovo – PR #4
 
 **Soubory:** `astro.config.mjs`, `src/i18n/cs.ts`, `src/i18n/en.ts`, `src/i18n/index.ts`, `src/i18n/routes.ts`,
 `src/i18n/routes.test.ts`.
@@ -91,21 +98,23 @@ přepínač tématu.
 - funkci „cesta pro stránku v jazyce“ (stránka, jazyk, volitelné parametry jako `slug`) → řetězec,
 - funkci „alternativy“ (stránka, parametry) → cesta pro každý jazyk; ji používá přepínač jazyka i `hreflang`.
 
-- [ ] V `astro.config.mjs` nastav `i18n` podle Globálních omezení a `trailingSlash` na jednu hodnotu (rozhodni `always` nebo `never` a drž se jí – Review bod 3). `site` zatím placeholder.
-- [ ] `cs.ts` jako zdroj pravdy; `en.ts` typově vázaný na tvar `cs.ts`, aby chybějící klíč byl chyba TypeScriptu. Zatím jen klíče pro navigaci a patičku.
-- [ ] Testy `routes.test.ts`:
+- [x] V `astro.config.mjs` nastav `i18n` podle Globálních omezení a `trailingSlash` na jednu hodnotu (rozhodni `always` nebo `never` a drž se jí – Review bod 3). `site` zatím placeholder.
+- [x] `cs.ts` jako zdroj pravdy; `en.ts` typově vázaný na tvar `cs.ts`, aby chybějící klíč byl chyba TypeScriptu. Zatím jen klíče pro navigaci a patičku.
+- [x] Testy `routes.test.ts`:
   - `home` → `/` (cs) a `/en/` (en)
   - `project` se slugem `nohy-v-cajku` → `/projekty/nohy-v-cajku/` a `/en/projects/nohy-v-cajku/` (koncové lomítko podle tvé volby)
   - `privacy` → `/ochrana-osobnich-udaju/` a `/en/privacy/`
   - alternativy pro `project` vrátí obě cesty se stejným slugem
   - `project` bez slugu → vyhodí chybu (ne tichý řetězec `undefined`)
   - každá vrácená cesta končí lomítkem podle zvolené konvence (Review bod 3)
-- [ ] Spusť testy, ověř, že selžou.
-- [ ] Implementuj `routes.ts` (pro výchozí jazyk můžeš stavět na `getRelativeLocaleUrl` z `astro:i18n`; vlastní mapa řeší přeložené segmenty).
-- [ ] Testy projdou, `astro check` projde.
-- [ ] Commit: `feat: i18n config, typed dictionaries and translated route map`
+- [x] Spusť testy, ověř, že selžou.
+- [x] Implementuj `routes.ts` (pro výchozí jazyk můžeš stavět na `getRelativeLocaleUrl` z `astro:i18n`; vlastní mapa řeší přeložené segmenty).
+- [x] Testy projdou, `astro check` projde.
+- [x] Commit: `feat: i18n config, typed dictionaries and translated route map`
 
 ### Úkol 4: Layout, hlavička, patička, SEO hlava, 404
+
+**Stav:** hotovo – PR #5
 
 **Soubory:** `src/layouts/BaseLayout.astro`, `src/components/Seo.astro`, `src/components/Header.astro`,
 `src/components/LanguageSwitcher.astro`, `src/components/Logo.astro`, `src/components/Footer.astro`,
@@ -143,6 +152,8 @@ přepínač tématu.
 
 ### Úkol 5: Content collections – služby a case studies
 
+**Issue:** #7 · **Milestone:** Obsah a stránky
+
 **Soubory:** `src/content.config.ts`, `src/content/services.yaml` (nebo JSON), `src/content/projects/cs/nohy-v-cajku.mdx`,
 `src/content/projects/en/nohy-v-cajku.mdx`, `src/assets/projects/…` (cover a screenshoty), `src/lib/projects.ts`,
 `src/lib/projects.test.ts`.
@@ -150,20 +161,34 @@ přepínač tématu.
 **Produkuje:** kolekce `services` a `projects`; funkci, která z kolekce vrátí projekty pro jazyk seřazené podle `order`
 (volitelně jen `featured`); funkci, která ze seznamu záznamů najde slugy chybějící v některém jazyce.
 
-- [ ] Schéma `services` přesně podle spec § 5 (lokalizované `title`, `description`, `features`; `priceFrom` číslo; `order`). Pro jeden soubor s více záznamy použij `file()` loader. Docs: https://docs.astro.build/en/guides/content-collections/#built-in-loaders
-- [ ] Schéma `projects` podle spec § 5 (`cover` přes `image()`, `type` jako enum `web | web-app | app`, volitelné `liveUrl`, `repoUrl`, `testimonial`). `glob()` loader nad `projects/**/*.mdx`.
-- [ ] Testy `projects.test.ts` (na ručně sestavených záznamech, ne na skutečné kolekci):
+- [x] Schéma `services` přesně podle spec § 5 (lokalizované `title`, `description`, `features`; `priceFrom` číslo; `order`). Pro jeden soubor s více záznamy použij `file()` loader. Docs: https://docs.astro.build/en/guides/content-collections/#built-in-loaders
+- [x] Schéma `projects` podle spec § 5 (`cover` přes `image()`, `type` jako enum `web | web-app | app`, volitelné `liveUrl`, `repoUrl`, `testimonial`). `glob()` loader nad `projects/**/*.mdx`.
+- [x] Testy `projects.test.ts` (na ručně sestavených záznamech, ne na skutečné kolekci):
   - z id `cs/nohy-v-cajku` se správně odvodí jazyk `cs` a slug `nohy-v-cajku`
   - pár `cs/x` + `en/x` → žádné chybějící slugy
   - jen `cs/x` → hlásí `x` jako chybějící v `en`
   - řazení podle `order` vzestupně; filtr `featured` vrátí jen označené
-- [ ] Spusť testy, selžou → implementuj `projects.ts` → projdou.
+- [x] Spusť testy, selžou → implementuj `projects.ts` → projdou.
 - [ ] Kontrola párování při buildu: zavolej funkci hledání chybějících slugů tam, kde se generují stránky case studies (Úkol 7) a při nálezu vyhoď chybu s výčtem slugů.
-- [ ] Naplň `services.yaml` třemi službami (ceny zatím placeholder – spec § 10) a jednu case study v obou jazycích s kostrou problém → řešení → výsledek → screenshoty → technologie (texty mohou být zatím pracovní).
+- [x] Naplň `services.yaml` třemi službami (ceny zatím placeholder – spec § 10) a jednu case study v obou jazycích s kostrou problém → řešení → výsledek → screenshoty → technologie (texty mohou být zatím pracovní).
 - [ ] **Ověření:** `astro check` + `npm test` projdou; dočasně smaž EN soubor → build spadne se srozumitelnou hláškou; vrať zpět.
 - [ ] Commit: `feat: content collections for services and case studies`
 
+**Poznámky k provedení** (větev `feat/content`):
+
+- *Rozhodnutí:*
+  - Lokalizované pole přes `z.record(z.enum(locales), …)` – v Zodu 4 vyžaduje všechny klíče, takže nový jazyk shodí build u každého chybějícího překladu.
+  - `priceFrom` je kladné celé číslo, `order` celé číslo (spec § 5 upravena). `featured` má výchozí `false`, `liveUrl`/`repoUrl` validuje `z.url({ protocol: /^https?$/ })` – samotné `z.url()` pustí i `javascript:` nebo překlep `htps:`.
+  - `parseProjectId` vyhodí chybu při neznámém jazyku, chybějícím jazyku nebo slugu i při víc než dvou segmentech (`cs/blog/x` – podsložka by jinak tiše vytvořila kolizi slugů). Hláška obsahuje celé id.
+  - `getProjectsForLocale` určuje jazyk přes `parseProjectId` (pravidla pro id na jednom místě) a nemutuje vstup (`toSorted`).
+  - Služby: prezentační web / web s rezervacemi / aplikace na míru (shodně se selectem formuláře, spec § 7). Ceny placeholder.
+  - Case study bez `testimonial` – klientka je z rodiny, citace by nebyla nezávislá (spec § 1: sekce Reference až při 2–3 zakázkách). Online rezervace a SMS jsou popsané jako spuštěné, ověří se v Úkolu 11.
+  - Screenshoty adminu převzaté z `pedicure-web/docs/screenshots` (vzorová data). Cover je zatím `calendar.png`, nahradí ho screenshot veřejného webu (`home.png`, 1280×960 @2x) spolu s `home-phone.png` a `booking.png`.
+- *Přesunuto do Úkolu 7:* kontrola párování při buildu a ověření „smaž EN soubor → build spadne“ – bez stránek case studies není kde `findMissingTranslations` volat.
+
 ### Úkol 6: Sekce homepage
+
+**Issue:** #8 · **Milestone:** Obsah a stránky
 
 **Soubory:** `src/components/sections/{Hero,Services,FeaturedProjects,Process,About,Contact}.astro`,
 `src/components/cards/{ServiceCard,ProjectCard}.astro`, `src/components/pages/HomePage.astro`, doplnění slovníků.
@@ -172,7 +197,7 @@ přepínač tématu.
 
 - [ ] Komponenta pro **kulatou tečku značky** (`src/components/BrandDot.astro`): ne znak `.` z písma (ten je hranatý), ale prvek s kulatým tvarem v barvě akcentu, průměr ~0,23 em, přesně na účaří (`brand/README.md` § 4). Pro čtečky obrazovky musí věta pořád končit tečkou – rozmysli, jak (vizuálně skrytý text vs. `aria-hidden`).
 - [ ] `Hero`: nadpis jako celá věta zakončená `BrandDot`, podnadpis, CTA „Nezávazná konzultace“ (kotva na kontakt) a vedlejší CTA „Ukázky práce“.
-- [ ] `Services` + `ServiceCard`: data z kolekce, cena formátovaná podle jazyka (`Intl.NumberFormat`, „od 15 000 Kč“ / „from CZK 15,000“), věta „přesná cena po nezávazné konzultaci“.
+- [ ] `Services` + `ServiceCard`: data z kolekce, cena formátovaná podle jazyka (`Intl.NumberFormat`, „od 15 000 Kč“ / „from CZK 15,000“), věta „přesná cena po nezávazné konzultaci“. Pod kartami řádek „Potřebujete něco jiného? Pojďme se pobavit.“ s odkazem na kontakt – text ze slovníku, ne čtvrtý záznam v kolekci (nemá cenu ani `features`, rozbil by schéma). Čtvrtou kartu zamítnuto: překrývala by se s „Aplikací na míru“ a 3 + 1 se hůř skládá do mřížky.
 - [ ] `FeaturedProjects` + `ProjectCard`: jen `featured`, seřazené; cover přes `<Image>`; odkaz z mapy cest; štítek `type`.
 - [ ] `Process`: 4–5 kroků ze slovníku (konzultace → návrh → vývoj → spuštění → podpora).
 - [ ] `About`: krátký text, fotka přes `<Image>`, Plzeň.
@@ -182,6 +207,8 @@ přepínač tématu.
 - [ ] Commit: `feat: homepage sections`
 
 ### Úkol 7: Stránky case studies a MDX komponenty
+
+**Issue:** #9 · **Milestone:** Obsah a stránky
 
 **Soubory:** `src/pages/projekty/[slug].astro`, `src/pages/en/projects/[slug].astro`,
 `src/components/pages/ProjectPage.astro`, `src/components/mdx/{Gallery,Quote}.astro`.
@@ -195,7 +222,16 @@ přepínač tématu.
 - [ ] **Ověření:** `/projekty/nohy-v-cajku/` a `/en/projects/nohy-v-cajku/` se vyrenderují, přepínač jazyka mezi nimi funguje, hreflang ukazuje na protějšek.
 - [ ] Commit: `feat: case study pages with MDX components`
 
+**Převzato z review Úkolu 5** (nálezy, které patří sem):
+
+- [ ] **Shoda nelokalizovaných polí:** `cover`, `type`, `tags`, `liveUrl`, `repoUrl`, `featured` a `order` jsou v CS i EN souboru zvlášť a nic nehlídá, že se shodují. Ke kontrole párování přidej kontrolu, že se pár v těchto polích neliší (jinak build selže s výčtem slugů a polí). Alternativa: tato pole brát jen z výchozího jazyka – rozhodni před implementací.
+- [ ] **Unikátní `order`:** při shodě rozhoduje pořadí načtení souborů, takže se pořadí může lišit mezi jazyky nebo stroji. Buď kontrola unikátnosti při buildu, nebo druhé řadicí kritérium (slug) v `getProjectsForLocale` + test.
+- [ ] **Testy `findMissingTranslations`:** doplnit víc chybějících slugů najednou, chybějící slugy v obou jazycích (`cs` bez `a`, `en` bez `b`) a prázdný vstup – na úplném výčtu stojí chybová hláška buildu.
+- [ ] **Cover vs. screenshoty:** cover `calendar.png` je zároveň v sekci Screenshoty, na stránce projektu se zobrazí dvakrát. Až přijde `home.png` (viz Úkol 5), zmizí to samo; jinak cover v `ProjectPage` nezobrazuj nebo ho vyřaď ze sekce Screenshoty.
+
 ### Úkol 8: Kontaktní formulář (Astro Action)
+
+**Issue:** #10 · **Milestone:** Kontaktní formulář
 
 **Soubory:** `src/actions/index.ts`, `src/lib/contact/schema.ts`, `src/lib/contact/spam.ts`,
 `src/lib/contact/turnstile.ts`, `src/lib/contact/mail.ts`, testy `src/lib/contact/*.test.ts`,
@@ -204,7 +240,7 @@ přepínač tématu.
 **Produkuje:** Zod schéma formuláře; funkci kontroly spamu (honeypot + časová kontrola); funkci ověření Turnstile tokenu;
 funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na klíče slovníku.
 
-- [ ] Přidej `@astrojs/cloudflare` adapter. Stránky zůstávají předrenderované; homepage s formulářem musí umět zobrazit výsledek akce – nastuduj, jak se v Astru čte výsledek form action (`Astro.getActionResult`) a co to znamená pro prerender té stránky. Docs: https://docs.astro.build/en/guides/actions/#call-actions-from-an-html-form-action — **tohle si spolu projdeme před implementací.**
+- [ ] Přidej `@astrojs/cloudflare` adapter. Stránky zůstávají předrenderované; homepage s formulářem musí umět zobrazit výsledek akce – nastuduj, jak se v Astru čte výsledek form action (`Astro.getActionResult`) a co to znamená pro prerender té stránky. Docs: https://docs.astro.build/en/guides/actions/#call-actions-from-an-html-form-action – **tohle si spolu projdeme před implementací.**
 - [ ] `env.schema` v configu: `RESEND_API_KEY` a `TURNSTILE_SECRET_KEY` jako server secret, Turnstile site key jako public client proměnná, cílová adresa e-mailu jako server proměnná. Docs: https://docs.astro.build/en/guides/environment-variables/#type-safe-environment-variables
 - [ ] Testy `schema.test.ts`:
   - platný vstup projde; telefon může chybět
@@ -235,6 +271,8 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 
 ### Úkol 9: Animace loga v hero
 
+**Issue:** #11 · **Milestone:** Dokončení a spuštění
+
 **Soubory:** `src/components/sections/Hero.astro` (nebo samostatná `HeroMark.astro`), CSS v komponentě.
 
 - [ ] Velká značka „mr.“ v hero jako inline SVG, kde tečka je samostatný element, který jde animovat.
@@ -246,6 +284,8 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [ ] Commit: `feat: hero logo dot-to-cursor animation`
 
 ### Úkol 10: GDPR stránka, sitemap, robots, strukturovaná data
+
+**Issue:** #12 · **Milestone:** Dokončení a spuštění
 
 **Soubory:** `src/pages/ochrana-osobnich-udaju.astro`, `src/pages/en/privacy.astro`, `src/components/pages/PrivacyPage.astro`,
 `public/robots.txt`, `src/components/JsonLd.astro`, výchozí OG obrázek `public/og-default.png`, `astro.config.mjs` (sitemap i18n).
@@ -260,6 +300,8 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 
 ### Úkol 11: Nasazení na Cloudflare a finální kontrola
 
+**Issue:** #13 · **Milestone:** Dokončení a spuštění
+
 **Soubory:** `wrangler.jsonc` (podle docs adaptéru), případně úprava `astro.config.mjs`.
 
 - [ ] Projdi https://docs.astro.build/en/guides/deploy/cloudflare/ a nastav projekt pro Workers se statickými assety.
@@ -267,10 +309,14 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [ ] Nastav proměnné prostředí a secrets v Cloudflare (produkce i preview).
 - [ ] Zapni Cloudflare Web Analytics.
 - [ ] **Ověření na preview URL:** Lighthouse (mobil) ≥ 95 ve všech kategoriích na `/`, `/en/` a jedné case study; formulář odešle e-mail; obě témata; přepínač jazyka na všech stránkách; 404.
+- [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`).
 - [ ] Commit + PR → merge do `main`.
 
 ---
 
 ## Mimo tento plán (blokováno otevřenými body spec § 10)
 
-Doména (a s ní `site`, ověření domény v Resend, produkční e-mail), finální texty a ceny, IČO v patičce.
+- Doména (a s ní `site`, ověření domény v Resend, produkční e-mail) – #14
+- Finální texty (sekce, case study, GDPR) – #15
+- Ceny služeb – #16
+- IČO v patičce – #17
