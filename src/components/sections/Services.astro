@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getDictionary, type Locale } from "../../i18n";
+import { getPath } from "../../i18n/routes";
+import type { Section as SectionId } from "../../lib/sections";
+import ServiceCard from "../cards/ServiceCard.astro";
+import Section from "../Section.astro";
+
+interface Props {
+	services: CollectionEntry<"services">[];
+	locale: Locale;
+}
+
+const { services, locale } = Astro.props;
+const dictionary = getDictionary(locale);
+const contactSection: SectionId = "contact";
+const contactHref = `${getPath("home", locale)}#${contactSection}`;
+---
+
+<Section id="services" title={dictionary.services.title}>
+	<div class="grid gap-6 md:grid-cols-3">
+		{services.map((service) => (
+			<ServiceCard service={service} locale={locale} />
+		))}
+	</div>
+	<p class="mt-8 text-muted">{dictionary.services.priceNote}</p>
+	<p class="mt-4">
+		{dictionary.services.somethingElse}{" "}
+		<a href={contactHref} class="font-semibold text-accent link-underline">
+			{dictionary.services.somethingElseLink}
+		</a>
+	</p>
+</Section>

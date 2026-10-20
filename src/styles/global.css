@@ -158,6 +158,16 @@ body {
 	color: var(--color-foreground);
 }
 
+/* Headings use the expanded width, body text the normal one (brand/README.md § 3).
+   Sizes stay in the markup – they depend on where the heading sits. */
+@layer base {
+	h1,
+	h2,
+	h3 {
+		@apply font-extrabold font-stretch-expanded;
+	}
+}
+
 /* Underline that slides in from the left on hover/focus and out to the right on leave.
    Only background-size is transitioned – the position flips instantly, which creates the pass-through. */
 @utility link-underline {
@@ -232,5 +242,40 @@ body {
 	100% {
 		opacity: 0.12;
 		animation-timing-function: steps(1, end);
+	}
+}
+
+/* Shared shape of call-to-action links and buttons; colours come from button-primary / button-secondary.
+   min-h-12 (48 px) keeps the touch target above 44 px but lets the label wrap at 200 % zoom. */
+@utility button {
+	@apply inline-flex min-h-12 items-center justify-center rounded-full border px-6 py-3 text-center font-semibold font-stretch-expanded;
+
+	&:focus-visible {
+		@apply outline-2 outline-offset-2 outline-accent;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		transition-property: background-color, border-color, color;
+		transition-duration: var(--default-transition-duration);
+		transition-timing-function: var(--default-transition-timing-function);
+	}
+}
+
+/* Accent pair from brand/README.md § 2: Signal + Ink on dark, Signal Deep + Paper on light.
+   Hover swaps to the foreground colour – the palette has no lighter accent shade. */
+@utility button-primary {
+	@apply button border-accent bg-accent text-accent-foreground;
+
+	&:hover {
+		@apply border-foreground bg-foreground text-background;
+	}
+}
+
+/* Muted (Ash / Ash Deep) border: Line is ~1.4 : 1 on Ink, below the 3 : 1 needed for a control outline. */
+@utility button-secondary {
+	@apply button border-line bg-transparent text-foreground;
+
+	&:hover {
+		@apply border-muted;
 	}
 }

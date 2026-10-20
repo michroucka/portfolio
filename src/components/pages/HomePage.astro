@@ -1,6 +1,14 @@
 ---
+import { getCollection } from "astro:content";
 import { getDictionary, type Locale } from "../../i18n";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getProjectsForLocale } from "../../lib/projects";
+import Hero from "../sections/Hero.astro";
+import Services from "../sections/Services.astro";
+import FeaturedProjects from "../sections/FeaturedProjects.astro";
+import Process from "../sections/Process.astro";
+import About from "../sections/About.astro";
+import Contact from "../sections/Contact.astro";
 
 interface Props {
 	locale: Locale;
@@ -8,9 +16,24 @@ interface Props {
 
 const { locale } = Astro.props;
 const dictionary = getDictionary(locale);
-const { title, description } = dictionary.home;
+const services = (await getCollection("services")).toSorted(
+	(a, b) => a.data.order - b.data.order,
+);
+const projects = getProjectsForLocale(await getCollection("projects"), locale, {
+	featuredOnly: true,
+});
 ---
 
-<BaseLayout locale={locale} page="home" title={title} description={description}>
-	<h1>{title}</h1>
+<BaseLayout
+	locale={locale}
+	page="home"
+	title={dictionary.home.title}
+	description={dictionary.home.description}
+>
+	<Hero locale={locale} />
+	<Services services={services} locale={locale} />
+	<FeaturedProjects projects={projects} locale={locale} />
+	<Process locale={locale} />
+	<About locale={locale} />
+	<Contact locale={locale} />
 </BaseLayout>
