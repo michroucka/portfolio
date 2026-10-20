@@ -17,54 +17,63 @@ const { locale, page, params } = Astro.props;
 const homePath = getPath("home", locale);
 const dictionary = getDictionary(locale);
 // Shared by the header and the mobile menu's top row – the menu and close buttons must line up exactly.
-const headerClasses = `${pageContainer} py-2 md:py-4 flex items-center justify-between`;
-const logoClasses = "w-44 md:w-60";
-const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.16em)]";
+const headerClasses = `${pageContainer} min-h-(--header-height) py-2 lg:py-4 flex items-center justify-between`;
+const logoClasses = "w-48 sm:w-56 lg:w-60";
+const menuButtonClasses = "block lg:hidden p-4 -mr-[calc(1rem+0.16em)]";
 const menuIconSize = "1.75em";
 ---
 
-<header class={headerClasses}>
-	<a href={homePath} class="group">
-		<Logo class={logoClasses} animateDotOnHover />
-	</a>
-
-	<div class="hidden md:flex items-center gap-6">
-		<nav
-			aria-label={dictionary.header.navigation}
-			class="flex gap-6 text-lg font-stretch-expanded font-semibold"
-		>
-			{sections.map((section) => (
-				<a
-					href={getSectionHref(section, locale)}
-					class="link-underline"
-				>
-					{dictionary.nav[section]}
-				</a>
-			))}
-		</nav>
-
-		<!-- The divider belongs to the switcher – without it (e.g. 404) it would dangle at the end of the row -->
-		{page && (
-			<>
-				<span aria-hidden="true" class="h-5 w-px bg-line"></span>
-				<LanguageSwitcher
-					locale={locale}
-					page={page}
-					params={params}
-					class="-mx-2"
-				/>
-			</>
-		)}
+<!-- Full-width sticky bar; the content row inside keeps to the page container. -->
+<header data-site-header class="sticky top-0 z-40">
+	<div data-header-backdrop aria-hidden="true">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
 	</div>
+	<div class={headerClasses}>
+		<a href={homePath} class="group">
+			<Logo class={logoClasses} animateDotOnHover />
+		</a>
 
-	<button
-		type="button"
-		data-menu-open
-		aria-label={dictionary.header.menuOpen}
-		class={menuButtonClasses}
-	>
-		<MenuIcon size={menuIconSize} />
-	</button>
+		<div class="hidden lg:flex items-center gap-6">
+			<nav
+				aria-label={dictionary.header.navigation}
+				class="flex gap-5 whitespace-nowrap text-base font-stretch-expanded font-semibold xl:gap-6 xl:text-lg"
+			>
+				{sections.map((section) => (
+					<a
+						href={getSectionHref(section, locale)}
+						class="link-underline"
+					>
+						{dictionary.nav[section]}
+					</a>
+				))}
+			</nav>
+
+			<!-- The divider belongs to the switcher – without it (e.g. 404) it would dangle at the end of the row -->
+			{page && (
+				<>
+					<span aria-hidden="true" class="h-5 w-px bg-line"></span>
+					<LanguageSwitcher
+						locale={locale}
+						page={page}
+						params={params}
+						class="-mx-2"
+					/>
+				</>
+			)}
+		</div>
+
+		<button
+			type="button"
+			data-menu-open
+			aria-label={dictionary.header.menuOpen}
+			class={menuButtonClasses}
+		>
+			<MenuIcon size={menuIconSize} />
+		</button>
+	</div>
 
 	<!-- On close the dialog loses [open] immediately but stays visible for the transition (allow-discrete),
 	     so its position and layout must not depend on [open] (fixed inset-0, flex-col always) – only display (open:flex). -->
@@ -118,6 +127,62 @@ const menuIconSize = "1.75em";
 </header>
 
 <style>
+	/* Progressive blur: the backdrop reaches 4rem below the header and every layer blurs less
+	   and fades out further down, so the blur and the tint taper off gradually instead of
+	   ending on one edge. It is a separate element because the fading masks would otherwise
+	   fade the logo and navigation too. */
+	[data-header-backdrop] {
+		position: absolute;
+		inset: 0 0 -4rem;
+		z-index: -1;
+		pointer-events: none;
+		/* Eased tint: stays dense under the header, then thins out slowly. */
+		background: linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--theme-background) 85%, transparent) 0%,
+			color-mix(in srgb, var(--theme-background) 75%, transparent) 40%,
+			color-mix(in srgb, var(--theme-background) 50%, transparent) 55%,
+			color-mix(in srgb, var(--theme-background) 26%, transparent) 70%,
+			color-mix(in srgb, var(--theme-background) 9%, transparent) 85%,
+			transparent 100%
+		);
+	}
+
+	[data-header-backdrop] span {
+		position: absolute;
+		inset: 0;
+		backdrop-filter: blur(var(--blur));
+		mask-image: linear-gradient(
+			to bottom,
+			black var(--solid),
+			transparent var(--end)
+		);
+	}
+
+	[data-header-backdrop] span:nth-child(1) {
+		--blur: 12px;
+		--solid: 30%;
+		--end: 55%;
+	}
+
+	[data-header-backdrop] span:nth-child(2) {
+		--blur: 6px;
+		--solid: 40%;
+		--end: 70%;
+	}
+
+	[data-header-backdrop] span:nth-child(3) {
+		--blur: 3px;
+		--solid: 50%;
+		--end: 85%;
+	}
+
+	[data-header-backdrop] span:nth-child(4) {
+		--blur: 1px;
+		--solid: 60%;
+		--end: 100%;
+	}
+
 	:global(html:has(dialog[open])) {
 		overflow: hidden;
 	}
@@ -205,7 +270,7 @@ const menuIconSize = "1.75em";
 		}
 	});
 
-	const desktopQuery = window.matchMedia("(min-width: 48rem)"); // Tailwind md breakpoint
+	const desktopQuery = window.matchMedia("(min-width: 64rem)"); // Tailwind lg breakpoint
 
 	desktopQuery.addEventListener("change", (event) => {
 		if (event.matches) {

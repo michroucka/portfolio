@@ -161,6 +161,16 @@ body {
 /* Headings use the expanded width, body text the normal one (brand/README.md § 3).
    Sizes stay in the markup – they depend on where the heading sits. */
 @layer base {
+	/* Height of the sticky header row (its min-height in Header.astro): one value for the header,
+	   anchor jumps and anything that has to reach under the header. */
+	:root {
+		--header-height: 4.75rem;
+	}
+
+	html {
+		scroll-padding-top: var(--header-height);
+	}
+
 	h1,
 	h2,
 	h3 {
