@@ -146,7 +146,7 @@ přepínač tématu.
 - *Nad rámec plánu:*
   - `src/lib/site.ts` – údaje o webu (e-mail, telefon, IČO, rok) a `pageContainer` (sdílený sloupec obsahu: `max-w-7xl` + vodorovný okraj; v úkolu 6 nahradil `pagePaddingX`).
   - Navigace v hlavičce se ukazuje od `lg` (1024 px), pod tím je hamburger: na `md` se nevešla (EN „About me“ se zalamoval, přepínač jazyka vyjel z obrazovky). Na `lg` má `text-base`, od `xl` `text-lg`.
-  - Hlavička je `sticky` (větev `feat/sticky-header`): přes celou šířku, progresivní blur (4 vrstvy `backdrop-filter` s ubývajícím rozmazáním a maskou + postupně slábnoucí tónování, 4 rem pod hlavičku) – žádný okraj. Kotvy drží pod ní `scroll-padding-top` na `html`. Auto-hide (schování při scrollu dolů) zatím ne: potřeboval by klientský JS.
+  - Hlavička je `sticky` (větev `feat/sticky-header`): přes celou šířku, progresivní blur (4 vrstvy `backdrop-filter` s ubývajícím rozmazáním a maskou + postupně slábnoucí tónování, 4 rem pod hlavičku) – žádný okraj. Výška řádku hlavičky je token `--header-height` (4,75 rem): je to `min-height` hlavičky a používá ho `scroll-padding-top` na `html`, aby kotvy nezajely pod lištu. Auto-hide (schování při scrollu dolů) zatím ne: potřeboval by klientský JS.
   - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
   - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
   - Logo v hlavičce: při hoveru se tečka promění v blikající kurzor a jméno mu ustoupí (`dot-cursor-hover`, `name-push-hover` v `global.css`).
