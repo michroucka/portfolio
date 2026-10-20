@@ -25,6 +25,12 @@ const menuIconSize = "1.75em";
 
 <!-- Full-width sticky bar; the content row inside keeps to the page container. -->
 <header data-site-header class="sticky top-0 z-40">
+	<div data-header-backdrop aria-hidden="true">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</div>
 	<div class={headerClasses}>
 		<a href={homePath} class="group">
 			<Logo class={logoClasses} animateDotOnHover />
@@ -121,26 +127,60 @@ const menuIconSize = "1.75em";
 </header>
 
 <style>
-	/* Translucent blurred backdrop that reaches a little below the header and fades out,
-	   so content slides under it without a hard edge. It is a pseudo-element because the
-	   fading mask would otherwise fade the logo and navigation too. */
-	[data-site-header]::before {
-		content: "";
+	/* Progressive blur: the backdrop reaches 4rem below the header and every layer blurs less
+	   and fades out further down, so the blur and the tint taper off gradually instead of
+	   ending on one edge. It is a separate element because the fading masks would otherwise
+	   fade the logo and navigation too. */
+	[data-header-backdrop] {
 		position: absolute;
-		inset: 0 0 -1.5rem;
+		inset: 0 0 -4rem;
 		z-index: -1;
 		pointer-events: none;
-		background-color: color-mix(
-			in srgb,
-			var(--theme-background) 75%,
-			transparent
+		/* Eased tint: stays dense under the header, then thins out slowly. */
+		background: linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--theme-background) 85%, transparent) 0%,
+			color-mix(in srgb, var(--theme-background) 75%, transparent) 40%,
+			color-mix(in srgb, var(--theme-background) 50%, transparent) 55%,
+			color-mix(in srgb, var(--theme-background) 26%, transparent) 70%,
+			color-mix(in srgb, var(--theme-background) 9%, transparent) 85%,
+			transparent 100%
 		);
-		backdrop-filter: blur(12px);
+	}
+
+	[data-header-backdrop] span {
+		position: absolute;
+		inset: 0;
+		backdrop-filter: blur(var(--blur));
 		mask-image: linear-gradient(
 			to bottom,
-			black calc(100% - 1.5rem),
-			transparent
+			black var(--solid),
+			transparent var(--end)
 		);
+	}
+
+	[data-header-backdrop] span:nth-child(1) {
+		--blur: 12px;
+		--solid: 30%;
+		--end: 55%;
+	}
+
+	[data-header-backdrop] span:nth-child(2) {
+		--blur: 6px;
+		--solid: 40%;
+		--end: 70%;
+	}
+
+	[data-header-backdrop] span:nth-child(3) {
+		--blur: 3px;
+		--solid: 50%;
+		--end: 85%;
+	}
+
+	[data-header-backdrop] span:nth-child(4) {
+		--blur: 1px;
+		--solid: 60%;
+		--end: 100%;
 	}
 
 	:global(html:has(dialog[open])) {
