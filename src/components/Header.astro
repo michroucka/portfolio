@@ -2,7 +2,7 @@
 import { getDictionary, type Locale } from "../i18n";
 import { type Page, type RouteParams, getPath } from "../i18n/routes";
 import Logo from "./Logo.astro";
-import { sections } from "../lib/sections";
+import { getSectionHref, sections } from "../lib/sections";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import MenuIcon from "./icons/MenuIcon.astro";
 import { pageContainer } from "../lib/site";
@@ -34,7 +34,10 @@ const menuIconSize = "1.75em";
 			class="flex gap-6 text-lg font-stretch-expanded font-semibold"
 		>
 			{sections.map((section) => (
-				<a href={`${homePath}#${section}`} class="link-underline">
+				<a
+					href={getSectionHref(section, locale)}
+					class="link-underline"
+				>
 					{dictionary.nav[section]}
 				</a>
 			))}
@@ -92,7 +95,7 @@ const menuIconSize = "1.75em";
 		>
 			{sections.map((section, index) => (
 				<a
-					href={`${homePath}#${section}`}
+					href={getSectionHref(section, locale)}
 					style={{ "--index": index }}
 					class="flex items-center justify-between py-4"
 				>

@@ -1,7 +1,6 @@
 ---
 import { getDictionary, type Locale } from "../../i18n";
-import { getPath } from "../../i18n/routes";
-import type { Section } from "../../lib/sections";
+import { getSectionHref } from "../../lib/sections";
 import { splitLastWord } from "../../lib/text";
 import BrandDot from "../BrandDot.astro";
 
@@ -12,8 +11,6 @@ interface Props {
 const { locale } = Astro.props;
 const dictionary = getDictionary(locale);
 const titleParts = splitLastWord(dictionary.hero.title);
-const homePath = getPath("home", locale);
-const sectionHref = (section: Section) => `${homePath}#${section}`;
 ---
 
 <section class="py-16 md:py-28">
@@ -24,10 +21,10 @@ const sectionHref = (section: Section) => `${homePath}#${section}`;
 		{dictionary.hero.subtitle}
 	</p>
 	<div class="mt-10 flex flex-wrap gap-4">
-		<a href={sectionHref("contact")} class="button-primary">
+		<a href={getSectionHref("contact", locale)} class="button-primary">
 			{dictionary.hero.primaryCta}
 		</a>
-		<a href={sectionHref("projects")} class="button-secondary">
+		<a href={getSectionHref("projects", locale)} class="button-secondary">
 			{dictionary.hero.secondaryCta}
 		</a>
 	</div>

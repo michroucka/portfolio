@@ -1,8 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getDictionary, type Locale } from "../../i18n";
-import { getPath } from "../../i18n/routes";
-import type { Section as SectionId } from "../../lib/sections";
+import { getSectionHref } from "../../lib/sections";
 import ServiceCard from "../cards/ServiceCard.astro";
 import Section from "../Section.astro";
 
@@ -13,8 +12,6 @@ interface Props {
 
 const { services, locale } = Astro.props;
 const dictionary = getDictionary(locale);
-const contactSection: SectionId = "contact";
-const contactHref = `${getPath("home", locale)}#${contactSection}`;
 ---
 
 <Section id="services" title={dictionary.services.title}>
@@ -26,7 +23,10 @@ const contactHref = `${getPath("home", locale)}#${contactSection}`;
 	<p class="mt-8 text-muted">{dictionary.services.priceNote}</p>
 	<p class="mt-4">
 		{dictionary.services.somethingElse}{" "}
-		<a href={contactHref} class="font-semibold text-accent link-underline">
+		<a
+			href={getSectionHref("contact", locale)}
+			class="font-semibold text-accent link-underline"
+		>
 			{dictionary.services.somethingElseLink}
 		</a>
 	</p>
