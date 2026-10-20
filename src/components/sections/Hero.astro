@@ -32,7 +32,7 @@ const titleParts = splitLastWord(dictionary.hero.title);
 
 <style>
 	/* Grid of four-pointed marks behind the hero (variant B). The SVG is only a mask, so the colour
-	   comes from the Line token and follows the theme. It starts under the sticky header (4.75rem, see scroll-padding-top),
+	   comes from the Line token and follows the theme. It starts under the sticky header (--header-height),
 	   reaches over the main padding (1.5rem) and fades out towards the text and every edge. */
 	[data-hero]::before {
 		--cell: 4rem;
@@ -40,7 +40,7 @@ const titleParts = splitLastWord(dictionary.hero.title);
 
 		content: "";
 		position: absolute;
-		inset: -4.75rem calc(-1 * var(--bleed)) 0;
+		inset: calc(-1 * var(--header-height)) calc(-1 * var(--bleed)) 0;
 		z-index: -1;
 		pointer-events: none;
 		background-color: var(--theme-line);
