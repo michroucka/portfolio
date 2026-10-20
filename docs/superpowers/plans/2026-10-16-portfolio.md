@@ -219,6 +219,7 @@ přepínač tématu.
   - Karta projektu: odkazem je jen nadpis, `::after` ho roztáhne přes kartu. Cover má `alt=""`, název je hned vedle.
   - Obsah je omezený na `max-w-7xl` (1280 px): `pagePaddingX` nahradil `pageContainer` (`mx-auto w-full max-w-7xl px-6`) v hlavičce, mobilním menu, `<main>` i patičce. Okraj patičky zůstává přes celou šířku, kontejner je vnitřní `div`.
   - Fotka v About je `src/assets/about/portrait.jpg` (1600 px, zmenšený originál), texty sekcí jsou pracovní (#15).
+  - Kroky spolupráce tvoří časovou osu: od čísla vede čára k dalšímu číslu – na desktopu vodorovně v jedné řadě, na mobilu svisle po levém okraji. Poslední krok čáru nemá.
   - Pozadí hero (větev `feat/hero-grid`): mřížka čtyřcípých hvězd s rovnými hranami (buňka 4 rem, jedna hvězda na levém okraji obsahu). SVG je jen maska, barva je token Line (`#2A2D32` / `#DDD9D0`), takže se přepíná s tématem. Mizí ke všem okrajům a pod textem, na mobilu je slabší. Prohnutá hvězda ✦ zamítnuta – čte se jako ikona AI. Pravá strana hero zůstává pro velkou značku z úkolu 9.
 - *Otevřené:* odkaz z karty projektu vede na stránku case study, která vznikne až v úkolu 7.
 
