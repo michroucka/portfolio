@@ -17,9 +17,9 @@ const { locale, page, params } = Astro.props;
 const homePath = getPath("home", locale);
 const dictionary = getDictionary(locale);
 // Shared by the header and the mobile menu's top row – the menu and close buttons must line up exactly.
-const headerClasses = `${pageContainer} py-2 md:py-4 flex items-center justify-between`;
-const logoClasses = "w-44 md:w-60";
-const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.16em)]";
+const headerClasses = `${pageContainer} py-2 lg:py-4 flex items-center justify-between`;
+const logoClasses = "w-44 lg:w-60";
+const menuButtonClasses = "block lg:hidden p-4 -mr-[calc(1rem+0.16em)]";
 const menuIconSize = "1.75em";
 ---
 
@@ -36,10 +36,10 @@ const menuIconSize = "1.75em";
 			<Logo class={logoClasses} animateDotOnHover />
 		</a>
 
-		<div class="hidden md:flex items-center gap-6">
+		<div class="hidden lg:flex items-center gap-6">
 			<nav
 				aria-label={dictionary.header.navigation}
-				class="flex gap-6 text-lg font-stretch-expanded font-semibold"
+				class="flex gap-5 whitespace-nowrap text-base font-stretch-expanded font-semibold xl:gap-6 xl:text-lg"
 			>
 				{sections.map((section) => (
 					<a
@@ -270,7 +270,7 @@ const menuIconSize = "1.75em";
 		}
 	});
 
-	const desktopQuery = window.matchMedia("(min-width: 48rem)"); // Tailwind md breakpoint
+	const desktopQuery = window.matchMedia("(min-width: 64rem)"); // Tailwind lg breakpoint
 
 	desktopQuery.addEventListener("change", (event) => {
 		if (event.matches) {
