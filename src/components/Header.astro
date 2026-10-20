@@ -23,48 +23,51 @@ const menuButtonClasses = "block md:hidden p-4 -mr-[calc(1rem+0.16em)]";
 const menuIconSize = "1.75em";
 ---
 
-<header class={headerClasses}>
-	<a href={homePath} class="group">
-		<Logo class={logoClasses} animateDotOnHover />
-	</a>
+<!-- Full-width sticky bar; the content row inside keeps to the page container. -->
+<header data-site-header class="sticky top-0 z-40">
+	<div class={headerClasses}>
+		<a href={homePath} class="group">
+			<Logo class={logoClasses} animateDotOnHover />
+		</a>
 
-	<div class="hidden md:flex items-center gap-6">
-		<nav
-			aria-label={dictionary.header.navigation}
-			class="flex gap-6 text-lg font-stretch-expanded font-semibold"
+		<div class="hidden md:flex items-center gap-6">
+			<nav
+				aria-label={dictionary.header.navigation}
+				class="flex gap-6 text-lg font-stretch-expanded font-semibold"
+			>
+				{sections.map((section) => (
+					<a
+						href={getSectionHref(section, locale)}
+						class="link-underline"
+					>
+						{dictionary.nav[section]}
+					</a>
+				))}
+			</nav>
+
+			<!-- The divider belongs to the switcher – without it (e.g. 404) it would dangle at the end of the row -->
+			{page && (
+				<>
+					<span aria-hidden="true" class="h-5 w-px bg-line"></span>
+					<LanguageSwitcher
+						locale={locale}
+						page={page}
+						params={params}
+						class="-mx-2"
+					/>
+				</>
+			)}
+		</div>
+
+		<button
+			type="button"
+			data-menu-open
+			aria-label={dictionary.header.menuOpen}
+			class={menuButtonClasses}
 		>
-			{sections.map((section) => (
-				<a
-					href={getSectionHref(section, locale)}
-					class="link-underline"
-				>
-					{dictionary.nav[section]}
-				</a>
-			))}
-		</nav>
-
-		<!-- The divider belongs to the switcher – without it (e.g. 404) it would dangle at the end of the row -->
-		{page && (
-			<>
-				<span aria-hidden="true" class="h-5 w-px bg-line"></span>
-				<LanguageSwitcher
-					locale={locale}
-					page={page}
-					params={params}
-					class="-mx-2"
-				/>
-			</>
-		)}
+			<MenuIcon size={menuIconSize} />
+		</button>
 	</div>
-
-	<button
-		type="button"
-		data-menu-open
-		aria-label={dictionary.header.menuOpen}
-		class={menuButtonClasses}
-	>
-		<MenuIcon size={menuIconSize} />
-	</button>
 
 	<!-- On close the dialog loses [open] immediately but stays visible for the transition (allow-discrete),
 	     so its position and layout must not depend on [open] (fixed inset-0, flex-col always) – only display (open:flex). -->
@@ -118,6 +121,28 @@ const menuIconSize = "1.75em";
 </header>
 
 <style>
+	/* Translucent blurred backdrop that reaches a little below the header and fades out,
+	   so content slides under it without a hard edge. It is a pseudo-element because the
+	   fading mask would otherwise fade the logo and navigation too. */
+	[data-site-header]::before {
+		content: "";
+		position: absolute;
+		inset: 0 0 -1.5rem;
+		z-index: -1;
+		pointer-events: none;
+		background-color: color-mix(
+			in srgb,
+			var(--theme-background) 75%,
+			transparent
+		);
+		backdrop-filter: blur(12px);
+		mask-image: linear-gradient(
+			to bottom,
+			black calc(100% - 1.5rem),
+			transparent
+		);
+	}
+
 	:global(html:has(dialog[open])) {
 		overflow: hidden;
 	}

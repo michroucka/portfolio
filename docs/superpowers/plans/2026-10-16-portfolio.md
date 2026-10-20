@@ -145,6 +145,7 @@ přepínač tématu.
   - Rok v © je napevno (`siteDetails.launchYear`) – v © se píše rok prvního zveřejnění, nemusí se aktualizovat.
 - *Nad rámec plánu:*
   - `src/lib/site.ts` – údaje o webu (e-mail, telefon, IČO, rok) a `pageContainer` (sdílený sloupec obsahu: `max-w-7xl` + vodorovný okraj; v úkolu 6 nahradil `pagePaddingX`).
+  - Hlavička je `sticky` (větev `feat/sticky-header`): přes celou šířku, poloprůhledné pozadí s rozmazáním (`::before` s `backdrop-filter`), které k dolnímu okraji plynule mizí maskou – žádný okraj. Kotvy drží pod ní `scroll-padding-top` na `html`. Auto-hide (schování při scrollu dolů) zatím ne: potřeboval by klientský JS.
   - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
   - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
   - Logo v hlavičce: při hoveru se tečka promění v blikající kurzor a jméno mu ustoupí (`dot-cursor-hover`, `name-push-hover` v `global.css`).
