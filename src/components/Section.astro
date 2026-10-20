@@ -1,0 +1,21 @@
+---
+import type { Section } from "../lib/sections";
+
+interface Props {
+	id: Section;
+	title: string;
+}
+
+const { id, title } = Astro.props;
+// aria-labelledby turns the section into a named region landmark for screen readers.
+const titleId = `${id}-title`;
+---
+
+<section id={id} aria-labelledby={titleId} class="py-16 md:py-24">
+	<h2 id={titleId} class="text-3xl md:text-4xl">
+		{title}
+	</h2>
+	<div class="mt-10">
+		<slot />
+	</div>
+</section>

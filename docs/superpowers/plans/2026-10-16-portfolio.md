@@ -141,10 +141,10 @@ přepínač tématu.
   - Ikona menu `MenuIcon.astro` je vlastní (dvě hranaté čáry, spodní kratší), morf do křížku jen přes CSS uvnitř otevřeného dialogu.
   - Přepínač jazyka: zkratky „CS · EN“ (ne vlajky), autonyma v `languageNames` (`i18n/index.ts`). Je v hlavičce (desktop, oddělený svislou čárou), v mobilním menu i v patičce. Bez `page` (404) se nevykreslí.
   - `page` je v `BaseLayout`/`Seo`/`Header`/`Footer` volitelné – bez něj žádný canonical/hreflang/`og:url`, přidá se `noindex`. Využívá 404.
-  - Logo: `viewBox` oříznutý o ochrannou zónu (zarovnání s layoutem), ochrannou zónu drží odsazení `pagePaddingX`.
+  - Logo: `viewBox` oříznutý o ochrannou zónu (zarovnání s layoutem), ochrannou zónu drží odsazení `pageContainer`.
   - Rok v © je napevno (`siteDetails.launchYear`) – v © se píše rok prvního zveřejnění, nemusí se aktualizovat.
 - *Nad rámec plánu:*
-  - `src/lib/site.ts` – údaje o webu (e-mail, telefon, IČO, rok) a `pagePaddingX` (sdílený vodorovný okraj).
+  - `src/lib/site.ts` – údaje o webu (e-mail, telefon, IČO, rok) a `pageContainer` (sdílený sloupec obsahu: `max-w-7xl` + vodorovný okraj; v úkolu 6 nahradil `pagePaddingX`).
   - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
   - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
   - Logo v hlavičce: při hoveru se tečka promění v blikající kurzor a jméno mu ustoupí (`dot-cursor-hover`, `name-push-hover` v `global.css`).
@@ -195,16 +195,29 @@ přepínač tématu.
 
 **Konzumuje:** kolekce a pomocné funkce (Úkol 5), mapu cest (Úkol 3).
 
-- [ ] Komponenta pro **kulatou tečku značky** (`src/components/BrandDot.astro`): ne znak `.` z písma (ten je hranatý), ale prvek s kulatým tvarem v barvě akcentu, průměr ~0,23 em, přesně na účaří (`brand/README.md` § 4). Pro čtečky obrazovky musí věta pořád končit tečkou – rozmysli, jak (vizuálně skrytý text vs. `aria-hidden`).
-- [ ] `Hero`: nadpis jako celá věta zakončená `BrandDot`, podnadpis, CTA „Nezávazná konzultace“ (kotva na kontakt) a vedlejší CTA „Ukázky práce“.
-- [ ] `Services` + `ServiceCard`: data z kolekce, cena formátovaná podle jazyka (`Intl.NumberFormat`, „od 15 000 Kč“ / „from CZK 15,000“), věta „přesná cena po nezávazné konzultaci“. Pod kartami řádek „Potřebujete něco jiného? Pojďme se pobavit.“ s odkazem na kontakt – text ze slovníku, ne čtvrtý záznam v kolekci (nemá cenu ani `features`, rozbil by schéma). Čtvrtou kartu zamítnuto: překrývala by se s „Aplikací na míru“ a 3 + 1 se hůř skládá do mřížky.
-- [ ] `FeaturedProjects` + `ProjectCard`: jen `featured`, seřazené; cover přes `<Image>`; odkaz z mapy cest; štítek `type`.
-- [ ] `Process`: 4–5 kroků ze slovníku (konzultace → návrh → vývoj → spuštění → podpora).
-- [ ] `About`: krátký text, fotka přes `<Image>`, Plzeň.
-- [ ] `Contact`: zatím jen sekce s nadpisem a e-mailem/telefonem; formulář přijde v Úkolu 8.
-- [ ] Každá sekce má `id` pro kotvy z hlavičky a nadpis `<h2>`; na stránce je jediný `<h1>` (v Hero).
+- [x] Komponenta pro **kulatou tečku značky** (`src/components/BrandDot.astro`): ne znak `.` z písma (ten je hranatý), ale prvek s kulatým tvarem v barvě akcentu, průměr ~0,23 em, přesně na účaří (`brand/README.md` § 4). Pro čtečky obrazovky musí věta pořád končit tečkou – rozmysli, jak (vizuálně skrytý text vs. `aria-hidden`).
+- [x] `Hero`: nadpis jako celá věta zakončená `BrandDot`, podnadpis, CTA „Nezávazná konzultace“ (kotva na kontakt) a vedlejší CTA „Ukázky práce“.
+- [x] `Services` + `ServiceCard`: data z kolekce, cena formátovaná podle jazyka (`Intl.NumberFormat`, „od 15 000 Kč“ / „from CZK 15,000“), věta „přesná cena po nezávazné konzultaci“. Pod kartami řádek „Potřebujete něco jiného? Pojďme se pobavit.“ s odkazem na kontakt – text ze slovníku, ne čtvrtý záznam v kolekci (nemá cenu ani `features`, rozbil by schéma). Čtvrtou kartu zamítnuto: překrývala by se s „Aplikací na míru“ a 3 + 1 se hůř skládá do mřížky.
+- [x] `FeaturedProjects` + `ProjectCard`: jen `featured`, seřazené; cover přes `<Image>`; odkaz z mapy cest; štítek `type`.
+- [x] `Process`: 4–5 kroků ze slovníku (konzultace → návrh → vývoj → spuštění → podpora).
+- [x] `About`: krátký text, fotka přes `<Image>`, okolí Plzně.
+- [x] `Contact`: zatím jen sekce s nadpisem a e-mailem/telefonem; formulář přijde v Úkolu 8.
+- [x] Každá sekce má `id` pro kotvy z hlavičky a nadpis `<h2>`; na stránce je jediný `<h1>` (v Hero).
 - [ ] **Ověření:** obě jazykové verze homepage na mobilu (375 px) i desktopu, obě témata; žádný text natvrdo mimo slovník (zkontroluj EN verzi, jestli v ní nezůstala čeština).
 - [ ] Commit: `feat: homepage sections`
+
+**Poznámky k provedení** (větev `feat/homepage`):
+
+- *Rozhodnutí:*
+  - `formatPrice` (`src/lib/price.ts`) formátuje přes `Intl.NumberFormat` s holým `cs` / `en` a výchozím `currencyDisplay`: angličtina nemá pro korunu symbol, takže vypíše „CZK“, kdežto `"code"` by v češtině ukázal „CZK“ místo „Kč“. V EN zůstávají koruny – fakturuje se v Kč a EN verze cílí na cizince podnikající v ČR.
+  - Cena i s předponou „od“ / „from“ je ve `whitespace-nowrap`: nezlomitelné mezery z Intl nepokryjí mezeru za předponou ze šablony.
+  - `BrandDot` obaluje poslední slovo nadpisu (slot + `whitespace-nowrap`), aby tečka nezůstala sama na novém řádku; čtečky dostanou `sr-only` tečku. Nadpis se dělí přes `splitLastWord` (`src/lib/text.ts`), takže slovník drží celou větu; nezlomitelná mezera není hranice slova.
+  - `Section.astro` sjednocuje `<section id>` (typ `Section` ze `sections.ts`), `<h2>` a `aria-labelledby`. Šířka 125 a váha nadpisů jsou v `@layer base`, velikosti zůstávají v markupu.
+  - Tlačítka jako utility `button` / `button-primary` / `button-secondary` v `global.css` (fungují na `<a>` i `<button>` pro úkol 8). Obrys sekundárního je Ash / Ash Deep – Line má na Ink jen ~1,4 : 1.
+  - Karta projektu: odkazem je jen nadpis, `::after` ho roztáhne přes kartu. Cover má `alt=""`, název je hned vedle.
+  - Obsah je omezený na `max-w-7xl` (1280 px): `pagePaddingX` nahradil `pageContainer` (`mx-auto w-full max-w-7xl px-6`) v hlavičce, mobilním menu, `<main>` i patičce. Okraj patičky zůstává přes celou šířku, kontejner je vnitřní `div`.
+  - Fotka v About je `src/assets/about/portrait.jpg` (1600 px, zmenšený originál), texty sekcí jsou pracovní (#15).
+- *Otevřené:* odkaz z karty projektu vede na stránku case study, která vznikne až v úkolu 7.
 
 ### Úkol 7: Stránky case studies a MDX komponenty
 

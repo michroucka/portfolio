@@ -1,7 +1,7 @@
 ---
 import { getDictionary, type Locale } from "../i18n";
 import { getPath, type Page, type RouteParams } from "../i18n/routes";
-import { pagePaddingX, siteDetails } from "../lib/site";
+import { pageContainer, siteDetails } from "../lib/site";
 import ThemeToggle from "./ThemeToggle.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 
@@ -19,50 +19,53 @@ const year = siteDetails.launchYear;
 
 // Mobile: stacked settings → contact → legal (DOM order).
 // Desktop: legal on the left, contact + settings on the right (md:order-*).
-const footerClasses = `${pagePaddingX} py-8 md:py-6 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between border-t border-line text-muted text-sm font-stretch-expanded font-semibold`;
+// The border spans the full width; only the content inside follows the page container.
+const footerContentClasses = `${pageContainer} py-8 md:py-6 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between text-muted text-sm font-stretch-expanded font-semibold`;
 
 // ≥ 44 px touch target without affecting layout: padding cancelled by an equal negative margin.
 const linkClasses = "py-3 -my-3 hover:text-foreground link-underline";
 ---
 
-<footer class={footerClasses}>
-	<div class="flex flex-col items-start gap-6 md:order-last md:flex-row md:items-center md:gap-8">
-		<div class="flex items-center gap-6 md:order-last">
-			<!-- Negative margins cancel the switcher links' padding: on mobile "CS" starts at the content edge
+<footer class="border-t border-line">
+	<div class={footerContentClasses}>
+		<div class="flex flex-col items-start gap-6 md:order-last md:flex-row md:items-center md:gap-8">
+			<div class="flex items-center gap-6 md:order-last">
+				<!-- Negative margins cancel the switcher links' padding: on mobile "CS" starts at the content edge
 			     and the row is no taller than the others; on desktop the gaps to the neighbours match. -->
-			{page && (
-				<LanguageSwitcher
-					locale={locale}
-					page={page}
-					params={params}
-					class="-ml-3 -my-2 md:-mx-2"
-					landmark={false}
+				{page && (
+					<LanguageSwitcher
+						locale={locale}
+						page={page}
+						params={params}
+						class="-ml-3 -my-2 md:-mx-2"
+						landmark={false}
+					/>
+				)}
+				<!-- p-3 -m-3: ≥ 44 px touch target, the icon stays put (at the content edge on desktop) -->
+				<ThemeToggle
+					label={dictionary.footer.lightThemeToggle}
+					class="p-3 -m-3 hover:text-foreground motion-safe:transition-colors"
+					size="2em"
 				/>
-			)}
-			<!-- p-3 -m-3: ≥ 44 px touch target, the icon stays put (at the content edge on desktop) -->
-			<ThemeToggle
-				label={dictionary.footer.lightThemeToggle}
-				class="p-3 -m-3 hover:text-foreground motion-safe:transition-colors"
-				size="2em"
-			/>
+			</div>
+			<a href={`mailto:${email}`} class={linkClasses}>
+				{email}
+			</a>
 		</div>
-		<a href={`mailto:${email}`} class={linkClasses}>
-			{email}
-		</a>
-	</div>
 
-	<div class="flex flex-col items-start gap-6 md:order-first md:flex-row md:items-center md:gap-8">
-		<!-- Mobile: privacy, company ID, © (the link first). Desktop: ©, company ID, privacy (md:order-*). -->
-		<a href={privacyPath} class:list={[linkClasses, "md:order-last"]}>
-			{dictionary.footer.privacy}
-		</a>
-		{siteDetails.ico && (
-			<span>
-				{dictionary.footer.companyId} {siteDetails.ico}
+		<div class="flex flex-col items-start gap-6 md:order-first md:flex-row md:items-center md:gap-8">
+			<!-- Mobile: privacy, company ID, © (the link first). Desktop: ©, company ID, privacy (md:order-*). -->
+			<a href={privacyPath} class:list={[linkClasses, "md:order-last"]}>
+				{dictionary.footer.privacy}
+			</a>
+			{siteDetails.ico && (
+				<span>
+					{dictionary.footer.companyId} {siteDetails.ico}
+				</span>
+			)}
+			<span class="md:order-first">
+				© {year} {siteDetails.name}
 			</span>
-		)}
-		<span class="md:order-first">
-			© {year} {siteDetails.name}
-		</span>
+		</div>
 	</div>
 </footer>

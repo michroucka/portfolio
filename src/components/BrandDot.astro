@@ -1,0 +1,12 @@
+---
+// nowrap keeps the last word and the dot together; the sr-only "." ends the sentence for screen readers.
+---
+
+<span class="whitespace-nowrap">
+	<slot />
+	<span
+		aria-hidden="true"
+		class="ms-[0.065em] inline-block h-[0.23em] w-[0.23em] rounded-full bg-accent align-baseline"
+	></span>
+	<span class="sr-only">.</span>
+</span>

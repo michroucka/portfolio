@@ -1,0 +1,46 @@
+---
+import { getDictionary, type Locale } from "../../i18n";
+import { siteDetails } from "../../lib/site";
+import Section from "../Section.astro";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = getDictionary(locale);
+const { email, phone } = siteDetails;
+// tel: links need the number without spaces (RFC 3966).
+const phoneHref = phone && `tel:${phone.replaceAll(" ", "")}`;
+---
+
+<Section id="contact" title={dictionary.contact.title}>
+	<p class="max-w-[60ch] text-lg">{dictionary.contact.intro}</p>
+	<dl class="mt-8 grid gap-6 sm:grid-cols-2 md:max-w-2xl">
+		<div>
+			<dt class="text-sm font-semibold text-muted uppercase">
+				{dictionary.contact.emailLabel}
+			</dt>
+			<dd class="mt-1 text-xl">
+				<a href={`mailto:${email}`} class="link-underline">
+					{email}
+				</a>
+			</dd>
+		</div>
+		{phone && (
+			<div>
+				<dt class="text-sm font-semibold text-muted uppercase">
+					{dictionary.contact.phoneLabel}
+				</dt>
+				<dd class="mt-1 text-xl">
+					<a
+						href={phoneHref}
+						class="whitespace-nowrap link-underline"
+					>
+						{phone}
+					</a>
+				</dd>
+			</div>
+		)}
+	</dl>
+</Section>

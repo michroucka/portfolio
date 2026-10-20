@@ -98,7 +98,7 @@ One-pager, ze kterého návštěvník během pár sekund pochopí, co Michal nab
 
 ### Kontext
 
-Úkol 6 plánu. Typografická škála a `pagePaddingX` (`src/lib/site.ts`) už existují z úkolu 4.
+Úkol 6 plánu. Typografická škála a `pageContainer` (dříve `pagePaddingX`, `src/lib/site.ts`) už existují z úkolu 4.
 Kotvy sekcí v hlavičce bere `src/lib/sections.ts`.
 
 ### Co udělat
