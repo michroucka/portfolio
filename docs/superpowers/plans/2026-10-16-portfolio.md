@@ -200,7 +200,7 @@ přepínač tématu.
 - [x] `Services` + `ServiceCard`: data z kolekce, cena formátovaná podle jazyka (`Intl.NumberFormat`, „od 15 000 Kč“ / „from CZK 15,000“), věta „přesná cena po nezávazné konzultaci“. Pod kartami řádek „Potřebujete něco jiného? Pojďme se pobavit.“ s odkazem na kontakt – text ze slovníku, ne čtvrtý záznam v kolekci (nemá cenu ani `features`, rozbil by schéma). Čtvrtou kartu zamítnuto: překrývala by se s „Aplikací na míru“ a 3 + 1 se hůř skládá do mřížky.
 - [x] `FeaturedProjects` + `ProjectCard`: jen `featured`, seřazené; cover přes `<Image>`; odkaz z mapy cest; štítek `type`.
 - [x] `Process`: 4–5 kroků ze slovníku (konzultace → návrh → vývoj → spuštění → podpora).
-- [x] `About`: krátký text, fotka přes `<Image>`, Plzeň.
+- [x] `About`: krátký text, fotka přes `<Image>`, okolí Plzně.
 - [x] `Contact`: zatím jen sekce s nadpisem a e-mailem/telefonem; formulář přijde v Úkolu 8.
 - [x] Každá sekce má `id` pro kotvy z hlavičky a nadpis `<h2>`; na stránce je jediný `<h1>` (v Hero).
 - [ ] **Ověření:** obě jazykové verze homepage na mobilu (375 px) i desktopu, obě témata; žádný text natvrdo mimo slovník (zkontroluj EN verzi, jestli v ní nezůstala čeština).

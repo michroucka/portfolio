@@ -81,7 +81,7 @@ export const cs = {
 	about: {
 		title: "O mně",
 		text: [
-			"Jsem Michal Roučka, vývojář z Plzně. Malým firmám stavím weby a aplikace, které jim šetří čas a přivádějí zákazníky.",
+			"Jsem Michal Roučka, vývojář z okolí Plzně. Malým firmám stavím weby a aplikace, které jim šetří čas a přivádějí zákazníky.",
 			"Pracuji sám, takže mluvíte vždy přímo se mnou – s tím, kdo váš web navrhuje i programuje. Žádní prostředníci a žádné agenturní přirážky.",
 		],
 		photoAlt: "Portrét Michala Roučky",

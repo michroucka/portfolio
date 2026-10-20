@@ -9,7 +9,7 @@
 ## 1. Cíl a kontext
 
 ### Účel
-Web, přes který Michal (student navazujícího magisterského studia, solo freelancer, živnost jako vedlejší činnost, Plzeň) nabízí tvorbu webů
+Web, přes který Michal (student navazujícího magisterského studia, solo freelancer, živnost jako vedlejší činnost, okolí Plzně – malé město, které čtenáři nic neřekne, proto se na webu uvádí „okolí Plzně“) nabízí tvorbu webů
 a webových aplikací malým firmám, které web nemají nebo mají zastaralý.
 
 ### Cílová skupina
@@ -50,7 +50,7 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
   ├─ Služby               – 3 karty s cenou „od"
   ├─ Vybrané projekty     – 2–3 karty → case studies
   ├─ Jak spolupráce probíhá – 4–5 kroků (konzultace → návrh → vývoj → spuštění → podpora)
-  ├─ O mně                – krátce, fotka, Plzeň
+  ├─ O mně                – krátce, fotka, okolí Plzně
   └─ Kontakt              – formulář + e-mail/telefon
 
 /projekty/[slug]          Case study

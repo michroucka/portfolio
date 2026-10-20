@@ -82,7 +82,7 @@ export const en: Dictionary = {
 	about: {
 		title: "About me",
 		text: [
-			"I’m Michal Roučka, a developer based in Pilsen. I build websites and applications that save small businesses time and bring them customers.",
+			"I’m Michal Roučka, a developer based near Pilsen. I build websites and applications that save small businesses time and bring them customers.",
 			"I work on my own, so you always talk directly to me – the person who designs and codes your website. No middlemen and no agency markup.",
 		],
 		photoAlt: "Portrait of Michal Roučka",
