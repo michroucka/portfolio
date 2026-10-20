@@ -41,6 +41,8 @@ na světlém vždy `positive`.
 | Ash Deep | `#64635E` | 100 99 94 | vedlejší text na světlém | 5,4 : 1 na Paper |
 | Signal | `#FF6A3D` | 255 106 61 | akcent na tmavém: tečka, CTA, odkazy | 6,7 : 1 na Ink |
 | Signal Deep | `#C2410C` | 194 65 12 | akcent na světlém | 4,7 : 1 na Paper |
+| Signal Light | `#FF7F57` | 255 127 87 | hover akcentu na tmavém (CTA) | Ink na ní 7,7 : 1 |
+| Signal Dark | `#9A3412` | 154 52 18 | hover akcentu na světlém (CTA) | Paper na ní 6,6 : 1 |
 | Chalk | `#FCFBF8` | 252 251 248 | plochy a karty ve světlém tématu | Ink 18,5 : 1 · Ash Deep 5,8 : 1 · Signal Deep 5,0 : 1 |
 | Line | `#2A2D32` | 42 45 50 | oddělovače a okraje karet v tmavém | dekorativní |
 | Line Light | `#DDD9D0` | 221 217 208 | oddělovače a okraje karet ve světlém | dekorativní |
@@ -49,6 +51,7 @@ na světlém vždy `positive`.
 **Okraje formulářových polí** musí mít kontrast ≥ 3 : 1 (WCAG 1.4.11) – použij Ash (tmavé) / Ash Deep (světlé), ne Line.
 
 Tlačítko CTA: na tmavém pozadí Signal, text Ink (6,7 : 1); na světlém pozadí Signal Deep, text Paper (4,7 : 1) – Ink na Signal Deep má jen 3,7 : 1, nepoužívat.
+Hover CTA jen posune odstín akcentu, text zůstává: na tmavém Signal Light (zesvětlí), na světlém Signal Dark (ztmaví).
 Signal na Paper (2,6 : 1) **nepoužívat** – na světlém vždy Signal Deep.
 Pro tisk nech CMYK/Pantone převést a nátiskovat v tiskárně.
 
