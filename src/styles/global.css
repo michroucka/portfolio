@@ -273,9 +273,9 @@ body {
 
 /* Muted (Ash / Ash Deep) border: Line is ~1.4 : 1 on Ink, below the 3 : 1 needed for a control outline. */
 @utility button-secondary {
-	@apply button border-line bg-transparent text-foreground;
+	@apply button border-muted bg-transparent text-foreground;
 
 	&:hover {
-		@apply border-muted;
+		@apply border-foreground;
 	}
 }
