@@ -36,6 +36,7 @@
 	--theme-surface: #1b1d21;
 	--theme-muted: #a09f99;
 	--theme-accent: #ff6a3d;
+	--theme-accent-hover: #ff7f57;
 	--theme-accent-foreground: #0e0f11;
 	--theme-line: #2a2d32;
 	--theme-input: #a09f99;
@@ -48,6 +49,7 @@
 	--theme-surface: #fcfbf8;
 	--theme-muted: #64635e;
 	--theme-accent: #c2410c;
+	--theme-accent-hover: #9a3412;
 	--theme-accent-foreground: #f5f3ee;
 	--theme-line: #ddd9d0;
 	--theme-input: #64635e;
@@ -63,6 +65,7 @@
 	--color-surface: var(--theme-surface);
 	--color-muted: var(--theme-muted);
 	--color-accent: var(--theme-accent);
+	--color-accent-hover: var(--theme-accent-hover);
 	--color-accent-foreground: var(--theme-accent-foreground);
 	--color-line: var(--theme-line);
 	--color-input: var(--theme-input);
@@ -272,12 +275,12 @@ body {
 }
 
 /* Accent pair from brand/README.md § 2: Signal + Ink on dark, Signal Deep + Paper on light.
-   Hover swaps to the foreground colour – the palette has no lighter accent shade. */
+   Hover shifts the shade: Signal Light on dark, Signal Dark on light – the text keeps its colour. */
 @utility button-primary {
 	@apply button border-accent bg-accent text-accent-foreground;
 
 	&:hover {
-		@apply border-foreground bg-foreground text-background;
+		@apply border-accent-hover bg-accent-hover;
 	}
 }
 

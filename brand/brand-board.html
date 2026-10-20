@@ -11,7 +11,7 @@
   :root {
     --ink: #0E0F11; --graphite: #1B1D21; --paper: #F5F3EE;
     --ash: #A09F99; --ash-deep: #64635E;
-    --signal: #FF6A3D; --signal-deep: #C2410C;
+    --signal: #FF6A3D; --signal-deep: #C2410C; --signal-light: #FF7F57; --signal-dark: #9A3412;
     --chalk: #FCFBF8; --line: #2A2D32; --line-light: #DDD9D0;
   }
   * { box-sizing: border-box; margin: 0; }
@@ -104,6 +104,12 @@
     <div class="sw" style="background:var(--ink); border:1px solid var(--line); min-height:120px"><b>Line</b>#2A2D32<br>Oddělovače a okraje karet v tmavém tématu</div>
     <div class="sw" style="background:var(--paper); color:var(--ink); border:1px solid var(--line-light); min-height:120px"><b>Line Light</b>#DDD9D0<br>Oddělovače a okraje karet ve světlém tématu</div>
     <div class="sw" style="background:transparent; border:1px dashed var(--line); color:var(--ash); min-height:120px">Okraje formulářových polí potřebují 3 : 1 – použij Ash (tmavé) / Ash Deep (světlé), ne Line.</div>
+  </div>
+  <div class="grid g4" style="margin-top:16px">
+    <div class="sw" style="background:var(--signal-light); color:var(--ink); min-height:120px"><b>Signal Light</b>#FF7F57<br>Hover CTA na tmavém (Ink na ní 7,7 : 1)</div>
+    <div class="sw" style="background:var(--signal-dark); min-height:120px"><b>Signal Dark</b>#9A3412<br>Hover CTA na světlém (Paper na ní 6,6 : 1)</div>
+    <div class="sw" style="background:transparent; border:1px dashed var(--line); color:var(--ash); min-height:120px">Hover jen posune odstín akcentu:
+      na tmavém zesvětlí, na světlém ztmaví. Text tlačítka zůstává.</div>
   </div>
 
   <h2>Typografie – jedna rodina, dvě šířky</h2>

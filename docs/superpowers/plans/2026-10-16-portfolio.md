@@ -24,7 +24,7 @@ Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `pre
 - Odkazy nikdy ručně skládanými stringy – vždy přes mapu cest / `getRelativeLocaleUrl`.
 - Komponenty `.astro`, žádný React ani UI knihovna. Klientský JS jen: Turnstile, mobilní menu, přepínač tématu, animace loga.
 - Barvy jen z palety: Ink `#0E0F11`, Graphite `#1B1D21`, Paper `#F5F3EE`, Ash `#A09F99`, Ash Deep `#64635E`,
-  Signal `#FF6A3D`, Signal Deep `#C2410C`, Chalk `#FCFBF8` (plocha ve světlém), Line `#2A2D32` / Line Light `#DDD9D0`
+  Signal `#FF6A3D`, Signal Deep `#C2410C`, Signal Light `#FF7F57` / Signal Dark `#9A3412` (hover CTA), Chalk `#FCFBF8` (plocha ve světlém), Line `#2A2D32` / Line Light `#DDD9D0`
   (okraje). Signal na Paper se nepoužívá. Okraje formulářových polí Ash / Ash Deep (≥ 3 : 1).
 - Písmo: Archivo (variabilní, osy `wdth`, `wght`), self-hosted, `font-display: swap`; nadpisy `wdth` 125, text `wdth` 100.
 - Téma: výchozí tmavé, světlé podle `prefers-color-scheme`, ruční přepínač v patičce.
@@ -219,6 +219,8 @@ přepínač tématu.
   - Karta projektu: odkazem je jen nadpis, `::after` ho roztáhne přes kartu. Cover má `alt=""`, název je hned vedle.
   - Obsah je omezený na `max-w-7xl` (1280 px): `pagePaddingX` nahradil `pageContainer` (`mx-auto w-full max-w-7xl px-6`) v hlavičce, mobilním menu, `<main>` i patičce. Okraj patičky zůstává přes celou šířku, kontejner je vnitřní `div`.
   - Fotka v About je `src/assets/about/portrait.jpg` (1600 px, zmenšený originál), texty sekcí jsou pracovní (#15).
+  - Kroky spolupráce tvoří časovou osu: od čísla vede čára k dalšímu číslu – na desktopu vodorovně v jedné řadě, na mobilu svisle po levém okraji. Poslední krok čáru nemá.
+  - Pozadí hero (větev `feat/hero-grid`): mřížka čtyřcípých hvězd s rovnými hranami (buňka 4 rem, jedna hvězda na levém okraji obsahu). SVG je jen maska, barva je token Line (`#2A2D32` / `#DDD9D0`), takže se přepíná s tématem. Mizí ke všem okrajům a pod textem, na mobilu je slabší. Prohnutá hvězda ✦ zamítnuta – čte se jako ikona AI. Pravá strana hero zůstává pro velkou značku z úkolu 9.
 - *Otevřené:* odkaz z karty projektu vede na stránku case study, která vznikne až v úkolu 7.
 
 ### Úkol 7: Stránky case studies a MDX komponenty

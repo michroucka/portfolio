@@ -14,13 +14,23 @@ const dictionary = getDictionary(locale);
 
 <Section id="about" title={dictionary.about.title}>
 	<div class="grid items-start gap-8 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12">
-		<Image
-			src={portrait}
-			alt={dictionary.about.photoAlt}
-			widths={[320, 640]}
-			sizes="(min-width: 768px) 20rem, 100vw"
-			class="aspect-square w-full max-w-80 object-cover"
-		/>
+		<div data-portrait class="relative w-full max-w-80">
+			<Image
+				src={portrait}
+				alt={dictionary.about.photoAlt}
+				widths={[320, 640]}
+				sizes="(min-width: 768px) 20rem, 100vw"
+				class="relative aspect-square w-full object-cover"
+			/>
+			<span data-corner-mark class="-top-[11px] -left-[11px]"></span>
+			<span data-corner-mark class="-top-[11px] -right-[11px]"></span>
+			<span data-corner-mark class="-bottom-[11px] -left-[11px]"></span>
+			<span data-corner-mark class="-right-[11px] -bottom-[11px]"></span>
+			<span
+				data-corner-mark
+				class="-right-[29px] -bottom-[29px] hidden opacity-50 sm:block"
+			></span>
+		</div>
 		<div class="max-w-[60ch] space-y-4 text-lg">
 			{dictionary.about.text.map((paragraph) => (
 				<p>{paragraph}</p>
@@ -28,3 +38,24 @@ const dictionary = getDictionary(locale);
 		</div>
 	</div>
 </Section>
+
+<style>
+	/* The photo looks "selected" like an object on a canvas: an offset Line frame behind it
+	   and the hero's four-pointed stars on its corners; the fainter one marks the frame's corner. */
+	[data-portrait]::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		translate: 1.125rem 1.125rem;
+		border: 1px solid var(--theme-line);
+	}
+
+	[data-corner-mark] {
+		position: absolute;
+		width: 22px;
+		height: 22px;
+		background-color: var(--theme-muted);
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-11 -11 22 22'%3E%3Cpath d='M0-10 1.6-1.6 10 0 1.6 1.6 0 10-1.6 1.6-10 0-1.6-1.6Z'/%3E%3C/svg%3E")
+			center / contain no-repeat;
+	}
+</style>
