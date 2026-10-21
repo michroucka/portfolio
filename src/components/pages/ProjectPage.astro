@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { Locale } from "../../i18n";
+import Gallery from "../mdx/Gallery.astro";
+import Quote from "../mdx/Quote.astro";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+	locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+
+// TODO: slug přes parseProjectId, tělo MDX přes render(project) z astro:content
+// TODO: og:image přes getImage() z astro:assets (cover, šířka 1200, formát jpg) → předej .src jako ogImage
+// TODO: BaseLayout s page="project" a params={{ slug }} – z toho vznikne canonical, hreflang i přepínač jazyka
+// TODO: obsah: typ (dictionary.projects.types), <h1> title, summary, cover přes <Image> (sizes podle max-w-7xl jako v ProjectCard)
+// TODO: <Content components={{ Gallery, Quote }} />
+// TODO: štítky technologií, odkazy liveUrl/repoUrl jen když existují, testimonial přes Quote jen když existuje
+// TODO: CTA na kontakt přes getSectionHref
+// TODO: nové texty (popisky odkazů, štítků, CTA) do cs.ts i en.ts
+---

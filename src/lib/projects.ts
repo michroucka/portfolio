@@ -44,6 +44,7 @@ export function getProjectsForLocale<T extends ProjectEntry>(
 	const selectedEntries = options?.featuredOnly
 		? entriesOfLocale.filter((entry) => entry.data.featured)
 		: entriesOfLocale;
+	// TODO: při shodném `order` řaď podle slugu (parseProjectId), ať je pořadí stejné v obou jazycích i na každém stroji
 	return selectedEntries.toSorted((a, b) => a.data.order - b.data.order);
 }
 
@@ -67,4 +68,49 @@ export function findMissingTranslations(
 
 	// Object.fromEntries loses the key type; the keys come straight from `locales`.
 	return Object.fromEntries(missingPerLocale) as Record<Locale, string[]>;
+}
+
+export const sharedProjectFields = [
+	"cover",
+	"type",
+	"tags",
+	"liveUrl",
+	"repoUrl",
+	"featured",
+	"order",
+] as const;
+
+export type SharedProjectField = (typeof sharedProjectFields)[number];
+
+export type SharedFieldsEntry = {
+	id: string;
+	data: {
+		cover: { src: string };
+		type: string;
+		tags: string[];
+		liveUrl?: string;
+		repoUrl?: string;
+		featured: boolean;
+		order: number;
+	};
+};
+
+export type FieldMismatch = {
+	slug: string;
+	fields: SharedProjectField[];
+};
+
+export function findMismatchedFields(
+	entries: SharedFieldsEntry[],
+): FieldMismatch[] {
+	// TODO: seskup záznamy podle slugu a porovnej každé pole ze sharedProjectFields napříč jazyky
+	// TODO: pozor, `cover` je objekt a `tags` pole – `===` na ně nestačí (cover porovnej přes `src`)
+	// TODO: slug chybějící v jednom jazyce sem nepatří, ten hlásí findMissingTranslations
+	throw new Error("Not implemented");
+}
+
+export function assertProjectTranslations(entries: SharedFieldsEntry[]): void {
+	// TODO: spusť findMissingTranslations i findMismatchedFields
+	// TODO: když cokoli najdou, vyhoď jednu chybu s úplným výčtem (jazyk → slugy, slug → pole)
+	throw new Error("Not implemented");
 }

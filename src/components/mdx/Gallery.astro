@@ -1,0 +1,17 @@
+---
+import type { ImageMetadata } from "astro";
+
+type GalleryImage = {
+	src: ImageMetadata;
+	alt: string;
+};
+
+interface Props {
+	images: GalleryImage[];
+}
+
+const { images } = Astro.props;
+
+// TODO: mřížka obrázků přes <Image> z astro:assets, alt z props
+// TODO: widths a sizes podle počtu sloupců v mřížce (výpočet jako v ProjectCard)
+---

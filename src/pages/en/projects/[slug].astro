@@ -1,0 +1,14 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import ProjectPage from "../../../components/pages/ProjectPage.astro";
+
+export const getStaticPaths = (async () => {
+	// TODO: načti kolekci projects a spusť assertProjectTranslations nad všemi záznamy (oba jazyky)
+	// TODO: z getProjectsForLocale(…, "en") vrať { params: { slug }, props: { project } }
+	return [];
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+// TODO: vyrenderuj ProjectPage s locale="en" a projektem z Astro.props
+---
