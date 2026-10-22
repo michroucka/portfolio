@@ -49,6 +49,21 @@ export const en: Dictionary = {
 			app: "Application",
 		},
 	},
+	projectPage: {
+		tagsLabel: "Technologies used",
+		liveLink: "Live website",
+		repoLink: "Source code",
+		ctaTitle: "Want something similar?",
+		ctaText:
+			"Tell me what your business needs. The first consultation is free and non-binding.",
+		ctaLink: "Free consultation",
+	},
+	gallery: {
+		label: "Enlarged image",
+		close: "Close",
+		previous: "Previous image",
+		next: "Next image",
+	},
 	process: {
 		title: "How we work together",
 		steps: [

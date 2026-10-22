@@ -48,6 +48,21 @@ export const cs = {
 			app: "Aplikace",
 		},
 	},
+	projectPage: {
+		tagsLabel: "Použité technologie",
+		liveLink: "Živý web",
+		repoLink: "Zdrojový kód",
+		ctaTitle: "Chcete něco podobného?",
+		ctaText:
+			"Napište mi, co vaše firma potřebuje. První konzultace je nezávazná a zdarma.",
+		ctaLink: "Nezávazná konzultace",
+	},
+	gallery: {
+		label: "Zvětšený obrázek",
+		close: "Zavřít",
+		previous: "Předchozí obrázek",
+		next: "Další obrázek",
+	},
 	process: {
 		title: "Jak spolupráce probíhá",
 		steps: [

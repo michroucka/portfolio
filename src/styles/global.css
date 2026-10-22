@@ -258,6 +258,43 @@ body {
 	}
 }
 
+/* Body of a case study rendered from MDX: Markdown elements carry no classes, so their spacing
+   lives here. Text keeps a readable measure; images and Gallery span the whole column,
+   which is what Gallery's sizes assume. */
+@utility case-study {
+	& > :where(p, ul, ol) {
+		@apply mt-6 max-w-prose;
+	}
+
+	& > p:has(> img:only-child) {
+		@apply max-w-none;
+	}
+
+	& > h2 {
+		@apply mt-16 max-w-prose text-2xl md:text-3xl;
+	}
+
+	& > h3 {
+		@apply mt-10 max-w-prose text-xl;
+	}
+
+	& > ul {
+		@apply list-disc space-y-2 ps-5 marker:text-accent;
+	}
+
+	& > ol {
+		@apply list-decimal space-y-2 ps-5 marker:text-accent;
+	}
+
+	& > :where(p, ul, ol) a {
+		@apply font-semibold text-accent link-underline;
+	}
+
+	& > p > img {
+		@apply border border-line;
+	}
+}
+
 /* Shared shape of call-to-action links and buttons; colours come from button-primary / button-secondary.
    min-h-12 (48 px) keeps the touch target above 44 px but lets the label wrap at 200 % zoom. */
 @utility button {

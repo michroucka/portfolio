@@ -1,6 +1,10 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import type { Locale } from "../../i18n";
+import { type CollectionEntry, render } from "astro:content";
+import { getImage, Image } from "astro:assets";
+import { getDictionary, type Locale } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { parseProjectId } from "../../lib/projects";
+import { getSectionHref } from "../../lib/sections";
 import Gallery from "../mdx/Gallery.astro";
 import Quote from "../mdx/Quote.astro";
 
@@ -10,13 +14,99 @@ interface Props {
 }
 
 const { project, locale } = Astro.props;
-
-// TODO: slug přes parseProjectId, tělo MDX přes render(project) z astro:content
-// TODO: og:image přes getImage() z astro:assets (cover, šířka 1200, formát jpg) → předej .src jako ogImage
-// TODO: BaseLayout s page="project" a params={{ slug }} – z toho vznikne canonical, hreflang i přepínač jazyka
-// TODO: obsah: typ (dictionary.projects.types), <h1> title, summary, cover přes <Image> (sizes podle max-w-7xl jako v ProjectCard)
-// TODO: <Content components={{ Gallery, Quote }} />
-// TODO: štítky technologií, odkazy liveUrl/repoUrl jen když existují, testimonial přes Quote jen když existuje
-// TODO: CTA na kontakt přes getSectionHref
-// TODO: nové texty (popisky odkazů, štítků, CTA) do cs.ts i en.ts
+const dictionary = getDictionary(locale);
+const { slug } = parseProjectId(project.id);
+const { title, summary, cover, type, tags, liveUrl, repoUrl, testimonial } =
+	project.data;
+const { Content } = await render(project);
+// Social networks take a single fixed-size file, not a responsive srcset or a large PNG.
+const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
+// Cover sizes follow the layout: the full max-w-7xl column minus px-6 (≤ 1232 px).
 ---
+
+<BaseLayout
+	locale={locale}
+	page="project"
+	params={{ slug }}
+	title={title}
+	description={summary}
+	ogImage={ogImage.src}
+>
+	<article class="py-16 md:py-24">
+		<header>
+			<p class="text-sm font-semibold text-muted uppercase">
+				{dictionary.projects.types[type]}
+			</p>
+			<h1 class="mt-2 max-w-[20ch] text-4xl md:text-5xl">{title}</h1>
+			<p class="mt-6 max-w-prose text-lg text-muted">{summary}</p>
+			<ul
+				aria-label={dictionary.projectPage.tagsLabel}
+				class="mt-8 flex flex-wrap gap-2"
+			>
+				{tags.map((tag) => (
+					<li class="border border-line px-3 py-1 text-sm">{tag}</li>
+				))}
+			</ul>
+			{(liveUrl || repoUrl) && (
+				<p class="mt-8 flex flex-wrap gap-x-8 gap-y-2">
+					{liveUrl && (
+						<a
+							href={liveUrl}
+							target="_blank"
+							rel="noopener"
+							class="font-semibold text-accent link-underline"
+						>
+							{dictionary.projectPage.liveLink}
+						</a>
+					)}
+					{repoUrl && (
+						<a
+							href={repoUrl}
+							target="_blank"
+							rel="noopener"
+							class="font-semibold text-accent link-underline"
+						>
+							{dictionary.projectPage.repoLink}
+						</a>
+					)}
+				</p>
+			)}
+		</header>
+
+		<Image
+			src={cover}
+			alt=""
+			widths={[600, 1200, 1800]}
+			sizes="(min-width: 1280px) 1232px, calc(100vw - 48px)"
+			loading="eager"
+			class="mt-12 w-full border border-line"
+		/>
+
+		<div class="case-study">
+			<Content components={{ Gallery, Quote }} />
+		</div>
+
+		{testimonial && (
+			<div class="mt-16 max-w-prose">
+				<Quote author={testimonial.author}>
+					<p>{testimonial.quote}</p>
+				</Quote>
+			</div>
+		)}
+
+		<section class="mt-16 border border-line bg-surface p-6 md:p-10">
+			<h2 class="text-2xl md:text-3xl">
+				{dictionary.projectPage.ctaTitle}
+			</h2>
+			<p class="mt-4 max-w-prose text-muted">
+				{dictionary.projectPage.ctaText}
+			</p>
+			<a
+				href={getSectionHref("contact", locale)}
+				class="mt-8 button-primary"
+			>
+				{dictionary.projectPage.ctaLink}
+			</a>
+		</section>
+	</article>
+</BaseLayout>

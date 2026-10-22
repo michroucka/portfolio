@@ -15,6 +15,10 @@ featured: true
 order: 1
 ---
 
+import calendarPhone from "../../../assets/projects/nohy-v-cajku/calendar-phone.png";
+import availability from "../../../assets/projects/nohy-v-cajku/availability.png";
+import settings from "../../../assets/projects/nohy-v-cajku/settings.png";
+
 ## Problém
 
 Nohy v cajku je malá pedikúra, která neměla web. Zákazníci se objednávali telefonem, nebo rovnou při návštěvě na další termín. Všechno se zapisovalo do papírového diáře.
@@ -41,13 +45,16 @@ Papírový diář skončil v šuplíku. Všechny termíny jsou na jednom místě
 
 Administrace běží na vlastní subdoméně za přihlášením. Na snímcích jsou vzorová data.
 
-![Týdenní kalendář s rezervacemi](../../../assets/projects/nohy-v-cajku/calendar.png)
-
-![Denní přehled na mobilu](../../../assets/projects/nohy-v-cajku/calendar-phone.png)
-
-![Nastavení výjimek v otevírací době](../../../assets/projects/nohy-v-cajku/availability.png)
-
-![Nastavení upozornění a synchronizace s Apple Kalendářem](../../../assets/projects/nohy-v-cajku/settings.png)
+<Gallery
+	images={[
+		{ src: calendarPhone, alt: "Denní přehled na mobilu" },
+		{ src: availability, alt: "Nastavení výjimek v otevírací době" },
+		{
+			src: settings,
+			alt: "Nastavení upozornění a synchronizace s Apple Kalendářem",
+		},
+	]}
+/>
 
 ## Technologie
 
