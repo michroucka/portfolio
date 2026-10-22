@@ -33,6 +33,10 @@ export function parseProjectId(id: string): ProjectId {
 	return { locale, slug };
 }
 
+function slugOf(entry: ProjectEntry): string {
+	return parseProjectId(entry.id).slug;
+}
+
 export function getProjectsForLocale<T extends ProjectEntry>(
 	entries: T[],
 	locale: Locale,
@@ -44,8 +48,12 @@ export function getProjectsForLocale<T extends ProjectEntry>(
 	const selectedEntries = options?.featuredOnly
 		? entriesOfLocale.filter((entry) => entry.data.featured)
 		: entriesOfLocale;
-	// TODO: při shodném `order` řaď podle slugu (parseProjectId), ať je pořadí stejné v obou jazycích i na každém stroji
-	return selectedEntries.toSorted((a, b) => a.data.order - b.data.order);
+
+	return selectedEntries.toSorted(
+		(a, b) =>
+			a.data.order - b.data.order ||
+			slugOf(a).localeCompare(slugOf(b), "en"),
+	);
 }
 
 export function findMissingTranslations(
@@ -100,17 +108,69 @@ export type FieldMismatch = {
 	fields: SharedProjectField[];
 };
 
+// Objects and arrays are never `===` to a copy, so they become strings first.
+// JSON keeps the order of tags, which is shown on the page, and survives tags containing commas.
+function toComparableValue(
+	field: SharedProjectField,
+	data: SharedFieldsEntry["data"],
+): unknown {
+	if (field === "cover") {
+		return data.cover.src;
+	}
+	if (field === "tags") {
+		return JSON.stringify(data.tags);
+	}
+	return data[field];
+}
+
 export function findMismatchedFields(
 	entries: SharedFieldsEntry[],
 ): FieldMismatch[] {
-	// TODO: seskup záznamy podle slugu a porovnej každé pole ze sharedProjectFields napříč jazyky
-	// TODO: pozor, `cover` je objekt a `tags` pole – `===` na ně nestačí (cover porovnej přes `src`)
-	// TODO: slug chybějící v jednom jazyce sem nepatří, ten hlásí findMissingTranslations
-	throw new Error("Not implemented");
+	const bySlug = Map.groupBy(entries, (entry) => slugOf(entry));
+	const mismatches: FieldMismatch[] = [];
+
+	for (const [slug, [reference, ...others]] of bySlug) {
+		// A slug present in one locale only is reported by findMissingTranslations.
+		if (!reference || others.length === 0) {
+			continue;
+		}
+		const fields = sharedProjectFields.filter((field) =>
+			others.some(
+				(entry) =>
+					toComparableValue(field, entry.data) !==
+					toComparableValue(field, reference.data),
+			),
+		);
+		if (fields.length > 0) {
+			mismatches.push({ slug, fields });
+		}
+	}
+
+	return mismatches;
 }
 
 export function assertProjectTranslations(entries: SharedFieldsEntry[]): void {
-	// TODO: spusť findMissingTranslations i findMismatchedFields
-	// TODO: když cokoli najdou, vyhoď jednu chybu s úplným výčtem (jazyk → slugy, slug → pole)
-	throw new Error("Not implemented");
+	const entryIds = entries.map((entry) => entry.id);
+	const missingTranslations = findMissingTranslations(entryIds);
+	const mismatchedFields = findMismatchedFields(entries);
+
+	const problems: string[] = [];
+	for (const [locale, slugs] of Object.entries(missingTranslations)) {
+		if (slugs.length > 0) {
+			problems.push(
+				`missing in src/content/projects/${locale}/: ${slugs.join(", ")}`,
+			);
+		}
+	}
+	for (const { slug, fields } of mismatchedFields) {
+		problems.push(
+			`${slug}: fields differ between locales: ${fields.join(", ")}`,
+		);
+	}
+
+	if (problems.length > 0) {
+		throw new Error(
+			`Project translations are not complete:\n${problems.join("\n")}`,
+		);
+	}
 }
