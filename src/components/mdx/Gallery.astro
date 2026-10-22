@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 
 type GalleryImage = {
 	src: ImageMetadata;
@@ -11,7 +12,16 @@ interface Props {
 }
 
 const { images } = Astro.props;
-
-// TODO: mřížka obrázků přes <Image> z astro:assets, alt z props
-// TODO: widths a sizes podle počtu sloupců v mřížce (výpočet jako v ProjectCard)
+// Image sizes follow the layout: two columns in max-w-7xl minus px-6 and gap-6 (≤ 604 px).
 ---
+
+<div class="grid gap-6 md:grid-cols-2">
+	{images.map((image) => (
+		<Image
+			src={image.src}
+			alt={image.alt}
+			widths={[400, 800, 1200]}
+			sizes="(min-width: 1280px) 604px, (min-width: 768px) calc(50vw - 36px), calc(100vw - 48px)"
+		/>
+	))}
+</div>
