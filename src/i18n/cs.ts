@@ -42,7 +42,7 @@ export const cs = {
 	},
 	projects: {
 		title: "Vybrané projekty",
-		moreProjects: "Další projekty, které jsem dělal pro sebe, najdete",
+		moreProjects: "Další projekty najdete",
 		moreProjectsLink: "na mém GitHubu",
 		types: {
 			web: "Web",
