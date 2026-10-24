@@ -117,12 +117,12 @@ export const en: Dictionary = {
 			{
 				title: "Fast communication",
 				description:
-					"You won’t wait weeks for an email. I reply within two working days at the latest, and if something gets delayed, I’ll let you know myself.",
+					"You won’t wait weeks for an email. I reply within two working days at the latest.",
 			},
 			{
 				title: "Reliability",
 				description:
-					"Agreed deadlines hold. I show up to meetings on time and deliver finished work when we said I would.",
+					"Agreed deadlines hold. I show up to meetings on time and deliver finished work when we said I would. If something does get delayed, I’ll let you know in good time and we’ll agree on what comes next.",
 			},
 			{
 				title: "A fast, well-built website",

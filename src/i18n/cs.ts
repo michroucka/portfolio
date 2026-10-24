@@ -116,12 +116,12 @@ export const cs = {
 			{
 				title: "Rychlá komunikace",
 				description:
-					"Na e-mail nebudete čekat týdny. Odpovím nejpozději do dvou pracovních dnů, a když se něco zdrží, dám vám vědět sám.",
+					"Na e-mail nebudete čekat týdny. Odpovím nejpozději do dvou pracovních dnů.",
 			},
 			{
 				title: "Spolehlivost",
 				description:
-					"Domluvené termíny dodržuji. Na schůzku přijdu včas a hotovou práci odevzdám, kdy jsme si řekli.",
+					"Domluvené termíny dodržuji. Na schůzku přijdu včas a hotovou práci odevzdám, kdy jsme si řekli. Kdyby se přece jen něco zdrželo, dám vám včas vědět a domluvíme se, jak dál.",
 			},
 			{
 				title: "Rychlý a kvalitní web",
