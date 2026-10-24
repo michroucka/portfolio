@@ -107,8 +107,32 @@ export const cs = {
 	about: {
 		title: "O mně",
 		text: [
-			"Jsem Michal Roučka, vývojář z okolí Plzně. Malým firmám stavím weby a aplikace, které jim šetří čas a přivádějí zákazníky.",
+			"Jmenuji se Michal Roučka a pocházím z okolí Plzně. K programování jsem se dostal až na vysoké škole: na Fakultě aplikovaných věd ZČU jsem v roce 2026 dokončil bakaláře v oboru softwarové inženýrství a teď tam pokračuji v navazujícím studiu.",
+			"Weby a aplikace pro malé firmy dělám vedle studia. Naplňuje mě, když po mně zůstane něco, co lidem opravdu pomáhá v práci, a chci mít za sebou skutečné projekty pro skutečné zákazníky, ne jen školní zadání. Každý web proto dělám tak, jako by byl mojí vizitkou – protože jí je.",
 			"Pracuji sám, takže mluvíte vždy přímo se mnou – s tím, kdo váš web navrhuje i programuje. Žádní prostředníci a žádné agenturní přirážky.",
+		],
+		valuesTitle: "Na čem si zakládám",
+		values: [
+			{
+				title: "Rychlá komunikace",
+				description:
+					"Na e-mail nebudete čekat týdny. Odpovím nejpozději do dvou pracovních dnů, a když se něco zdrží, dám vám vědět sám.",
+			},
+			{
+				title: "Spolehlivost",
+				description:
+					"Domluvené termíny dodržuji. Na schůzku přijdu včas a hotovou práci odevzdám, kdy jsme si řekli.",
+			},
+			{
+				title: "Rychlý a kvalitní web",
+				description:
+					"Načte se hned, funguje na telefonu i na počítači a je postavený tak, aby se dal snadno udržovat a rozšiřovat.",
+			},
+			{
+				title: "Vaše spokojenost",
+				description:
+					"Hotovo je, až když jste spokojení vy. Ne ve chvíli, kdy si úkol odškrtnu já.",
+			},
 		],
 		photoAlt: "Portrét Michala Roučky",
 	},
