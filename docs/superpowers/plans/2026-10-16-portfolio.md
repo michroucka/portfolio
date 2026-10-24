@@ -232,19 +232,33 @@ přepínač tématu.
 
 **Konzumuje:** kolekci `projects` a funkce z Úkolu 5, mapu cest z Úkolu 3.
 
-- [ ] Obě page obálky generují `getStaticPaths` jen z projektů svého jazyka a před tím spustí kontrolu párování (Úkol 5).
-- [ ] `ProjectPage`: titulek, typ, cover, tělo MDX (předej MDX komponenty `Gallery` a `Quote`), štítky technologií, odkazy `liveUrl`/`repoUrl` pokud existují, `testimonial` pokud existuje, CTA na kontakt.
-- [ ] SEO: titulek a popis z frontmatteru, `og:image` = cover, alternativy přes mapu cest s parametrem `slug`.
-- [ ] `Gallery`: mřížka obrázků přes `<Image>` s povinným `alt`. `Quote`: `<figure>` + `<blockquote>` + `<figcaption>`.
-- [ ] **Ověření:** `/projekty/nohy-v-cajku/` a `/en/projects/nohy-v-cajku/` se vyrenderují, přepínač jazyka mezi nimi funguje, hreflang ukazuje na protějšek.
-- [ ] Commit: `feat: case study pages with MDX components`
+- [x] Obě page obálky generují `getStaticPaths` jen z projektů svého jazyka a před tím spustí kontrolu párování (Úkol 5).
+- [x] `ProjectPage`: titulek, typ, cover, tělo MDX (předej MDX komponenty `Gallery` a `Quote`), štítky technologií, odkazy `liveUrl`/`repoUrl` pokud existují, `testimonial` pokud existuje, CTA na kontakt.
+- [x] SEO: titulek a popis z frontmatteru, `og:image` = cover, alternativy přes mapu cest s parametrem `slug`.
+- [x] `Gallery`: mřížka obrázků přes `<Image>` s povinným `alt`. `Quote`: `<figure>` + `<blockquote>` + `<figcaption>`.
+- [x] **Ověření:** `/projekty/nohy-v-cajku/` a `/en/projects/nohy-v-cajku/` se vyrenderují, přepínač jazyka mezi nimi funguje, hreflang ukazuje na protějšek.
+- [x] Commit: `feat: case study pages with MDX components`
 
 **Převzato z review Úkolu 5** (nálezy, které patří sem):
 
-- [ ] **Shoda nelokalizovaných polí:** `cover`, `type`, `tags`, `liveUrl`, `repoUrl`, `featured` a `order` jsou v CS i EN souboru zvlášť a nic nehlídá, že se shodují. Ke kontrole párování přidej kontrolu, že se pár v těchto polích neliší (jinak build selže s výčtem slugů a polí). Alternativa: tato pole brát jen z výchozího jazyka – rozhodni před implementací.
-- [ ] **Unikátní `order`:** při shodě rozhoduje pořadí načtení souborů, takže se pořadí může lišit mezi jazyky nebo stroji. Buď kontrola unikátnosti při buildu, nebo druhé řadicí kritérium (slug) v `getProjectsForLocale` + test.
-- [ ] **Testy `findMissingTranslations`:** doplnit víc chybějících slugů najednou, chybějící slugy v obou jazycích (`cs` bez `a`, `en` bez `b`) a prázdný vstup – na úplném výčtu stojí chybová hláška buildu.
-- [ ] **Cover vs. screenshoty:** cover `calendar.png` je zároveň v sekci Screenshoty, na stránce projektu se zobrazí dvakrát. Až přijde `home.png` (viz Úkol 5), zmizí to samo; jinak cover v `ProjectPage` nezobrazuj nebo ho vyřaď ze sekce Screenshoty.
+- [x] **Shoda nelokalizovaných polí:** `cover`, `type`, `tags`, `liveUrl`, `repoUrl`, `featured` a `order` jsou v CS i EN souboru zvlášť a nic nehlídá, že se shodují. Ke kontrole párování přidej kontrolu, že se pár v těchto polích neliší (jinak build selže s výčtem slugů a polí). Alternativa: tato pole brát jen z výchozího jazyka – rozhodni před implementací.
+- [x] **Unikátní `order`:** při shodě rozhoduje pořadí načtení souborů, takže se pořadí může lišit mezi jazyky nebo stroji. Buď kontrola unikátnosti při buildu, nebo druhé řadicí kritérium (slug) v `getProjectsForLocale` + test.
+- [x] **Testy `findMissingTranslations`:** doplnit víc chybějících slugů najednou, chybějící slugy v obou jazycích (`cs` bez `a`, `en` bez `b`) a prázdný vstup – na úplném výčtu stojí chybová hláška buildu.
+- [x] **Cover vs. screenshoty:** cover `calendar.png` je zároveň v sekci Screenshoty, na stránce projektu se zobrazí dvakrát. Až přijde `home.png` (viz Úkol 5), zmizí to samo; jinak cover v `ProjectPage` nezobrazuj nebo ho vyřaď ze sekce Screenshoty.
+
+**Poznámky k provedení** (větev `feat/case-studies`):
+
+- *Rozhodnutí:*
+  - Nelokalizovaná pole zůstávají v obou souborech a hlídá je `findMismatchedFields`; `assertProjectTranslations` hlásí chybějící překlady i rozdílná pole najednou. Pole a tagy se porovnávají jako JSON, takže záleží i na pořadí (zobrazuje se).
+  - Shodné `order` řadí `getProjectsForLocale` podle slugu.
+  - Nová sdílená pole `year` a `scope` (enum, popisky ve slovníku `projects.scope`) plní pruh s fakty pod coverem: Rok · Co jsem dělal · Odkazy. Na mobilu dva sloupce, „Co jsem dělal“ přes dva řádky, aby odkazy byly pod rokem. Zkoušený aside vedle textu zamítnut.
+  - Prázdná pravá polovina vedle `max-w-prose`: od `lg` jsou `h2` jako float v levé třetině, text vpravo. Grid zamítnut – vysoký nadpis roztahoval řádek a dělal díry. Galerie kvůli `clear` používá `pt-8` místo `mt-8` (margin se při clearance ztratí); margin na nadpisu by posouval další sekci.
+  - `text-wrap: pretty` pro odstavce a seznamy, `balance` pro nadpisy (base vrstva, celý web).
+  - Lightbox: obrázek je v centrujícím obalu s `max-h-full max-w-full`, takže klik vedle obrázku dialog zavře. Zavírací tlačítko má statickou `CloseIcon` – morfující `MenuIcon` se při fade-out vracel do hamburgeru.
+  - Galerie se čtyřmi obrázky má od `md` čtyři sloupce, jinak tři.
+  - Cover je úvodní stránka webu (`screens/web-home.png`), tím zmizel i duplicitní cover ve Screenshotech. Web je focený z produkce, rezervace a admin lokálně proti dev databázi se vzorovými daty (budoucí týden, aby rezervace nebyly ztlumené jako proběhlé).
+  - Sekce Branding: logo, ikona webu, vizitka, dárkový poukaz (exporty v `src/assets/projects/nohy-v-cajku/branding/`, zdrojové soubory mimo repo).
+
 
 ### Úkol 8: Kontaktní formulář (Astro Action)
 
