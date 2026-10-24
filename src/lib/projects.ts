@@ -81,6 +81,8 @@ export function findMissingTranslations(
 export const sharedProjectFields = [
 	"cover",
 	"type",
+	"year",
+	"scope",
 	"tags",
 	"liveUrl",
 	"repoUrl",
@@ -95,6 +97,8 @@ export type SharedFieldsEntry = {
 	data: {
 		cover: { src: string };
 		type: string;
+		year: number;
+		scope: string[];
 		tags: string[];
 		liveUrl?: string;
 		repoUrl?: string;
@@ -109,7 +113,7 @@ export type FieldMismatch = {
 };
 
 // Objects and arrays are never `===` to a copy, so they become strings first.
-// JSON keeps the order of tags, which is shown on the page, and survives tags containing commas.
+// JSON keeps the order of tags and scope, which is shown on the page, and survives values containing commas.
 function toComparableValue(
 	field: SharedProjectField,
 	data: SharedFieldsEntry["data"],
@@ -117,8 +121,8 @@ function toComparableValue(
 	if (field === "cover") {
 		return data.cover.src;
 	}
-	if (field === "tags") {
-		return JSON.stringify(data.tags);
+	if (field === "tags" || field === "scope") {
+		return JSON.stringify(data[field]);
 	}
 	return data[field];
 }

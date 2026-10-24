@@ -75,6 +75,8 @@ type SharedData = SharedFieldsEntry["data"];
 const baseData: SharedData = {
 	cover: { src: "/cover.png" },
 	type: "web",
+	year: 2026,
+	scope: ["website", "booking"],
 	tags: ["Astro", "TypeScript"],
 	liveUrl: "https://example.com",
 	repoUrl: "https://github.com/example/repo",
@@ -82,7 +84,7 @@ const baseData: SharedData = {
 	order: 1,
 };
 
-// Fresh cover and tags per entry, so equal values never share a reference.
+// Fresh cover, scope and tags per entry, so equal values never share a reference.
 function buildEntry(
 	id: string,
 	overrides: Partial<SharedData> = {},
@@ -92,6 +94,7 @@ function buildEntry(
 		data: {
 			...baseData,
 			cover: { ...baseData.cover },
+			scope: [...baseData.scope],
 			tags: [...baseData.tags],
 			...overrides,
 		},
@@ -113,6 +116,8 @@ describe("findMismatchedFields", () => {
 	const differentValues: { [F in SharedProjectField]: SharedData[F] } = {
 		cover: { src: "/other.png" },
 		type: "app",
+		year: 2025,
+		scope: ["website"],
 		tags: ["Astro"],
 		liveUrl: "https://example.org",
 		repoUrl: "https://github.com/example/other",

@@ -16,8 +16,18 @@ interface Props {
 const { project, locale } = Astro.props;
 const dictionary = getDictionary(locale);
 const { slug } = parseProjectId(project.id);
-const { title, summary, cover, type, tags, liveUrl, repoUrl, testimonial } =
-	project.data;
+const {
+	title,
+	summary,
+	cover,
+	type,
+	year,
+	scope,
+	tags,
+	liveUrl,
+	repoUrl,
+	testimonial,
+} = project.data;
 const { Content } = await render(project);
 // Social networks take a single fixed-size file, not a responsive srcset or a large PNG.
 const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
@@ -47,30 +57,6 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 					<li class="border border-line px-3 py-1 text-sm">{tag}</li>
 				))}
 			</ul>
-			{(liveUrl || repoUrl) && (
-				<p class="mt-8 flex flex-wrap gap-x-8 gap-y-2">
-					{liveUrl && (
-						<a
-							href={liveUrl}
-							target="_blank"
-							rel="noopener"
-							class="font-semibold text-accent link-underline"
-						>
-							{dictionary.projectPage.liveLink}
-						</a>
-					)}
-					{repoUrl && (
-						<a
-							href={repoUrl}
-							target="_blank"
-							rel="noopener"
-							class="font-semibold text-accent link-underline"
-						>
-							{dictionary.projectPage.repoLink}
-						</a>
-					)}
-				</p>
-			)}
 		</header>
 
 		<Image
@@ -81,6 +67,57 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 			loading="eager"
 			class="mt-12 w-full border border-line"
 		/>
+
+		<dl
+			aria-label={dictionary.projectPage.factsLabel}
+			class="grid grid-cols-2 gap-8 border-b border-line py-8 lg:grid-cols-3 lg:gap-x-0"
+		>
+			<div>
+				<dt class="project-fact-label">
+					{dictionary.projectPage.yearLabel}
+				</dt>
+				<dd class="mt-2">{year}</dd>
+			</div>
+			<div class="max-lg:row-span-2">
+				<dt class="project-fact-label">
+					{dictionary.projectPage.scopeLabel}
+				</dt>
+				{scope.map((item) => (
+					<dd class="mt-2">{dictionary.projects.scope[item]}</dd>
+				))}
+			</div>
+			{(liveUrl || repoUrl) && (
+				<div>
+					<dt class="project-fact-label">
+						{dictionary.projectPage.linksLabel}
+					</dt>
+					{liveUrl && (
+						<dd class="mt-2">
+							<a
+								href={liveUrl}
+								target="_blank"
+								rel="noopener"
+								class="font-semibold text-accent link-underline"
+							>
+								{dictionary.projectPage.liveLink}
+							</a>
+						</dd>
+					)}
+					{repoUrl && (
+						<dd class="mt-2">
+							<a
+								href={repoUrl}
+								target="_blank"
+								rel="noopener"
+								class="font-semibold text-accent link-underline"
+							>
+								{dictionary.projectPage.repoLink}
+							</a>
+						</dd>
+					)}
+				</div>
+			)}
+		</dl>
 
 		<div class="case-study">
 			<Content components={{ Gallery, Quote }} />

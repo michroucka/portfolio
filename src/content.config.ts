@@ -28,6 +28,16 @@ const projects = defineCollection({
 			summary: z.string(),
 			cover: image(),
 			type: z.enum(["web", "web-app", "app"]),
+			year: z.number().int(),
+			scope: z.array(
+				z.enum([
+					"branding",
+					"website",
+					"booking",
+					"admin",
+					"local-seo",
+				]),
+			),
 			tags: z.array(z.string()),
 			liveUrl: httpUrl.optional(),
 			repoUrl: httpUrl.optional(),

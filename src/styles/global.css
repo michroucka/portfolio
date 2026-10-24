@@ -177,7 +177,12 @@ body {
 	h1,
 	h2,
 	h3 {
-		@apply font-extrabold font-stretch-expanded;
+		@apply font-extrabold font-stretch-expanded text-balance;
+	}
+
+	/* pretty avoids a single word on the last line; browsers without support simply wrap as usual. */
+	:where(p, li, figcaption, blockquote) {
+		@apply text-pretty;
 	}
 }
 
@@ -259,23 +264,36 @@ body {
 }
 
 /* Body of a case study rendered from MDX: Markdown elements carry no classes, so their spacing
-   lives here. Text keeps a readable measure; images and Gallery span the whole column,
-   which is what Gallery's sizes assume. */
+   lives here. Text keeps a readable measure. From lg, section headings float into a left third
+   so the width is filled by structure rather than by empty space. A float (not a grid) keeps a
+   tall heading from stretching the row next to it, and a heading and the first element after it
+   start at the same height because both get the same top margin. Images and Gallery span the
+   whole column, which is what Gallery's sizes assume. */
 @utility case-study {
+	@apply flow-root;
+
+	& > * {
+		@apply lg:ms-[calc(100%/3)];
+	}
+
 	& > :where(p, ul, ol) {
 		@apply mt-6 max-w-prose;
 	}
 
-	& > p:has(> img:only-child) {
-		@apply max-w-none;
+	& > h2 {
+		@apply mt-16 max-w-prose text-2xl md:text-3xl lg:clear-both lg:float-left lg:ms-0 lg:w-1/3 lg:pe-16;
 	}
 
-	& > h2 {
-		@apply mt-16 max-w-prose text-2xl md:text-3xl;
+	& > h2 + * {
+		@apply lg:mt-16;
 	}
 
 	& > h3 {
 		@apply mt-10 max-w-prose text-xl;
+	}
+
+	& > :where(p:has(> img:only-child), [data-gallery]) {
+		@apply max-w-none lg:clear-both lg:ms-0;
 	}
 
 	& > ul {
@@ -293,6 +311,14 @@ body {
 	& > p > img {
 		@apply border border-line;
 	}
+}
+
+@utility project-fact-label {
+	@apply text-sm font-semibold text-muted uppercase;
+}
+
+@utility project-fact-label {
+	@apply text-sm font-semibold text-muted uppercase;
 }
 
 /* Shared shape of call-to-action links and buttons; colours come from button-primary / button-secondary.
