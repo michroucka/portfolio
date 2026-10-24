@@ -50,12 +50,12 @@ Postavil jsem web a k němu rezervační systém, který diář úplně nahradil
 
 - **Logo a vizuální identita.** Navrhl jsem logo, barvy a písmo a podle nich vizitky, dárkové poukazy, ceník a billboard. Stejná identita je na webu i v aplikaci.
 - **První web salonu.** Zákazníci na něm najdou ceník, kontakt a cestu.
-- **Vidět na Googlu i Seznamu.** Založil jsem salonu firemní profil na Google a Firmy.cz s odkazem na web. Při hledání „pedikúra Kralovice“ je profil hned nahoře a web na prvním místě ve výsledcích.
+- **Vidět na Googlu i Seznamu.** Založil jsem salonu firemní profil na Googlu a na Firmy.cz s odkazem na web. Při hledání „pedikúra Kralovice“ je profil hned nahoře a web na prvním místě ve výsledcích.
 - **Rezervace online, bez registrace.** Zákazníci si vyberou volný termín sami, kdykoli, a klidně i pro víc lidí najednou. Dva lidé si nikdy nezarezervují stejný čas.
 - **Zrušení nebo přesun jedním odkazem.** Odkaz přijde v potvrzovacím e-mailu, nic dalšího není potřeba.
 - **SMS připomínka v den termínu.** Na termín se tak zapomíná mnohem méně.
 - **Kalendář místo diáře.** Na tabletu v salonu i na mobilu, s kontaktem u každé rezervace. Termíny domluvené osobně se zapisují rovnou sem.
-- **Platba přes QR kód.** U každé rezervace aplikace ukáže QR kód s částkou podle služby a zákazník zaplatí v mobilním bankovnictví rovnou na účet salonu. Pro jinou částku jde QR kód vytvořit ručně.
+- **Platba přes QR kód.** U každé rezervace aplikace ukáže QR kód s částkou podle služby a zákazník zaplatí v mobilním bankovnictví rovnou na účet salonu. Pro jinou částku lze QR kód vytvořit ručně.
 - **Ranní přehled.** Každé ráno přijde upozornění s plánem na celý den a další upozornění při každé nové rezervaci.
 
 ## Výsledek
@@ -119,4 +119,8 @@ Logo s otiskem chodidla v kruhu ladí s teplou tmavou barvou a zlatorůžovým p
 
 ## Technologie
 
-Next.js a TypeScript, databáze PostgreSQL (Prisma), Tailwind CSS. Potvrzovací e-maily přes Resend, SMS přes SMS bránu, push upozornění přes Web Push. Administrace je instalovatelná jako aplikace (PWA). Pro vyhledávače strukturovaná data (LocalBusiness) a sitemap. Hosting na Vercelu, databáze na Neonu.
+Web i administrace jsou jedna aplikace v Next.js a TypeScriptu. Rezervace ukládá databáze PostgreSQL (přes Prisma) a sama hlídá, aby se dva termíny nikdy nepřekryly, ani když si dva lidé vybírají ve stejnou chvíli. Vzhled je postavený v Tailwind CSS.
+
+Potvrzovací e-maily posílá Resend a připomínky v den termínu SMS brána. Upozornění na nové rezervace a ranní přehled chodí do telefonu přes Web Push. Administrace se přidá na plochu tabletu i mobilu jako aplikace (PWA), nic se nestahuje z obchodu. Rezervace jde navíc odebírat v Apple Kalendáři.
+
+Vyhledávačům pomáhají sitemap a strukturovaná data o salonu (LocalBusiness). Web běží na Vercelu a databáze na Neonu, takže není potřeba žádný vlastní server, o který by se musel někdo starat.

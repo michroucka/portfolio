@@ -50,7 +50,7 @@ I built a website with a booking system that fully replaced the diary.
 
 - **Logo and visual identity.** I designed the logo, colours and typefaces, and based on them business cards, gift vouchers, a price list and a billboard. The same identity runs through the website and the app.
 - **The business's first website.** Customers find prices, contact details and directions.
-- **Visible on Google and Seznam.** I set up a Google Business and Firmy.cz Profile with a link to the website. Searching for “pedikúra Kralovice” shows the profile right at the top and the website as the first result.
+- **Visible on Google and Seznam.** I set up a Google Business Profile and a Firmy.cz listing, both linking to the website. Searching for “pedikúra Kralovice” shows the profile right at the top and the website as the first result.
 - **Online booking, no sign-up.** Customers pick a free slot themselves, any time, even for several people at once. Two people can never book the same time.
 - **Cancel or reschedule with one link.** The link comes in the confirmation email, nothing else needed.
 - **SMS reminder on the day.** Far fewer forgotten appointments.
@@ -119,4 +119,8 @@ The logo, a footprint inside a circle, pairs a warm dark colour with a gold-to-r
 
 ## Technology
 
-Next.js and TypeScript, a PostgreSQL database (Prisma), Tailwind CSS. Confirmation emails via Resend, text messages through an SMS gateway, push notifications via Web Push. The admin panel installs as an app (PWA). Structured data (LocalBusiness) and a sitemap for search engines. Hosted on Vercel, database on Neon.
+The website and the admin app are a single Next.js application written in TypeScript. Bookings live in a PostgreSQL database (via Prisma), which itself makes sure two appointments never overlap, even when two people pick a slot at the same moment. The styling is built with Tailwind CSS.
+
+Confirmation emails go out through Resend and same-day reminders through an SMS gateway. Notifications about new bookings and the morning overview reach the phone via Web Push. The admin app is added to the tablet or phone home screen like an app (PWA), with nothing to download from an app store. Bookings can also be subscribed to in Apple Calendar.
+
+A sitemap and structured data about the salon (LocalBusiness) help search engines. The website runs on Vercel and the database on Neon, so there is no server of its own for anyone to look after.
