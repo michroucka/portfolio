@@ -256,7 +256,7 @@ přepínač tématu.
   - `text-wrap: pretty` pro odstavce a seznamy, `balance` pro nadpisy (base vrstva, celý web).
   - Lightbox: obrázek je v centrujícím obalu s `max-h-full max-w-full`, takže klik vedle obrázku dialog zavře. Zavírací tlačítko má statickou `CloseIcon` – morfující `MenuIcon` se při fade-out vracel do hamburgeru.
   - Galerie se čtyřmi obrázky má od `md` čtyři sloupce, jinak tři.
-  - Cover je úvodní stránka webu (`screens/web-home.png`), tím zmizel i duplicitní cover ve Screenshotech. Web je focený z produkce, rezervace a admin lokálně proti dev databázi se vzorovými daty (budoucí týden, aby rezervace nebyly ztlumené jako proběhlé).
+  - Cover je úvodní stránka webu (`screens/web-home.png`). Stejný snímek je záměrně i první v galerii Web – v galerii jde zvětšit v lightboxu a patří k ostatním snímkům webu. Web je focený z produkce, rezervace a admin lokálně proti dev databázi se vzorovými daty (budoucí týden, aby rezervace nebyly ztlumené jako proběhlé).
   - Sekce Branding: logo, ikona webu, vizitka, dárkový poukaz (exporty v `src/assets/projects/nohy-v-cajku/branding/`, zdrojové soubory mimo repo).
 
 

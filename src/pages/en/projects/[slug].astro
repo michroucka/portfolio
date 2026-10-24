@@ -2,25 +2,13 @@
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import ProjectPage from "../../../components/pages/ProjectPage.astro";
 import { getCollection } from "astro:content";
-import {
-	assertProjectTranslations,
-	getProjectsForLocale,
-	parseProjectId,
-} from "../../../lib/projects";
+import { getProjectStaticPaths } from "../../../lib/projects";
 
-export const getStaticPaths = (async () => {
-	const projects = await getCollection("projects");
-	assertProjectTranslations(projects);
-	const localeProjects = getProjectsForLocale(projects, "en");
-
-	return localeProjects.map((project) => {
-		const { slug } = parseProjectId(project.id);
-		return {
-			params: { slug },
-			props: { project },
-		};
-	});
-}) satisfies GetStaticPaths;
+export const getStaticPaths = (async () =>
+	getProjectStaticPaths(
+		await getCollection("projects"),
+		"en",
+	)) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 

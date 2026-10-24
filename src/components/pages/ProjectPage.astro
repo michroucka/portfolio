@@ -31,7 +31,6 @@ const {
 const { Content } = await render(project);
 // Social networks take a single fixed-size file, not a responsive srcset or a large PNG.
 const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
-// Cover sizes follow the layout: the full max-w-7xl column minus px-6 (≤ 1232 px).
 ---
 
 <BaseLayout
@@ -59,6 +58,7 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 			</ul>
 		</header>
 
+		{/* Cover sizes follow the layout: the full max-w-7xl column minus px-6 (≤ 1232 px). */}
 		<Image
 			src={cover}
 			alt=""
@@ -68,56 +68,59 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 			class="mt-12 w-full border border-line"
 		/>
 
-		<dl
-			aria-label={dictionary.projectPage.factsLabel}
-			class="grid grid-cols-2 gap-8 border-b border-line py-8 lg:grid-cols-3 lg:gap-x-0"
-		>
-			<div>
-				<dt class="project-fact-label">
-					{dictionary.projectPage.yearLabel}
-				</dt>
-				<dd class="mt-2">{year}</dd>
-			</div>
-			<div class="max-lg:row-span-2">
-				<dt class="project-fact-label">
-					{dictionary.projectPage.scopeLabel}
-				</dt>
-				{scope.map((item) => (
-					<dd class="mt-2">{dictionary.projects.scope[item]}</dd>
-				))}
-			</div>
-			{(liveUrl || repoUrl) && (
+		{/* <dl> has no role that can carry a name, so the section is labelled by a hidden heading. */}
+		<section aria-labelledby="project-facts-heading">
+			<h2 id="project-facts-heading" class="sr-only">
+				{dictionary.projectPage.factsLabel}
+			</h2>
+			<dl class="grid grid-cols-2 gap-8 border-b border-line py-8 lg:grid-cols-3 lg:gap-x-0">
 				<div>
 					<dt class="project-fact-label">
-						{dictionary.projectPage.linksLabel}
+						{dictionary.projectPage.yearLabel}
 					</dt>
-					{liveUrl && (
-						<dd class="mt-2">
-							<a
-								href={liveUrl}
-								target="_blank"
-								rel="noopener"
-								class="font-semibold text-accent link-underline"
-							>
-								{dictionary.projectPage.liveLink}
-							</a>
-						</dd>
-					)}
-					{repoUrl && (
-						<dd class="mt-2">
-							<a
-								href={repoUrl}
-								target="_blank"
-								rel="noopener"
-								class="font-semibold text-accent link-underline"
-							>
-								{dictionary.projectPage.repoLink}
-							</a>
-						</dd>
-					)}
+					<dd class="mt-2">{year}</dd>
 				</div>
-			)}
-		</dl>
+				<div class="max-lg:row-span-2">
+					<dt class="project-fact-label">
+						{dictionary.projectPage.scopeLabel}
+					</dt>
+					{scope.map((item) => (
+						<dd class="mt-2">{dictionary.projects.scope[item]}</dd>
+					))}
+				</div>
+				{(liveUrl || repoUrl) && (
+					<div>
+						<dt class="project-fact-label">
+							{dictionary.projectPage.linksLabel}
+						</dt>
+						{liveUrl && (
+							<dd class="mt-2">
+								<a
+									href={liveUrl}
+									target="_blank"
+									rel="noopener"
+									class="font-semibold text-accent link-underline"
+								>
+									{dictionary.projectPage.liveLink}
+								</a>
+							</dd>
+						)}
+						{repoUrl && (
+							<dd class="mt-2">
+								<a
+									href={repoUrl}
+									target="_blank"
+									rel="noopener"
+									class="font-semibold text-accent link-underline"
+								>
+									{dictionary.projectPage.repoLink}
+								</a>
+							</dd>
+						)}
+					</div>
+				)}
+			</dl>
+		</section>
 
 		<div class="case-study">
 			<Content components={{ Gallery, Quote }} />

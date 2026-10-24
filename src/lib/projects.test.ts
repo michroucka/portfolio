@@ -1,10 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, expectTypeOf, it } from "vitest";
 import {
 	assertProjectTranslations,
 	findMismatchedFields,
 	findMissingTranslations,
+	getProjectStaticPaths,
 	getProjectsForLocale,
+	localizedProjectFields,
 	parseProjectId,
+	type ProjectData,
 	type SharedFieldsEntry,
 	type SharedProjectField,
 	sharedProjectFields,
@@ -322,5 +325,45 @@ describe("getProjectsForLocale", () => {
 				{ featuredOnly: true },
 			),
 		).toEqual([{ id: "cs/a", data: { order: 2, featured: true } }]);
+	});
+});
+
+describe("project fields", () => {
+	// Checked by astro check: a new schema field fails the typecheck until it is listed
+	// as shared (compared between locales) or localized.
+	it("every schema field is either shared or localized", () => {
+		expectTypeOf<
+			Exclude<
+				keyof ProjectData,
+				SharedProjectField | (typeof localizedProjectFields)[number]
+			>
+		>().toEqualTypeOf<never>();
+	});
+});
+
+describe("getProjectStaticPaths", () => {
+	it("returns the locale's projects with their slug as the route param", () => {
+		const paths = getProjectStaticPaths(
+			[
+				buildEntry("cs/b", { order: 2 }),
+				buildEntry("en/b", { order: 2 }),
+				buildEntry("cs/a"),
+				buildEntry("en/a"),
+			],
+			"en",
+		);
+
+		expect(
+			paths.map(({ params, props }) => [params.slug, props.project.id]),
+		).toEqual([
+			["a", "en/a"],
+			["b", "en/b"],
+		]);
+	});
+
+	it("missing translation → throws before generating any path", () => {
+		expect(() => getProjectStaticPaths([buildEntry("cs/a")], "cs")).toThrow(
+			"missing in src/content/projects/en/: a",
+		);
 	});
 });

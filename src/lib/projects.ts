@@ -1,4 +1,7 @@
+import type { CollectionEntry } from "astro:content";
 import { isLocale, type Locale, locales } from "../i18n";
+
+export type ProjectData = CollectionEntry<"projects">["data"];
 
 // The minimal shape the helpers need – real collection entries satisfy it,
 // and tests can build plain objects without Astro.
@@ -92,18 +95,18 @@ export const sharedProjectFields = [
 
 export type SharedProjectField = (typeof sharedProjectFields)[number];
 
+export const localizedProjectFields = [
+	"title",
+	"summary",
+	"testimonial",
+] as const;
+
+// Typed from the schema, so a changed field type breaks the check at compile time.
+// Only the cover's src is compared, and tests can build it without ImageMetadata.
 export type SharedFieldsEntry = {
 	id: string;
-	data: {
+	data: Omit<Pick<ProjectData, SharedProjectField>, "cover"> & {
 		cover: { src: string };
-		type: string;
-		year: number;
-		scope: string[];
-		tags: string[];
-		liveUrl?: string;
-		repoUrl?: string;
-		featured: boolean;
-		order: number;
 	};
 };
 
@@ -177,4 +180,15 @@ export function assertProjectTranslations(entries: SharedFieldsEntry[]): void {
 			`Project translations are not complete:\n${problems.join("\n")}`,
 		);
 	}
+}
+
+export function getProjectStaticPaths<T extends SharedFieldsEntry>(
+	entries: T[],
+	locale: Locale,
+) {
+	assertProjectTranslations(entries);
+	return getProjectsForLocale(entries, locale).map((project) => ({
+		params: { slug: slugOf(project) },
+		props: { project },
+	}));
 }

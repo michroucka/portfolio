@@ -317,10 +317,6 @@ body {
 	@apply text-sm font-semibold text-muted uppercase;
 }
 
-@utility project-fact-label {
-	@apply text-sm font-semibold text-muted uppercase;
-}
-
 /* Shared shape of call-to-action links and buttons; colours come from button-primary / button-secondary.
    min-h-12 (48 px) keeps the touch target above 44 px but lets the label wrap at 200 % zoom. */
 @utility button {
