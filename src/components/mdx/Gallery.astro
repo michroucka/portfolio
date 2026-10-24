@@ -22,16 +22,26 @@ const dictionary = getDictionary(locale);
 const fullSizeImages = await Promise.all(
 	images.map(({ src }) => getImage({ src, format: "webp" })),
 );
-// Thumbnail sizes follow the layout: two columns on mobile, three from md, in max-w-7xl minus px-6
-// and gap-6 (≤ 395 px). Each thumbnail links to the full-size image, so it still opens without JS.
+// Thumbnail sizes follow the layout: two columns on mobile; from md three columns, or four when
+// there are exactly four images so none is left alone on a row; all in max-w-7xl minus px-6 and
+// gap-6 (≤ 395 px, or ≤ 290 px in four columns). Each thumbnail links to the full-size image, so it still opens without JS.
 // In the lightbox the images sit side by side in a scroll-snap track: swiping works on touch
 // screens without extra code, and the buttons and arrow keys only scroll the track.
+const hasFourColumns = images.length === 4;
+const thumbnailSizes = hasFourColumns
+	? "(min-width: 1280px) 290px, (min-width: 768px) calc(25vw - 30px), calc(50vw - 36px)"
+	: "(min-width: 1280px) 395px, (min-width: 768px) calc(33.33vw - 32px), calc(50vw - 36px)";
 const controlClasses =
 	"flex size-12 items-center justify-center text-foreground hover:text-accent focus-visible:outline-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-30 motion-safe:transition-[color,opacity]";
 ---
 
 <div data-gallery class="pt-8">
-	<ul class="grid grid-cols-2 gap-6 md:grid-cols-3">
+	<ul
+		class:list={[
+			"grid grid-cols-2 gap-6",
+			hasFourColumns ? "md:grid-cols-4" : "md:grid-cols-3",
+		]}
+	>
 		{images.map((image, index) => (
 			<li>
 				<a
@@ -43,7 +53,7 @@ const controlClasses =
 						src={image.src}
 						alt={image.alt}
 						widths={[400, 800]}
-						sizes="(min-width: 1280px) 395px, (min-width: 768px) calc(33.33vw - 32px), calc(50vw - 36px)"
+						sizes={thumbnailSizes}
 						class="aspect-[4/3] w-full object-contain"
 					/>
 				</a>
