@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { getDictionary, type Locale } from "../../i18n";
+import { siteDetails } from "../../lib/site";
 import ProjectCard from "../cards/ProjectCard.astro";
 import Section from "../Section.astro";
 
@@ -19,4 +20,14 @@ const dictionary = getDictionary(locale);
 			<ProjectCard project={project} locale={locale} />
 		))}
 	</div>
+	<p class="mt-8">
+		{dictionary.projects.moreProjects}{" "}
+		<a
+			href={siteDetails.github}
+			class="font-semibold text-accent link-underline"
+		>
+			{dictionary.projects.moreProjectsLink}
+		</a>
+		.
+	</p>
 </Section>

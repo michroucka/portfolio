@@ -43,6 +43,8 @@ export const en: Dictionary = {
 	},
 	projects: {
 		title: "Selected projects",
+		moreProjects: "You can find projects I’ve built for myself",
+		moreProjectsLink: "on my GitHub",
 		types: {
 			web: "Website",
 			"web-app": "Website and app",

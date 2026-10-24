@@ -42,6 +42,8 @@ export const cs = {
 	},
 	projects: {
 		title: "Vybrané projekty",
+		moreProjects: "Další projekty, které jsem dělal pro sebe, najdete",
+		moreProjectsLink: "na mém GitHubu",
 		types: {
 			web: "Web",
 			"web-app": "Web s aplikací",
