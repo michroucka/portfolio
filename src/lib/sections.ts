@@ -5,8 +5,8 @@ import { getPath } from "../i18n/routes";
 export const sections = [
 	"services",
 	"projects",
-	"collaboration",
 	"about",
+	"collaboration",
 	"contact",
 ] as const satisfies readonly (keyof Dictionary["nav"])[];
 

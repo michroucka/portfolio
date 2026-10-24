@@ -4,8 +4,8 @@ export const en: Dictionary = {
 	nav: {
 		services: "Services",
 		projects: "Projects",
-		collaboration: "Collaboration",
 		about: "About me",
+		collaboration: "Collaboration",
 		contact: "Contact",
 	},
 	header: {
@@ -30,7 +30,7 @@ export const en: Dictionary = {
 	hero: {
 		title: "Websites and applications for small businesses",
 		subtitle:
-			"From showcase websites to tailor-made booking systems. Personal, straightforward, and agency markup-free.",
+			"From showcase websites to tailor-made booking systems. Personal, straightforward, and agency markup-free. Pilsen and the surrounding area.",
 		primaryCta: "Free consultation",
 		secondaryCta: "Selected projects",
 	},
@@ -110,7 +110,7 @@ export const en: Dictionary = {
 		text: [
 			"My name is Michal Roučka and I’m from the Pilsen area. I only got into programming at university: in 2026 I finished my bachelor’s degree in software engineering at the Faculty of Applied Sciences, University of West Bohemia, and I’m now continuing there with a master’s.",
 			"I build websites and applications for small businesses alongside my studies. I find it fulfilling to build something that genuinely helps people, and I want real projects for real clients behind me, not just school assignments. That’s why I build every website as if it were my business card – because it is.",
-			"I work on my own, so you always talk directly to me – the person who designs and codes your website. No middlemen and no agency markup.",
+			"I work on my own, so you always talk directly to me – the person who designs and codes your website.",
 		],
 		valuesTitle: "What I stand for",
 		values: [
