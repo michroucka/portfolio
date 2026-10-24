@@ -11,9 +11,10 @@ type GalleryImage = {
 
 interface Props {
 	images: GalleryImage[];
+	note?: string;
 }
 
-const { images } = Astro.props;
+const { images, note } = Astro.props;
 // MDX passes no page props to its components, so the locale comes from the route (i18n in astro.config).
 const locale = isLocale(Astro.currentLocale)
 	? Astro.currentLocale
@@ -60,6 +61,7 @@ const controlClasses =
 			</li>
 		))}
 	</ul>
+	{note && <p class="mt-4 text-sm text-muted">{note}</p>}
 
 	<dialog
 		data-gallery-dialog
