@@ -2,7 +2,7 @@
 import type { ImageMetadata } from "astro";
 import { getImage, Image } from "astro:assets";
 import { defaultLocale, getDictionary, isLocale } from "../../i18n";
-import MenuIcon from "../icons/MenuIcon.astro";
+import CloseIcon from "../icons/CloseIcon.astro";
 
 type GalleryImage = {
 	src: ImageMetadata;
@@ -30,7 +30,7 @@ const controlClasses =
 	"flex size-12 items-center justify-center text-foreground hover:text-accent focus-visible:outline-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-30 motion-safe:transition-[color,opacity]";
 ---
 
-<div data-gallery class="my-8">
+<div data-gallery class="pt-8">
 	<ul class="grid grid-cols-2 gap-6 md:grid-cols-3">
 		{images.map((image, index) => (
 			<li>
@@ -63,7 +63,7 @@ const controlClasses =
 				aria-label={dictionary.gallery.close}
 				class={controlClasses}
 			>
-				<MenuIcon size="1.5rem" morphOnDialogOpen />
+				<CloseIcon size="1.5rem" />
 			</button>
 		</div>
 		<ul
@@ -73,13 +73,17 @@ const controlClasses =
 			{images.map((image, index) => (
 				<li class="flex w-full shrink-0 snap-center snap-always px-14 md:px-20">
 					<figure class="flex min-h-0 w-full flex-col items-center gap-4">
-						<img
-							src={fullSizeImages[index]?.src}
-							alt=""
-							loading="lazy"
-							decoding="async"
-							class="min-h-0 w-full flex-1 object-contain"
-						/>
+						{/* The image box must match the visible image, otherwise a click on the
+						    letterboxing would count as a click on the image and not close the dialog. */}
+						<div class="flex min-h-0 w-full flex-1 items-center justify-center">
+							<img
+								src={fullSizeImages[index]?.src}
+								alt=""
+								loading="lazy"
+								decoding="async"
+								class="max-h-full max-w-full"
+							/>
+						</div>
 						<figcaption class="text-center text-sm">
 							{image.alt}
 						</figcaption>

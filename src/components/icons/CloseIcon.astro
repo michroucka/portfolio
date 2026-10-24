@@ -1,0 +1,37 @@
+---
+// The close state of MenuIcon without its morph, for buttons that only ever close
+// (the menu's open/close toggle keeps MenuIcon). Decorative: the parent must provide the accessible name.
+interface Props {
+	class?: string;
+	size?: string;
+}
+
+const { class: className, size = "1em" } = Astro.props;
+---
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 256 256"
+	width={size}
+	height={size}
+	fill="currentColor"
+	aria-hidden="true"
+	focusable="false"
+	class={className}
+>
+	<!-- Same 238 × 32 bars crossing at the icon centre as the folded MenuIcon -->
+	<rect
+		x="9"
+		y="112"
+		width="238"
+		height="32"
+		transform="rotate(45 128 128)"
+	></rect>
+	<rect
+		x="9"
+		y="112"
+		width="238"
+		height="32"
+		transform="rotate(-45 128 128)"
+	></rect>
+</svg>
