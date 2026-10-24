@@ -108,7 +108,7 @@ export const cs = {
 		title: "O mně",
 		text: [
 			"Jmenuji se Michal Roučka a pocházím z okolí Plzně. K programování jsem se dostal až na vysoké škole: na Fakultě aplikovaných věd ZČU jsem v roce 2026 dokončil bakaláře v oboru softwarové inženýrství a nyní tam pokračuji v navazujícím studiu.",
-			"Weby a aplikace pro malé firmy dělám vedle studia. Naplňuje mě, když po mně zůstane něco, co lidem opravdu pomáhá v práci, a chci mít za sebou skutečné projekty pro skutečné zákazníky, ne jen školní zadání. Každý web proto dělám tak, jako by byl mojí vizitkou – protože jí je.",
+			"Weby a aplikace pro malé firmy dělám vedle studia. Naplňuje mě, když po mně zůstane něco, co lidem opravdu pomáhá, a chci mít za sebou skutečné projekty pro skutečné zákazníky, ne jen školní zadání. Každý web proto dělám tak, jako by byl mojí vizitkou – protože jí je.",
 			"Pracuji sám, takže mluvíte vždy přímo se mnou – s tím, kdo váš web navrhuje i programuje. Žádní prostředníci a žádné agenturní přirážky.",
 		],
 		valuesTitle: "Na čem si zakládám",

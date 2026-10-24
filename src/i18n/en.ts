@@ -109,7 +109,7 @@ export const en: Dictionary = {
 		title: "About me",
 		text: [
 			"My name is Michal Roučka and I’m from the Pilsen area. I only got into programming at university: in 2026 I finished my bachelor’s degree in software engineering at the Faculty of Applied Sciences, University of West Bohemia, and I’m now continuing there with a master’s.",
-			"I build websites and applications for small businesses alongside my studies. I find it fulfilling to build something that genuinely helps people in their work, and I want real projects for real clients behind me, not just school assignments. That’s why I build every website as if it were my business card – because it is.",
+			"I build websites and applications for small businesses alongside my studies. I find it fulfilling to build something that genuinely helps people, and I want real projects for real clients behind me, not just school assignments. That’s why I build every website as if it were my business card – because it is.",
 			"I work on my own, so you always talk directly to me – the person who designs and codes your website. No middlemen and no agency markup.",
 		],
 		valuesTitle: "What I stand for",
