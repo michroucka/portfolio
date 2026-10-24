@@ -59,7 +59,7 @@ export const en: Dictionary = {
 	projectPage: {
 		factsLabel: "About the project",
 		yearLabel: "Year",
-		scopeLabel: "What I did",
+		scopeLabel: "What was built",
 		tagsLabel: "Technologies used",
 		linksLabel: "Links",
 		liveLink: "Live website",

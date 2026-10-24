@@ -251,7 +251,7 @@ přepínač tématu.
 - *Rozhodnutí:*
   - Nelokalizovaná pole zůstávají v obou souborech a hlídá je `findMismatchedFields`; `assertProjectTranslations` hlásí chybějící překlady i rozdílná pole najednou. Pole a tagy se porovnávají jako JSON, takže záleží i na pořadí (zobrazuje se).
   - Shodné `order` řadí `getProjectsForLocale` podle slugu.
-  - Nová sdílená pole `year` a `scope` (enum, popisky ve slovníku `projects.scope`) plní pruh s fakty pod coverem: Rok · Co jsem dělal · Odkazy. Na mobilu dva sloupce, „Co jsem dělal“ přes dva řádky, aby odkazy byly pod rokem. Zkoušený aside vedle textu zamítnut.
+  - Nová sdílená pole `year` a `scope` (enum, popisky ve slovníku `projects.scope`) plní pruh s fakty pod coverem: Rok · Co vzniklo · Odkazy. Na mobilu dva sloupce, „Co vzniklo“ přes dva řádky, aby odkazy byly pod rokem. Zkoušený aside vedle textu zamítnut.
   - Prázdná pravá polovina vedle `max-w-prose`: od `lg` jsou `h2` jako float v levé třetině, text vpravo. Grid zamítnut – vysoký nadpis roztahoval řádek a dělal díry. Galerie kvůli `clear` používá `pt-8` místo `mt-8` (margin se při clearance ztratí); margin na nadpisu by posouval další sekci.
   - `text-wrap: pretty` pro odstavce a seznamy, `balance` pro nadpisy (base vrstva, celý web).
   - Lightbox: obrázek je v centrujícím obalu s `max-h-full max-w-full`, takže klik vedle obrázku dialog zavře. Zavírací tlačítko má statickou `CloseIcon` – morfující `MenuIcon` se při fade-out vracel do hamburgeru.

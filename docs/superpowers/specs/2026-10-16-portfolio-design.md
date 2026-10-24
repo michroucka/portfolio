@@ -133,7 +133,7 @@ a vykreslí sdílenou komponentu stránky. Žádná duplikace obsahu ani markupu
 - `cover` – obrázek přes `image()` (optimalizace při buildu)
 - `type` – `web` | `web-app` | `app`
 - `year` – rok realizace (celé číslo)
-- `scope` – co jsem dělal: `branding` | `website` | `booking` | `admin` | `local-seo`, popisky ve slovníku
+- `scope` – co vzniklo: `branding` | `website` | `booking` | `admin` | `local-seo`, popisky ve slovníku
 - `tags` – technologie
 - `liveUrl?`, `repoUrl?` – jen `http(s)` URL
 - `featured: boolean` (výchozí `false`), `order` – celé číslo
@@ -144,7 +144,7 @@ Screenshoty jsou rozdělené do sekcí podle části projektu (u Nohou v cajku W
 Text je psaný jazykem klienta; technologie jsou sekundární vrstva.
 Screenshoty admin rozhraní a rezervace pouze s dummy daty; web může být z produkce.
 
-Stránka: pod coverem je pruh s fakty (rok, co jsem dělal, odkazy), štítky technologií jsou v hlavičce.
+Stránka: pod coverem je pruh s fakty (rok, co vzniklo, odkazy), štítky technologií jsou v hlavičce.
 Od `lg` sedí nadpisy sekcí v levé třetině a text vpravo v `max-w-prose`; obrázky a galerie jdou přes celou šířku.
 
 ### Kontrola párování

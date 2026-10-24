@@ -58,7 +58,7 @@ export const cs = {
 	projectPage: {
 		factsLabel: "O projektu",
 		yearLabel: "Rok",
-		scopeLabel: "Co jsem dělal",
+		scopeLabel: "Co vzniklo",
 		tagsLabel: "Použité technologie",
 		linksLabel: "Odkazy",
 		liveLink: "Živý web",
