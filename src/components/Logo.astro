@@ -4,8 +4,6 @@ import logoLightTheme from "../../brand/logo/mr-horizontal-positive.svg?raw";
 
 interface Props {
 	class?: string;
-	// On hover/focus of a `group` parent the dot turns into a blinking cursor (brand/README.md § 5).
-	animateDotOnHover?: boolean;
 }
 
 function removeTitleAndAttributes(svg: string): string {
@@ -74,61 +72,26 @@ function findDot(svg: string): Dot {
 
 // Replaces the circle with a <rect> whose corner radius equals the radius (looks identical).
 // Unlike a circle, a <rect> can animate width/height/rx/y, so the dot can morph into the "_" cursor.
-// --dot (diameter) and --baseline (bottom edge) are used by dot-cursor-hover and @keyframes dot-cursor.
-function dotToRect(svg: string, className: string): string {
+// --dot (diameter) and --baseline (bottom edge) are used by @keyframes dot-cursor.
+function dotToRect(svg: string): string {
 	const { tag, fill, cx, cy, r } = findDot(svg);
 	const d = 2 * r;
 	const rect =
 		`<rect fill="${fill}" x="${cx - r}" y="${cy - r}" width="${d}" height="${d}" rx="${r}"` +
-		` style="--dot: ${d}px; --baseline: ${cy + r}px" class="${className}" />`;
+		` style="--dot: ${d}px; --baseline: ${cy + r}px" />`;
 
 	return svg.replace(tag, rect);
 }
 
-// The name is the path right after the symbol group (<g>…</g><path …>, see build_final.py).
-// The cursor is 0.93 dot diameters longer than the dot but the gap to the name is only one
-// diameter, so the name moves aside during the animation (name-push-hover, needs --dot).
-function prepareName(svg: string, className: string): string {
-	const { r } = findDot(svg);
-	const namePath = "</g><path ";
+const { class: className } = Astro.props;
 
-	if (!svg.includes(namePath)) {
-		throw new Error(
-			"Logo SVG is missing the name path after the symbol group",
-		);
-	}
-
-	return svg.replace(
-		namePath,
-		`</g><path style="--dot: ${2 * r}px" class="${className}" `,
-	);
-}
-
-const { class: className, animateDotOnHover = false } = Astro.props;
-
-// Class names must appear in full (not concatenated) so Tailwind can detect them.
-const dotClasses = animateDotOnHover ? "dot-cursor-hover" : "";
-const nameClasses = animateDotOnHover ? "name-push-hover" : "";
-
-// prepareName reads the radius from the <circle>, so it must run before dotToRect.
 const prepare = (svg: string): string =>
-	dotToRect(
-		prepareName(
-			cropProtectiveZone(removeTitleAndAttributes(svg)),
-			nameClasses,
-		),
-		dotClasses,
-	);
+	dotToRect(cropProtectiveZone(removeTitleAndAttributes(svg)));
 const logoLight = prepare(logoLightTheme);
 const logoDark = prepare(logoDarkTheme);
 ---
 
-<!-- overflow-visible: the name moves past the cropped viewBox during the animation and must not be clipped -->
-<div
-	class:list={[className, animateDotOnHover && "[&_svg]:overflow-visible"]}
-	role="img"
-	aria-label="Michal Roučka"
->
+<div class={className} role="img" aria-label="Michal Roučka">
 	<span set:html={logoLight} class="hidden light:block" />
 	<span set:html={logoDark} class="block light:hidden" />
 </div>

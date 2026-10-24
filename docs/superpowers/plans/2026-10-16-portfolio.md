@@ -149,8 +149,7 @@ přepínač tématu.
   - Hlavička je `sticky` (větev `feat/sticky-header`): přes celou šířku, progresivní blur (4 vrstvy `backdrop-filter` s ubývajícím rozmazáním a maskou + postupně slábnoucí tónování, 4 rem pod hlavičku) – žádný okraj. Výška řádku hlavičky je token `--header-height` (4,75 rem): je to `min-height` hlavičky a používá ho `scroll-padding-top` na `html`, aby kotvy nezajely pod lištu. Auto-hide (schování při scrollu dolů) zatím ne: potřeboval by klientský JS.
   - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
   - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
-  - Logo v hlavičce: při hoveru se tečka promění v blikající kurzor a jméno mu ustoupí (`dot-cursor-hover`, `name-push-hover` v `global.css`).
-- *Odchylka od manuálu (§ 5):* při hoveru na logo kurzor bliká, dokud je na něm myš (ne jen 3×) – tvar je přes `transition`, aby se po odjetí plynule vrátil do tečky. „3 bliknutí a zpět“ platí pro hero (Úkol 9). Rytmus blikání je 530 ms svítí / 530 ms zhasnuto.
+  - Logo v hlavičce je bez animace: hover efekt (tečka → blikající kurzor) byl odebrán (větev `feat/home-header-tweaks`), animace tečky zůstává jen pro hero (Úkol 9).
 
 ### Úkol 5: Content collections – služby a case studies
 

@@ -4,8 +4,8 @@ export const en: Dictionary = {
 	nav: {
 		services: "Services",
 		projects: "Projects",
-		collaboration: "Collaboration",
 		about: "About me",
+		collaboration: "Collaboration",
 		contact: "Contact",
 	},
 	header: {
@@ -30,7 +30,7 @@ export const en: Dictionary = {
 	hero: {
 		title: "Websites and applications for small businesses",
 		subtitle:
-			"From showcase websites to tailor-made booking systems. Personal, straightforward, and agency markup-free.",
+			"From showcase websites to tailor-made booking systems. Personal, straightforward, and agency markup-free. Pilsen and the surrounding area.",
 		primaryCta: "Free consultation",
 		secondaryCta: "Selected projects",
 	},
@@ -43,6 +43,8 @@ export const en: Dictionary = {
 	},
 	projects: {
 		title: "Selected projects",
+		moreProjects: "You can find more projects",
+		moreProjectsLink: "on my GitHub",
 		types: {
 			web: "Website",
 			"web-app": "Website and app",
@@ -108,8 +110,35 @@ export const en: Dictionary = {
 	about: {
 		title: "About me",
 		text: [
-			"I’m Michal Roučka, a developer based near Pilsen. I build websites and applications that save small businesses time and bring them customers.",
-			"I work on my own, so you always talk directly to me – the person who designs and codes your website. No middlemen and no agency markup.",
+			"My name is Michal Roučka and I’m from the Pilsen area. I only got into programming at university: in 2026 I finished my bachelor’s degree in software engineering at the Faculty of Applied Sciences, University of West Bohemia, and I’m now continuing there with a master’s.",
+			"I build websites and applications for small businesses alongside my studies. I find it fulfilling to build something that genuinely helps people, and I want real projects for real clients behind me, not just school assignments. That’s why I build every website as if it were my business card – because it is.",
+			"Outside work and school I take photos, play around with graphic design and travel whenever I can. An eye for images and detail comes in handy when I design websites too.",
+			"I work on my own, so you always talk directly to me – the person who designs and codes your website.",
+		],
+		cta: "Want to talk about your project?",
+		ctaLink: "Get in touch",
+		valuesTitle: "What I stand for",
+		values: [
+			{
+				title: "Fast communication",
+				description:
+					"You won’t wait weeks for a reply to your email. I always get back to you as soon as I can.",
+			},
+			{
+				title: "Reliability",
+				description:
+					"Agreed deadlines hold. I show up to meetings on time and deliver finished work when we said I would. If something does get delayed, I’ll let you know in good time and we’ll agree on what comes next.",
+			},
+			{
+				title: "A fast, well-built website",
+				description:
+					"It loads instantly, works on phones and computers, and is built to be easy to maintain and extend.",
+			},
+			{
+				title: "Your satisfaction",
+				description:
+					"The job is done when you’re happy with it. Not the moment I tick it off my list.",
+			},
 		],
 		photoAlt: "Portrait of Michal Roučka",
 	},

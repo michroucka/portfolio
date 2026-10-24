@@ -3,6 +3,7 @@ export const siteDetails = {
 	email: "michroucka7@gmail.com",
 	ico: undefined as string | undefined, // set once the business is registered
 	phone: "+420 774 739 180",
+	github: "https://github.com/michroucka",
 	launchYear: 2026,
 };
 

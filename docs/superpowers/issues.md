@@ -418,11 +418,13 @@ K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 1. Rozhodnout a koupit doménu, napojit na Cloudflare.
 2. Nastavit `site` v `astro.config.mjs`.
 3. Ověřit doménu v Resend (DNS) a přepnout odesílatele z testovacího.
+4. Založit e-mail na vlastní doméně a nahradit jím gmail v `siteDetails.email` (`src/lib/site.ts`) – adresa na vlastní doméně působí na zákazníky důvěryhodněji.
 
 ### Hotovo, když
 
 - [ ] `site` má skutečnou doménu
 - [ ] Resend posílá z ověřené domény
+- [ ] Web ukazuje e-mail na vlastní doméně
 
 ---
 
