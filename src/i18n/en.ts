@@ -114,6 +114,8 @@ export const en: Dictionary = {
 			"I build websites and applications for small businesses alongside my studies. I find it fulfilling to build something that genuinely helps people, and I want real projects for real clients behind me, not just school assignments. That’s why I build every website as if it were my business card – because it is.",
 			"I work on my own, so you always talk directly to me – the person who designs and codes your website.",
 		],
+		cta: "Want to talk about your project?",
+		ctaLink: "Get in touch",
 		valuesTitle: "What I stand for",
 		values: [
 			{

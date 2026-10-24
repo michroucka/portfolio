@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { getDictionary, type Locale } from "../../i18n";
 import portrait from "../../assets/about/portrait.jpg";
+import { getSectionHref } from "../../lib/sections";
 import Section from "../Section.astro";
 
 interface Props {
@@ -31,23 +32,32 @@ const dictionary = getDictionary(locale);
 				class="-right-[29px] -bottom-[29px] hidden opacity-50 sm:block"
 			></span>
 		</div>
-		<div>
-			<div class="max-w-[60ch] space-y-4 text-lg">
+		<div class="max-w-[60ch]">
+			<div class="space-y-4 text-lg">
 				{dictionary.about.text.map((paragraph) => (
 					<p>{paragraph}</p>
 				))}
 			</div>
-			<h3 class="mt-12 text-lg">{dictionary.about.valuesTitle}</h3>
-			<dl class="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2">
-				{dictionary.about.values.map((value) => (
-					<div class="border-t border-line pt-4">
-						<dt class="font-semibold">{value.title}</dt>
-						<dd class="mt-2 text-muted">{value.description}</dd>
-					</div>
-				))}
-			</dl>
+			<p class="mt-6">
+				{dictionary.about.cta}{" "}
+				<a
+					href={getSectionHref("contact", locale)}
+					class="font-semibold text-accent link-underline"
+				>
+					{dictionary.about.ctaLink}
+				</a>
+			</p>
 		</div>
 	</div>
+	<h3 class="mt-16 text-lg md:mt-20">{dictionary.about.valuesTitle}</h3>
+	<dl class="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+		{dictionary.about.values.map((value) => (
+			<div class="border-t border-line pt-4">
+				<dt class="font-semibold">{value.title}</dt>
+				<dd class="mt-2 text-muted">{value.description}</dd>
+			</div>
+		))}
+	</dl>
 </Section>
 
 <style>
