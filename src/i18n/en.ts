@@ -117,7 +117,7 @@ export const en: Dictionary = {
 			{
 				title: "Fast communication",
 				description:
-					"You won’t wait weeks for an email. I reply within two working days at the latest.",
+					"You won’t wait weeks for a reply to your email. I always get back to you as soon as I can.",
 			},
 			{
 				title: "Reliability",

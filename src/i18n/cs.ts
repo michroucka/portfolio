@@ -116,7 +116,7 @@ export const cs = {
 			{
 				title: "Rychlá komunikace",
 				description:
-					"Na e-mail nebudete čekat týdny. Odpovím nejpozději do dvou pracovních dnů.",
+					"Na odpověď na e-mail nebudete čekat týdny. Ozvu se vždy, jak nejdřív to půjde.",
 			},
 			{
 				title: "Spolehlivost",
