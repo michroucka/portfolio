@@ -48,6 +48,32 @@ export const en: Dictionary = {
 			"web-app": "Website and app",
 			app: "Application",
 		},
+		scope: {
+			branding: "Logo and visual identity",
+			website: "Website",
+			booking: "Booking system",
+			admin: "Admin app",
+			"local-seo": "Google and Firmy.cz listings",
+		},
+	},
+	projectPage: {
+		factsLabel: "About the project",
+		yearLabel: "Year",
+		scopeLabel: "What was built",
+		tagsLabel: "Technologies used",
+		linksLabel: "Links",
+		liveLink: "Live website",
+		repoLink: "Source code",
+		ctaTitle: "Want something similar?",
+		ctaText:
+			"Tell me what your business needs. The first consultation is free and non-binding.",
+		ctaLink: "Free consultation",
+	},
+	gallery: {
+		label: "Enlarged image",
+		close: "Close",
+		previous: "Previous image",
+		next: "Next image",
 	},
 	process: {
 		title: "How we work together",

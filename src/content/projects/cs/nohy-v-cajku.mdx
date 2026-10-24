@@ -1,8 +1,15 @@
 ---
 title: Nohy v cajku
 summary: Pedikérka místo papírového diáře spravuje termíny v přehledné aplikaci a zákazníci se objednávají online.
-cover: ../../../assets/projects/nohy-v-cajku/calendar.png
+cover: ../../../assets/projects/nohy-v-cajku/screens/web-home.png
 type: web-app
+year: 2026
+scope:
+    - branding
+    - website
+    - booking
+    - admin
+    - local-seo
 tags:
     - Next.js
     - TypeScript
@@ -15,6 +22,22 @@ featured: true
 order: 1
 ---
 
+import webHome from "../../../assets/projects/nohy-v-cajku/screens/web-home.png";
+import webHomePhone from "../../../assets/projects/nohy-v-cajku/screens/web-home-phone.png";
+import webPrices from "../../../assets/projects/nohy-v-cajku/screens/web-prices.png";
+import bookingDate from "../../../assets/projects/nohy-v-cajku/screens/booking-date.png";
+import bookingTime from "../../../assets/projects/nohy-v-cajku/screens/booking-time.png";
+import bookingDetails from "../../../assets/projects/nohy-v-cajku/screens/booking-details.png";
+import bookingConfirmed from "../../../assets/projects/nohy-v-cajku/screens/booking-confirmed.png";
+import adminCalendarTablet from "../../../assets/projects/nohy-v-cajku/screens/admin-calendar-tablet.png";
+import adminCalendarPhone from "../../../assets/projects/nohy-v-cajku/screens/admin-calendar-phone.png";
+import adminAvailability from "../../../assets/projects/nohy-v-cajku/screens/admin-availability-tablet.png";
+import adminSettings from "../../../assets/projects/nohy-v-cajku/screens/admin-settings-tablet.png";
+import logo from "../../../assets/projects/nohy-v-cajku/branding/logo.png";
+import iconWeb from "../../../assets/projects/nohy-v-cajku/branding/icon-web.png";
+import businessCard from "../../../assets/projects/nohy-v-cajku/branding/business-card.png";
+import giftCard from "../../../assets/projects/nohy-v-cajku/branding/gift-card.png";
+
 ## Problém
 
 Nohy v cajku je malá pedikúra, která neměla web. Zákazníci se objednávali telefonem, nebo rovnou při návštěvě na další termín. Všechno se zapisovalo do papírového diáře.
@@ -25,30 +48,79 @@ Diář musel být pořád po ruce a chyby se stávaly snadno: termín se zapomn�
 
 Postavil jsem web a k němu rezervační systém, který diář úplně nahradil.
 
+- **Logo a vizuální identita.** Navrhl jsem logo, barvy a písmo a podle nich vizitky, dárkové poukazy, ceník a billboard. Stejná identita je na webu i v aplikaci.
 - **První web salonu.** Zákazníci na něm najdou ceník, kontakt a cestu.
-- **Vidět v Googlu.** Založil jsem salonu firemní profil na Google Mapách s odkazem na web. Při hledání „pedikúra Kralovice“ je profil hned nahoře a web na prvním místě ve výsledcích.
+- **Vidět na Googlu i Seznamu.** Založil jsem salonu firemní profil na Googlu a na Firmy.cz s odkazem na web. Při hledání „pedikúra Kralovice“ je profil hned nahoře a web na prvním místě ve výsledcích.
 - **Rezervace online, bez registrace.** Zákazníci si vyberou volný termín sami, kdykoli, a klidně i pro víc lidí najednou. Dva lidé si nikdy nezarezervují stejný čas.
 - **Zrušení nebo přesun jedním odkazem.** Odkaz přijde v potvrzovacím e-mailu, nic dalšího není potřeba.
 - **SMS připomínka v den termínu.** Na termín se tak zapomíná mnohem méně.
 - **Kalendář místo diáře.** Na tabletu v salonu i na mobilu, s kontaktem u každé rezervace. Termíny domluvené osobně se zapisují rovnou sem.
+- **Platba přes QR kód.** U každé rezervace aplikace ukáže QR kód s částkou podle služby a zákazník zaplatí v mobilním bankovnictví rovnou na účet salonu. Pro jinou částku lze QR kód vytvořit ručně.
 - **Ranní přehled.** Každé ráno přijde upozornění s plánem na celý den a další upozornění při každé nové rezervaci.
 
 ## Výsledek
 
 Papírový diář skončil v šuplíku. Všechny termíny jsou na jednom místě, nic se neztratí a ke každému je kontakt. Rezervace přicházejí i mimo otevírací dobu, bez telefonování uprostřed práce.
 
-## Screenshoty
+## Branding
 
-Administrace běží na vlastní subdoméně za přihlášením. Na snímcích jsou vzorová data.
+Logo s otiskem chodidla v kruhu ladí s teplou tmavou barvou a zlatorůžovým přechodem. Ze stopy vznikly ikony webu a administrace, ze stejných barev a písma tiskoviny, které salon používá.
 
-![Týdenní kalendář s rezervacemi](../../../assets/projects/nohy-v-cajku/calendar.png)
+<Gallery
+	images={[
+		{ src: logo, alt: "Logo Nohy v cajku" },
+		{ src: iconWeb, alt: "Ikona webu" },
+		{ src: businessCard, alt: "Vizitka, líc a rub" },
+		{ src: giftCard, alt: "Dárkový poukaz" },
+	]}
+/>
 
-![Denní přehled na mobilu](../../../assets/projects/nohy-v-cajku/calendar-phone.png)
+## Web
 
-![Nastavení výjimek v otevírací době](../../../assets/projects/nohy-v-cajku/availability.png)
+<Gallery
+	images={[
+		{ src: webHome, alt: "Úvodní stránka" },
+		{ src: webHomePhone, alt: "Úvodní stránka na mobilu" },
+		{ src: webPrices, alt: "Ceník" },
+	]}
+/>
 
-![Nastavení upozornění a synchronizace s Apple Kalendářem](../../../assets/projects/nohy-v-cajku/settings.png)
+## Rezervace
+
+<Gallery
+	images={[
+		{ src: bookingDate, alt: "Výběr dne s volnými termíny" },
+		{ src: bookingTime, alt: "Výběr času" },
+		{ src: bookingDetails, alt: "Kontaktní údaje bez registrace" },
+		{
+			src: bookingConfirmed,
+			alt: "Potvrzení s odkazem na přesun nebo zrušení",
+		},
+	]}
+/>
+
+## Administrace
+
+<Gallery
+	images={[
+		{ src: adminCalendarTablet, alt: "Týdenní kalendář na tabletu" },
+		{ src: adminCalendarPhone, alt: "Denní přehled na mobilu" },
+		{
+			src: adminAvailability,
+			alt: "Úprava otevírací doby pro konkrétní den",
+		},
+		{
+			src: adminSettings,
+			alt: "Nastavení upozornění a synchronizace s Apple Kalendářem",
+		},
+	]}
+	note="Rezervace a administrace jsou na vzorových datech. Administrace běží na vlastní subdoméně za přihlášením."
+/>
 
 ## Technologie
 
-Next.js a TypeScript, databáze PostgreSQL (Prisma), Tailwind CSS. Potvrzovací e-maily přes Resend, SMS přes SMS bránu, push upozornění přes Web Push. Administrace je instalovatelná jako aplikace (PWA). Pro vyhledávače strukturovaná data (LocalBusiness) a sitemap. Hosting na Vercelu, databáze na Neonu.
+Web i administrace jsou jedna aplikace v Next.js a TypeScriptu. Rezervace ukládá databáze PostgreSQL (přes Prisma) a sama hlídá, aby se dva termíny nikdy nepřekryly, ani když si dva lidé vybírají ve stejnou chvíli. Vzhled je postavený v Tailwind CSS.
+
+Potvrzovací e-maily posílá Resend a připomínky v den termínu SMS brána. Upozornění na nové rezervace a ranní přehled chodí do telefonu přes Web Push. Administrace se přidá na plochu tabletu i mobilu jako aplikace (PWA), nic se nestahuje z obchodu. Rezervace jde navíc odebírat v Apple Kalendáři.
+
+Vyhledávačům pomáhají sitemap a strukturovaná data o salonu (LocalBusiness). Web běží na Vercelu a databáze na Neonu, takže není potřeba žádný vlastní server, o který by se musel někdo starat.

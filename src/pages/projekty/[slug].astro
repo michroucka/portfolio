@@ -1,0 +1,18 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import ProjectPage from "../../components/pages/ProjectPage.astro";
+import { getCollection } from "astro:content";
+import { getProjectStaticPaths } from "../../lib/projects";
+
+export const getStaticPaths = (async () =>
+	getProjectStaticPaths(
+		await getCollection("projects"),
+		"cs",
+	)) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { project } = Astro.props;
+---
+
+<ProjectPage locale="cs" project={project} />

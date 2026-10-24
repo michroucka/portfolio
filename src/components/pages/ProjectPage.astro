@@ -1,0 +1,152 @@
+---
+import { type CollectionEntry, render } from "astro:content";
+import { getImage, Image } from "astro:assets";
+import { getDictionary, type Locale } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { parseProjectId } from "../../lib/projects";
+import { getSectionHref } from "../../lib/sections";
+import Gallery from "../mdx/Gallery.astro";
+import Quote from "../mdx/Quote.astro";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+	locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const dictionary = getDictionary(locale);
+const { slug } = parseProjectId(project.id);
+const {
+	title,
+	summary,
+	cover,
+	type,
+	year,
+	scope,
+	tags,
+	liveUrl,
+	repoUrl,
+	testimonial,
+} = project.data;
+const { Content } = await render(project);
+// Social networks take a single fixed-size file, not a responsive srcset or a large PNG.
+const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
+---
+
+<BaseLayout
+	locale={locale}
+	page="project"
+	params={{ slug }}
+	title={title}
+	description={summary}
+	ogImage={ogImage.src}
+>
+	<article class="py-16 md:py-24">
+		<header>
+			<p class="text-sm font-semibold text-muted uppercase">
+				{dictionary.projects.types[type]}
+			</p>
+			<h1 class="mt-2 max-w-[20ch] text-4xl md:text-5xl">{title}</h1>
+			<p class="mt-6 max-w-prose text-lg text-muted">{summary}</p>
+			<ul
+				aria-label={dictionary.projectPage.tagsLabel}
+				class="mt-8 flex flex-wrap gap-2"
+			>
+				{tags.map((tag) => (
+					<li class="border border-line px-3 py-1 text-sm">{tag}</li>
+				))}
+			</ul>
+		</header>
+
+		{/* Cover sizes follow the layout: the full max-w-7xl column minus px-6 (≤ 1232 px). */}
+		<Image
+			src={cover}
+			alt=""
+			widths={[600, 1200, 1800]}
+			sizes="(min-width: 1280px) 1232px, calc(100vw - 48px)"
+			loading="eager"
+			class="mt-12 w-full border border-line"
+		/>
+
+		{/* <dl> has no role that can carry a name, so the section is labelled by a hidden heading. */}
+		<section aria-labelledby="project-facts-heading">
+			<h2 id="project-facts-heading" class="sr-only">
+				{dictionary.projectPage.factsLabel}
+			</h2>
+			<dl class="grid grid-cols-2 gap-8 border-b border-line py-8 lg:grid-cols-3 lg:gap-x-0">
+				<div>
+					<dt class="project-fact-label">
+						{dictionary.projectPage.yearLabel}
+					</dt>
+					<dd class="mt-2">{year}</dd>
+				</div>
+				<div class="max-lg:row-span-2">
+					<dt class="project-fact-label">
+						{dictionary.projectPage.scopeLabel}
+					</dt>
+					{scope.map((item) => (
+						<dd class="mt-2">{dictionary.projects.scope[item]}</dd>
+					))}
+				</div>
+				{(liveUrl || repoUrl) && (
+					<div>
+						<dt class="project-fact-label">
+							{dictionary.projectPage.linksLabel}
+						</dt>
+						{liveUrl && (
+							<dd class="mt-2">
+								<a
+									href={liveUrl}
+									target="_blank"
+									rel="noopener"
+									class="font-semibold text-accent link-underline"
+								>
+									{dictionary.projectPage.liveLink}
+								</a>
+							</dd>
+						)}
+						{repoUrl && (
+							<dd class="mt-2">
+								<a
+									href={repoUrl}
+									target="_blank"
+									rel="noopener"
+									class="font-semibold text-accent link-underline"
+								>
+									{dictionary.projectPage.repoLink}
+								</a>
+							</dd>
+						)}
+					</div>
+				)}
+			</dl>
+		</section>
+
+		<div class="case-study">
+			<Content components={{ Gallery, Quote }} />
+		</div>
+
+		{testimonial && (
+			<div class="mt-16 max-w-prose">
+				<Quote author={testimonial.author}>
+					<p>{testimonial.quote}</p>
+				</Quote>
+			</div>
+		)}
+
+		<section class="mt-16 border border-line bg-surface p-6 md:p-10">
+			<h2 class="text-2xl md:text-3xl">
+				{dictionary.projectPage.ctaTitle}
+			</h2>
+			<p class="mt-4 max-w-prose text-muted">
+				{dictionary.projectPage.ctaText}
+			</p>
+			<a
+				href={getSectionHref("contact", locale)}
+				class="mt-8 button-primary"
+			>
+				{dictionary.projectPage.ctaLink}
+			</a>
+		</section>
+	</article>
+</BaseLayout>

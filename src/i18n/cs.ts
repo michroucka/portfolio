@@ -47,6 +47,32 @@ export const cs = {
 			"web-app": "Web s aplikací",
 			app: "Aplikace",
 		},
+		scope: {
+			branding: "Logo a vizuální identita",
+			website: "Web",
+			booking: "Rezervační systém",
+			admin: "Administrace",
+			"local-seo": "Profil na Googlu a Firmy.cz",
+		},
+	},
+	projectPage: {
+		factsLabel: "O projektu",
+		yearLabel: "Rok",
+		scopeLabel: "Co vzniklo",
+		tagsLabel: "Použité technologie",
+		linksLabel: "Odkazy",
+		liveLink: "Živý web",
+		repoLink: "Zdrojový kód",
+		ctaTitle: "Chcete něco podobného?",
+		ctaText:
+			"Napište mi, co vaše firma potřebuje. První konzultace je nezávazná a zdarma.",
+		ctaLink: "Nezávazná konzultace",
+	},
+	gallery: {
+		label: "Zvětšený obrázek",
+		close: "Zavřít",
+		previous: "Předchozí obrázek",
+		next: "Další obrázek",
 	},
 	process: {
 		title: "Jak spolupráce probíhá",

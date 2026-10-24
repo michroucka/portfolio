@@ -132,19 +132,27 @@ a vykreslí sdílenou komponentu stránky. Žádná duplikace obsahu ani markupu
 - `title`, `summary` (jedna věta pro kartu)
 - `cover` – obrázek přes `image()` (optimalizace při buildu)
 - `type` – `web` | `web-app` | `app`
+- `year` – rok realizace (celé číslo)
+- `scope` – co vzniklo: `branding` | `website` | `booking` | `admin` | `local-seo`, popisky ve slovníku
 - `tags` – technologie
 - `liveUrl?`, `repoUrl?` – jen `http(s)` URL
 - `featured: boolean` (výchozí `false`), `order` – celé číslo
 - `testimonial?: { quote, author }`
 
-Tělo MDX má pevnou kostru: **problém → řešení → výsledek → screenshoty → technologie**.
+Tělo MDX má pevnou kostru: **problém → řešení → výsledek → (branding) → screenshoty → technologie**.
+Screenshoty jsou rozdělené do sekcí podle části projektu (u Nohou v cajku Web, Rezervace, Administrace).
 Text je psaný jazykem klienta; technologie jsou sekundární vrstva.
-Screenshoty admin rozhraní pouze s dummy daty.
+Screenshoty admin rozhraní a rezervace pouze s dummy daty; web může být z produkce.
+
+Stránka: pod coverem je pruh s fakty (rok, co vzniklo, odkazy), štítky technologií jsou v hlavičce.
+Od `lg` sedí nadpisy sekcí v levé třetině a text vpravo v `max-w-prose`; obrázky a galerie jdou přes celou šířku.
 
 ### Kontrola párování
-Při buildu se ověří, že každá case study existuje v obou jazycích. Pokud ne, build selže.
+Při buildu se ověří, že každá case study existuje v obou jazycích a že se pár neliší v nelokalizovaných
+polích (`cover`, `type`, `year`, `scope`, `tags`, `liveUrl`, `repoUrl`, `featured`, `order`). Pokud ne, build selže
+s výčtem slugů a polí.
 Kontrola běží tam, kde se generují stránky case studies (`getStaticPaths`, Úkol 7 plánu);
-funkce `findMissingTranslations` je v `src/lib/projects.ts`.
+funkce `assertProjectTranslations` (s `findMissingTranslations` a `findMismatchedFields`) je v `src/lib/projects.ts`.
 
 ---
 
