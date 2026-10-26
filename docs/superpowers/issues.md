@@ -17,7 +17,7 @@ Implementuje Michal sám (mentor režim), Claude radí, dává kostry a dělá r
 | #10 | Kontaktní formulář (Astro Action) | Kontaktní formulář | enhancement | #8 |
 | #11 | Animace loga v hero | Dokončení a spuštění | enhancement | #8 |
 | #12 | GDPR stránka, sitemap, robots, strukturovaná data | Dokončení a spuštění | enhancement | – |
-| #13 | Nasazení na Cloudflare a finální kontrola | Dokončení a spuštění | enhancement | #9, #10, #11, #12 |
+| #13 | Nasazení na Vercel a finální kontrola | Dokončení a spuštění | enhancement | #9, #10, #11, #12 |
 | #14 | Doména | Dokončení a spuštění | external | – |
 | #15 | Finální texty (sekce, case study, GDPR) | Dokončení a spuštění | content | – |
 | #16 | Ceny služeb | Dokončení a spuštění | content | – |
@@ -204,12 +204,12 @@ Hlavní akce návštěvníka – ozvat se. Formulář pošle e-mail Michalovi p�
 
 ### Kontext
 
-Úkol 8 plánu. Jediná serverová část webu (Cloudflare adapter). Před implementací projít spolu,
+Úkol 8 plánu. Jediná serverová část webu (Vercel adapter). Před implementací projít spolu,
 jak `Astro.getActionResult` souvisí s prerenderem homepage.
 
 ### Co udělat
 
-1. Adapter `@astrojs/cloudflare` a `env.schema` (tajné klíče, site key, cílová adresa).
+1. Adapter `@astrojs/vercel` a `env.schema` (tajné klíče, site key, cílová adresa).
 2. Testy a implementace `schema`, `spam`, `turnstile`, `mail` v `src/lib/contact/`.
 3. Action `contact` a formulář v `Contact.astro`, chyby přeložené přes slovníky.
 
@@ -349,7 +349,7 @@ GDPR stránka v obou jazycích, sitemap s jazykovými alternativami a validní J
 
 ---
 
-## #13 Nasazení na Cloudflare a finální kontrola
+## #13 Nasazení na Vercel a finální kontrola
 
 Milestone: Dokončení a spuštění · Assignee: michroucka · Labely: enhancement
 
@@ -357,31 +357,28 @@ Milestone: Dokončení a spuštění · Assignee: michroucka · Labely: enhancem
 
 ### Záměr
 
-Web běží na Cloudflare Workers, `main` → produkce, větve → preview (spec § 9).
+Web běží na Vercelu, `main` → produkce, větve → preview (spec § 9).
 
 ### Kontext
 
-Úkol 11 plánu. Bez domény (#14) jde nasadit na `workers.dev` a formulář testovat s testovacím odesílatelem Resend.
+Úkol 11 plánu. Bez domény (#14) jde nasadit na `*.vercel.app` a formulář testovat s testovacím odesílatelem Resend.
 
 ### Co udělat
 
-1. `wrangler.jsonc` podle docs adaptéru, propojení přes Workers Builds.
-2. Proměnné prostředí a secrets (produkce i preview), Cloudflare Web Analytics.
+1. Projekt na Vercelu (Pro), propojení přes Git integraci.
+2. Proměnné prostředí a secrets (Production i Preview), Vercel Web Analytics.
 3. Finální kontrola na preview URL.
 
 ### Soubory
 
-**Vytvořit**
-
-- `wrangler.jsonc`
-
 **Upravit**
 
-- `astro.config.mjs` – podle potřeby adaptéru
+- `astro.config.mjs` – Web Analytics v adaptéru
 
 ### Na co si dát pozor
 
 - Secrets nepatří do repa.
+- Preview chrání Deployment Protection – Lighthouse proti preview URL měř přihlášený nebo s bypassem.
 
 ### Výsledek
 
@@ -415,7 +412,7 @@ K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 
 ### Co udělat
 
-1. Rozhodnout a koupit doménu, napojit na Cloudflare.
+1. Rozhodnout a koupit doménu, napojit na Vercel.
 2. Nastavit `site` v `astro.config.mjs`.
 3. Ověřit doménu v Resend (DNS) a přepnout odesílatele z testovacího.
 4. Založit e-mail na vlastní doméně a nahradit jím gmail v `siteDetails.email` (`src/lib/site.ts`) – adresa na vlastní doméně působí na zákazníky důvěryhodněji.

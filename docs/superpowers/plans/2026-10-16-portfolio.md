@@ -7,10 +7,10 @@
 **Cíl:** Dvojjazyčný (CZ/EN) prezentační web, přes který Michal nabízí tvorbu webů a aplikací malým firmám.
 
 **Architektura:** Astro se statickým předrenderováním všech stránek; jediná serverová část je Astro Action kontaktního
-formuláře běžící na Cloudflare Workeru. i18n přes vestavěný routing Astra + vlastní mapu přeložených cest. Obsah
+formuláře běžící jako Vercel Function. i18n přes vestavěný routing Astra + vlastní mapu přeložených cest. Obsah
 v content collections, UI texty ve typovaných slovnících.
 
-**Tech stack:** Astro, `@astrojs/cloudflare`, `@astrojs/mdx`, `@astrojs/sitemap`, Tailwind CSS v4 (Vite plugin),
+**Tech stack:** Astro, `@astrojs/vercel`, `@astrojs/mdx`, `@astrojs/sitemap`, Tailwind CSS v4 (Vite plugin),
 Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `prettier-plugin-astro`.
 
 **Spec:** `docs/superpowers/specs/2026-10-16-portfolio-design.md`
@@ -49,7 +49,7 @@ Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `pre
 **Soubory:** vytvořit kostru Astra v kořeni `portfolio/`, `.gitignore`, `.prettierrc`, `eslint.config.js`,
 `vitest.config.ts`, `.github/workflows/ci.yml`.
 
-- [x] `git init`, první commit se stávajícím `docs/` a `brand/` (předtím zkontroluj `.gitignore` – `.DS_Store`, `.idea/`, `node_modules/`, `dist/`, `.wrangler/`, `.env*`).
+- [x] `git init`, první commit se stávajícím `docs/` a `brand/` (předtím zkontroluj `.gitignore` – `.DS_Store`, `.idea/`, `node_modules/`, `dist/`, `.vercel/`, `.env*`).
 - [x] Vytvoř Astro projekt (`npm create astro@latest`, šablona „minimal“, TypeScript **strict**) do existující složky.
 - [x] Přidej integrace `@astrojs/mdx`, `@astrojs/sitemap` a Tailwind v4 přes `npx astro add` (Tailwind se v Astru přidává jako Vite plugin). Docs: https://docs.astro.build/en/guides/styling/#tailwind
 - [x] Nastav Prettier + `prettier-plugin-astro`, ESLint s `eslint-plugin-astro`.
@@ -270,7 +270,7 @@ přepínač tématu.
 **Produkuje:** Zod schéma formuláře; funkci kontroly spamu (honeypot + časová kontrola); funkci ověření Turnstile tokenu;
 funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na klíče slovníku.
 
-- [ ] Přidej `@astrojs/cloudflare` adapter. Stránky zůstávají předrenderované; homepage s formulářem musí umět zobrazit výsledek akce – nastuduj, jak se v Astru čte výsledek form action (`Astro.getActionResult`) a co to znamená pro prerender té stránky. Docs: https://docs.astro.build/en/guides/actions/#call-actions-from-an-html-form-action – **tohle si spolu projdeme před implementací.**
+- [ ] Přidej `@astrojs/vercel` adapter. Stránky zůstávají předrenderované; homepage s formulářem musí umět zobrazit výsledek akce – nastuduj, jak se v Astru čte výsledek form action (`Astro.getActionResult`) a co to znamená pro prerender té stránky. Docs: https://docs.astro.build/en/guides/actions/#call-actions-from-an-html-form-action – **tohle si spolu projdeme před implementací.**
 - [ ] `env.schema` v configu: `RESEND_API_KEY` a `TURNSTILE_SECRET_KEY` jako server secret, Turnstile site key jako public client proměnná, cílová adresa e-mailu jako server proměnná. Docs: https://docs.astro.build/en/guides/environment-variables/#type-safe-environment-variables
 - [ ] Testy `schema.test.ts`:
   - platný vstup projde; telefon může chybět
@@ -328,16 +328,17 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [ ] **Ověření:** `dist/sitemap-index.xml` obsahuje všechny stránky obou jazyků s `xhtml:link` alternativami; JSON-LD projde https://validator.schema.org/.
 - [ ] Commit: `feat: privacy page, sitemap, robots and structured data`
 
-### Úkol 11: Nasazení na Cloudflare a finální kontrola
+### Úkol 11: Nasazení na Vercel a finální kontrola
 
 **Issue:** #13 · **Milestone:** Dokončení a spuštění
 
-**Soubory:** `wrangler.jsonc` (podle docs adaptéru), případně úprava `astro.config.mjs`.
+**Soubory:** úprava `astro.config.mjs` (Web Analytics v adaptéru), případně `vercel.json`, pokud bude potřeba.
 
-- [ ] Projdi https://docs.astro.build/en/guides/deploy/cloudflare/ a nastav projekt pro Workers se statickými assety.
-- [ ] Propoj GitHub repo přes Workers Builds (https://developers.cloudflare.com/workers/ci-cd/builds/): `main` → produkce, větve → preview.
-- [ ] Nastav proměnné prostředí a secrets v Cloudflare (produkce i preview).
-- [ ] Zapni Cloudflare Web Analytics.
+- [ ] Projdi https://docs.astro.build/en/guides/deploy/vercel/ a založ projekt na Vercelu (tým s plánem Pro).
+- [ ] Propoj GitHub repo přes Git integraci Vercelu: `main` → produkce, větve → preview.
+- [ ] Nastav proměnné prostředí a secrets ve Vercelu (Production i Preview).
+- [ ] Zapni Vercel Web Analytics (v projektu i v adaptéru: https://docs.astro.build/en/guides/integrations-guide/vercel/#webanalytics).
+- [ ] Preview chrání Deployment Protection – pro Lighthouse proti preview URL buď měř přihlášený v prohlížeči, nebo použij bypass.
 - [ ] **Ověření na preview URL:** Lighthouse (mobil) ≥ 95 ve všech kategoriích na `/`, `/en/` a jedné case study; formulář odešle e-mail; obě témata; přepínač jazyka na všech stránkách; 404.
 - [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`).
 - [ ] Commit + PR → merge do `main`.

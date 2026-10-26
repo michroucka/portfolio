@@ -66,20 +66,22 @@ Mimo rozsah (YAGNI): blog, FAQ, samostatné stránky služeb, stránka pro vývo
 
 | Oblast | Volba |
 |---|---|
-| Framework | **Astro** (statický výstup + Cloudflare adapter pro Actions) |
+| Framework | **Astro** (statický výstup + Vercel adapter pro Actions) |
 | Styling | **Tailwind CSS v4** (Vite plugin), design tokeny přes `@theme` |
 | Obsah | Astro **content collections** (MDX pro case studies, data collection pro služby) |
 | Formulář | HTML `<form>` + **Astro Actions** |
 | E-mail | **Resend** |
 | Antispam | **Cloudflare Turnstile** + honeypot |
-| Analytika | **Cloudflare Web Analytics** (bez cookies) |
-| Hosting | **Cloudflare Workers** se statickými assety, nasazení přes Workers Builds |
+| Analytika | **Vercel Web Analytics** (bez cookies) |
+| Hosting | **Vercel** (plán Pro – Hobby nepovoluje komerční použití), nasazení přes Git integraci |
 | Testy | **Vitest** (unit) + kontroly při buildu |
 | Kvalita | TypeScript strict, `astro check`, ESLint, Prettier (`prettier-plugin-astro`) |
 
 Zamítnuté alternativy:
-- Next.js + next-intl na Cloudflare přes OpenNext – zbytečně těžké pro obsahový web, vrstva adaptéru navíc.
+- Next.js + next-intl – zbytečně těžké pro obsahový web.
 - Next.js static export – nejhorší podpora i18n a formuláře.
+- Hosting na Cloudflare Workers – zdarma i pro komerční web, ale Vercel Pro je už zaplacený
+  a dává pohodlnější preview deploye u PR. Při zrušení Pro by se web musel přestěhovat.
 
 ---
 
@@ -87,7 +89,7 @@ Zamítnuté alternativy:
 
 ### Renderování
 - Všechny stránky jsou **předrenderované při buildu** (statické HTML).
-- Cloudflare adapter je nutný pouze pro Astro Action kontaktního formuláře, která běží na Workeru.
+- Vercel adapter je nutný pouze pro Astro Action kontaktního formuláře, která běží jako Vercel Function.
 
 ### Jazyky a URL
 - `defaultLocale: "cs"`, `locales: ["cs", "en"]`, `prefixDefaultLocale: false`.
@@ -217,7 +219,7 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 | selhání Resend / Turnstile API | obecná chyba + fallback „napište mi přímo na e-mail“ |
 
 ### Konfigurace
-- `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY` – tajné, v proměnných prostředí Cloudflare.
+- `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY` – tajné, v proměnných prostředí Vercelu.
 - Turnstile site key – veřejný.
 - Všechny proměnné definované typově přes `astro:env` (chybějící proměnná = chyba).
 - Resend vyžaduje ověřenou doménu (DNS) – **doména musí být vyřešena před spuštěním formuláře**.
@@ -241,7 +243,7 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 - Self-hosted fonty, max. 2 řezy, `font-display: swap`. Žádné externí font CDN.
 
 ### Analytika
-- Cloudflare Web Analytics (bez cookies → není potřeba cookie lišta).
+- Vercel Web Analytics (bez cookies → není potřeba cookie lišta).
 
 ### Přístupnost
 - `lang` na `<html>` podle jazyka
@@ -268,7 +270,7 @@ E2E testy (Playwright) zatím ne – ruční průchod preview URL před mergem.
 - Git + GitHub repozitář (projekt zatím není git repozitář).
 
 ### Nasazení
-- Cloudflare Workers se statickými assety, propojení s GitHub přes **Workers Builds**:
+- Vercel, propojení s GitHub přes **Git integraci Vercelu**:
   push do `main` → produkce, větve/PR → preview URL.
 - GitHub Actions na každém PR: `astro check`, lint, testy, build.
 
