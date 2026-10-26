@@ -146,6 +146,38 @@ export const cs = {
 		intro: "Napište mi nebo zavolejte. Ozvu se do dvou pracovních dnů a domluvíme si nezávaznou konzultaci.",
 		emailLabel: "E-mail",
 		phoneLabel: "Telefon",
+		form: {
+			name: "Jméno",
+			email: "E-mail",
+			phone: "Telefon",
+			phoneOptional: "(volitelné)",
+			service: "Služba",
+			servicePlaceholder: "Vyberte službu…",
+			serviceOther: "Něco jiného",
+			message: "Zpráva",
+			submit: "Odeslat",
+			sending: "Odesílám…",
+			success: "Děkuji, zpráva odešla. Ozvu se do dvou pracovních dnů.",
+			privacyBefore:
+				"Údaje z formuláře použiju jen k odpovědi na vaši zprávu. Víc v ",
+			privacyLink: "zásadách ochrany osobních údajů",
+			privacyAfter: ".",
+			noScript:
+				"Formulář potřebuje JavaScript, který máte vypnutý. Napište mi prosím přímo na e-mail:",
+			verificationUnavailable:
+				"Nepodařilo se načíst ochranu proti spamu (třeba kvůli blokátoru reklam). Napište mi prosím přímo na e-mail:",
+			errors: {
+				required: "Vyplňte prosím toto pole.",
+				invalidEmail: "Zadejte platný e-mail.",
+				invalidPhone: "Zadejte platné telefonní číslo.",
+				invalidService: "Vyberte službu.",
+				tooLong: "Text je příliš dlouhý.",
+				verificationFailed:
+					"Ověření vypršelo. Zkuste formulář odeslat znovu.",
+				unavailable:
+					"Zprávu se nepodařilo odeslat. Napište mi prosím přímo na e-mail:",
+			},
+		},
 	},
 	languageSwitcher: {
 		label: "Jazyk",
