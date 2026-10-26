@@ -2,7 +2,7 @@
 
 Bilingual (CS/EN) presentation website through which Michal Roučka offers websites and web apps
 to small businesses. Astro with static prerendering, Tailwind CSS v4, content collections;
-the only server part will be the contact form action on Cloudflare Workers.
+the only server part will be the contact form action running as a Vercel Function.
 
 - Design spec (what and why): `docs/superpowers/specs/2026-10-16-portfolio-design.md`
 - Implementation plan (tasks 1–11, steps and tests): `docs/superpowers/plans/2026-10-16-portfolio.md`

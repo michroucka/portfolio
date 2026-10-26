@@ -10,7 +10,7 @@
 node_modules/
 dist/
 .astro/
-.wrangler/
+.vercel/
 
 # Env
 .env
