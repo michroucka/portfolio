@@ -10,16 +10,18 @@
   features:
       cs:
           - Design na míru vaší značce, žádná šablona
+          - Logo a vizuální styl, pokud je ještě nemáte
           - Funguje na mobilu i počítači
           - Rychlé načítání a dobrá pozice ve vyhledávání
-          - Profil na Google Mapách, aby vás zákazníci našli
+          - Firemní profil na Googlu, aby vás zákazníci našli na mapách
           - Kontaktní formulář, mapa a otevírací doba
           - Česky i anglicky, pokud to potřebujete
       en:
           - Custom design that fits your brand, no template
+          - A logo and visual style if you don’t have them yet
           - Works on phones and computers
           - Fast loading and good search visibility
-          - A Google Business Profile so customers can find you
+          - A Google Business Profile so customers find you on the map
           - Contact form, map and opening hours
           - Czech and English, if you need it
   order: 1
