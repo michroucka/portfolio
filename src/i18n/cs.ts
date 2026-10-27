@@ -42,8 +42,6 @@ export const cs = {
 	},
 	projects: {
 		title: "Vybrané projekty",
-		moreProjects: "Další projekty najdete",
-		moreProjectsLink: "na mém GitHubu",
 		types: {
 			web: "Web",
 			"web-app": "Web s aplikací",
@@ -90,6 +88,11 @@ export const cs = {
 					"Připravím návrh a pevnou cenu. Pracovat začnu, až s obojím budete souhlasit.",
 			},
 			{
+				title: "Podklady",
+				description:
+					"Texty, fotky a logo. Nemáte je? Nevadí. Texty napíšu podle krátkého rozhovoru nebo dotazníku, fotky nafotím nebo vyberu a logo vám můžu navrhnout.",
+			},
+			{
 				title: "Vývoj",
 				description:
 					"Průběžně vám ukazuji, jak práce postupuje, a vaše připomínky zapracuji hned.",
@@ -97,7 +100,7 @@ export const cs = {
 			{
 				title: "Spuštění",
 				description:
-					"Web nasadím, napojím doménu a ukážu vám, jak si obsah upravit.",
+					"Poradím s výběrem domény a hostingu a všechno nastavím. Doména i hosting budou na vaše jméno a platíte je přímo poskytovateli. Pak web spustím a ukážu vám, jak si obsah upravit.",
 			},
 			{
 				title: "Podpora",
@@ -109,9 +112,9 @@ export const cs = {
 	about: {
 		title: "O mně",
 		text: [
-			"Jmenuji se Michal Roučka a pocházím z okolí Plzně. K programování jsem se dostal až na vysoké škole: na Fakultě aplikovaných věd ZČU jsem v roce 2026 dokončil bakaláře v oboru softwarové inženýrství a nyní tam pokračuji v navazujícím studiu.",
-			"Weby a aplikace pro malé firmy dělám vedle studia. Naplňuje mě, když po mně zůstane něco, co lidem opravdu pomáhá, a chci mít za sebou skutečné projekty pro skutečné zákazníky, ne jen školní zadání. Každý web proto dělám tak, jako by byl mojí vizitkou – protože jí je.",
-			"Mimo práci a školu fotím, rád si hraji s grafikou a kdykoli to jde, vyrážím na cesty. Cit pro obraz a detail se mi pak hodí i při navrhování webů.",
+			"Jmenuji se Michal Roučka a pocházím z okolí Plzně. Na Fakultě aplikovaných věd ZČU jsem v roce 2026 dokončil bakaláře v oboru softwarové inženýrství a pokračuji zde v navazujícím magisterském studiu.",
+			"Weby a aplikace stavím pro živnostníky a malé firmy z Plzeňského kraje. Naplňuje mě, když po mně zůstane něco, co lidem opravdu pomáhá. Každý web proto dělám tak, jako by byl mojí vizitkou – protože jí je.",
+			"Kromě programování fotím a částečně se věnuji i grafice. Web proto umím nejen postavit, ale i navrhnout tak, aby dobře vypadal a seděl k vaší značce. Když budete chtít, mohu připravit i fotky nebo logo.",
 			"Pracuji sám, takže mluvíte vždy přímo se mnou – s tím, kdo váš web navrhuje i programuje.",
 		],
 		cta: "Chcete probrat svůj projekt?",
@@ -121,12 +124,12 @@ export const cs = {
 			{
 				title: "Rychlá komunikace",
 				description:
-					"Na odpověď na e-mail nebudete čekat týdny. Ozvu se vždy, jak nejdřív to půjde.",
+					"Odpovídám rychle a srozumitelně. Řeknu vám, co a proč dělám, abyste se mohli rozhodovat sami.",
 			},
 			{
 				title: "Spolehlivost",
 				description:
-					"Domluvené termíny dodržuji. Na schůzku přijdu včas a hotovou práci odevzdám, kdy jsme si řekli. Kdyby se přece jen něco zdrželo, dám vám včas vědět a domluvíme se, jak dál.",
+					"Domluvené termíny dodržuji a o průběhu máte vždy přehled. Když se cokoli změní, dozvíte se to ode mě hned, ne až v den odevzdání.",
 			},
 			{
 				title: "Rychlý a kvalitní web",

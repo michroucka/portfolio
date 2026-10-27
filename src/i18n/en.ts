@@ -43,8 +43,6 @@ export const en: Dictionary = {
 	},
 	projects: {
 		title: "Selected projects",
-		moreProjects: "You can find more projects",
-		moreProjectsLink: "on my GitHub",
 		types: {
 			web: "Website",
 			"web-app": "Website and app",
@@ -91,6 +89,11 @@ export const en: Dictionary = {
 					"I prepare a proposal and a fixed price. I only start once you agree with both.",
 			},
 			{
+				title: "Materials",
+				description:
+					"Texts, photos and a logo. Don’t have them? No problem. I write the texts from a short conversation or questionnaire, take or pick the photos, and can design a logo for you.",
+			},
+			{
 				title: "Development",
 				description:
 					"I show you how the work is going along the way and take your feedback on board right away.",
@@ -98,7 +101,7 @@ export const en: Dictionary = {
 			{
 				title: "Launch",
 				description:
-					"I deploy the website, connect your domain and show you how to edit the content yourself.",
+					"I help you choose a domain and hosting and set everything up. Both are in your name and you pay the providers directly. Then I launch the website and show you how to edit the content yourself.",
 			},
 			{
 				title: "Support",
@@ -110,9 +113,9 @@ export const en: Dictionary = {
 	about: {
 		title: "About me",
 		text: [
-			"My name is Michal Roučka and I’m from the Pilsen area. I only got into programming at university: in 2026 I finished my bachelor’s degree in software engineering at the Faculty of Applied Sciences, University of West Bohemia, and I’m now continuing there with a master’s.",
-			"I build websites and applications for small businesses alongside my studies. I find it fulfilling to build something that genuinely helps people, and I want real projects for real clients behind me, not just school assignments. That’s why I build every website as if it were my business card – because it is.",
-			"Outside work and school I take photos, play around with graphic design and travel whenever I can. An eye for images and detail comes in handy when I design websites too.",
+			"My name is Michal Roučka and I’m from the Pilsen area. In 2026 I finished my bachelor’s degree in software engineering at the Faculty of Applied Sciences, University of West Bohemia, and I’m continuing there with a master’s.",
+			"I build websites and applications for sole traders and small businesses in the Pilsen Region. I find it fulfilling to leave behind something that genuinely helps people. That’s why I build every website as if it were my business card – because it is.",
+			"Besides programming, I take photos and do some graphic design. So I can not only build your website but also design it to look good and fit your brand, and if you like, I can prepare the photos or the logo too.",
 			"I work on my own, so you always talk directly to me – the person who designs and codes your website.",
 		],
 		cta: "Want to talk about your project?",
@@ -122,12 +125,12 @@ export const en: Dictionary = {
 			{
 				title: "Fast communication",
 				description:
-					"You won’t wait weeks for a reply to your email. I always get back to you as soon as I can.",
+					"I reply quickly and clearly. I explain what I do and why, so the decisions stay yours.",
 			},
 			{
 				title: "Reliability",
 				description:
-					"Agreed deadlines hold. I show up to meetings on time and deliver finished work when we said I would. If something does get delayed, I’ll let you know in good time and we’ll agree on what comes next.",
+					"Agreed deadlines hold, and you always know where things stand. If anything changes, you hear it from me straight away, not on the day of delivery.",
 			},
 			{
 				title: "A fast, well-built website",

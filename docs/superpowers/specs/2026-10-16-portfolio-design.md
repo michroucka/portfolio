@@ -50,7 +50,7 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
   ├─ Služby               – 3 karty s cenou „od"
   ├─ Vybrané projekty     – 2–3 karty → case studies
   ├─ O mně                – fotka, studium, okolí Plzně, na čem si zakládám
-  ├─ Jak spolupráce probíhá – 4–5 kroků (konzultace → návrh → vývoj → spuštění → podpora)
+  ├─ Jak spolupráce probíhá – 6 kroků (konzultace → návrh → podklady → vývoj → spuštění → podpora)
   └─ Kontakt              – formulář + e-mail/telefon
 
 /projekty/[slug]          Case study
