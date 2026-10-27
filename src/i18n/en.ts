@@ -91,6 +91,11 @@ export const en: Dictionary = {
 					"I prepare a proposal and a fixed price. I only start once you agree with both.",
 			},
 			{
+				title: "Materials",
+				description:
+					"Texts, photos and a logo. Don’t have them? No problem. I write the texts from a short conversation or questionnaire, take or pick the photos, and can design a logo for you.",
+			},
+			{
 				title: "Development",
 				description:
 					"I show you how the work is going along the way and take your feedback on board right away.",
@@ -98,7 +103,7 @@ export const en: Dictionary = {
 			{
 				title: "Launch",
 				description:
-					"I deploy the website, connect your domain and show you how to edit the content yourself.",
+					"I help you choose a domain and hosting and set everything up. Both are in your name and you pay the providers directly. Then I launch the website and show you how to edit the content yourself.",
 			},
 			{
 				title: "Support",

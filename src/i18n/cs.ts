@@ -90,6 +90,11 @@ export const cs = {
 					"Připravím návrh a pevnou cenu. Pracovat začnu, až s obojím budete souhlasit.",
 			},
 			{
+				title: "Podklady",
+				description:
+					"Texty, fotky a logo. Nemáte je? Nevadí. Texty napíšu podle krátkého rozhovoru nebo dotazníku, fotky nafotím nebo vyberu a logo vám můžu navrhnout.",
+			},
+			{
 				title: "Vývoj",
 				description:
 					"Průběžně vám ukazuji, jak práce postupuje, a vaše připomínky zapracuji hned.",
@@ -97,7 +102,7 @@ export const cs = {
 			{
 				title: "Spuštění",
 				description:
-					"Web nasadím, napojím doménu a ukážu vám, jak si obsah upravit.",
+					"Poradím s výběrem domény a hostingu a všechno nastavím. Doména i hosting budou na vaše jméno a platíte je přímo poskytovateli. Pak web spustím a ukážu vám, jak si obsah upravit.",
 			},
 			{
 				title: "Podpora",
