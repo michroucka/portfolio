@@ -15,9 +15,19 @@ export const en: Dictionary = {
 		menu: "Menu",
 	},
 	footer: {
+		tagline:
+			"Websites and applications for sole traders and small businesses in the Pilsen Region.",
+		contactHeading: "Contact",
+		region: "Pilsen Region",
+		writeMessage: "Send a message",
+		profilesHeading: "Profiles",
 		lightThemeToggle: "Light theme",
 		privacy: "Privacy policy",
 		companyId: "Company ID",
+		registeredOffice: "Registered office",
+		tradeRegister: "Sole trader registered in the Czech Trade Register",
+		notVatPayer: "Not a VAT payer",
+		vatPayer: "VAT payer",
 	},
 	layout: {
 		skipToMain: "Skip to content",
@@ -25,12 +35,12 @@ export const en: Dictionary = {
 	home: {
 		title: "Michal Roučka – websites and applications for small businesses",
 		description:
-			"I design and build websites, booking systems and custom applications for small businesses in Pilsen and beyond. Clear prices up front, first consultation free.",
+			"I design and build websites, booking systems and custom applications for small businesses in Pilsen and across the Pilsen Region. Clear prices up front, first consultation free.",
 	},
 	hero: {
 		title: "Websites and applications for small businesses",
 		subtitle:
-			"From showcase websites to tailor-made booking systems. Personal, straightforward, and agency markup-free. Pilsen and the surrounding area.",
+			"From showcase websites to tailor-made booking systems. Personal, straightforward, and agency markup-free. Pilsen Region.",
 		primaryCta: "Free consultation",
 		secondaryCta: "Selected projects",
 	},

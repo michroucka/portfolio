@@ -1,9 +1,13 @@
 ---
 import { getDictionary, type Locale } from "../i18n";
 import { getPath, type Page, type RouteParams } from "../i18n/routes";
-import { pageContainer, siteDetails } from "../lib/site";
-import ThemeToggle from "./ThemeToggle.astro";
+import { getSectionHref } from "../lib/sections";
+import { pageContainer, siteDetails, telHref } from "../lib/site";
+import Arrow from "./icons/Arrow.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import Logo from "./Logo.astro";
+import ProfileLinks from "./ProfileLinks.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
 	locale: Locale;
@@ -12,32 +16,88 @@ interface Props {
 }
 
 const { locale, page, params } = Astro.props;
-const privacyPath = getPath("privacy", locale);
-const email = siteDetails.email;
 const dictionary = getDictionary(locale);
-const year = siteDetails.launchYear;
-
-// Mobile: stacked settings → contact → legal (DOM order).
-// Desktop: legal on the left, contact + settings on the right (md:order-*).
-// The border spans the full width; only the content inside follows the page container.
-const footerContentClasses = `${pageContainer} py-8 md:py-6 flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between text-muted text-sm font-stretch-expanded font-semibold`;
+const { email, phone, legal, name, launchYear } = siteDetails;
 
 // ≥ 44 px touch target without affecting layout: padding cancelled by an equal negative margin.
 const linkClasses = "py-3 -my-3 hover:text-foreground link-underline";
+const columnHeadingClasses = "project-fact-label";
 ---
 
-<footer class="border-t border-line">
-	<div class={footerContentClasses}>
-		<div class="flex flex-col items-start gap-6 md:order-last md:flex-row md:items-center md:gap-8">
+<footer class="border-t border-line bg-surface">
+	<div class={`${pageContainer} pt-12 pb-8 md:pt-16`}>
+		<!-- Below lg: brand on top, contact and profiles side by side from the left; profiles wrap
+		     below when the row is too narrow. lg: the wrapper dissolves (contents), so brand,
+		     contact and profiles become the three grid columns. -->
+		<div class="grid gap-10 lg:grid-cols-[2fr_1fr_1fr] lg:gap-16">
+			<div>
+				<Logo class="w-60" />
+				<p class="mt-6 max-w-xs text-lg text-muted">
+					{dictionary.footer.tagline}
+				</p>
+			</div>
+
+			<div class="flex flex-wrap gap-x-16 gap-y-10 lg:contents">
+				<section aria-labelledby="footer-contact">
+					<h2 id="footer-contact" class={columnHeadingClasses}>
+						{dictionary.footer.contactHeading}
+					</h2>
+					<ul class="mt-4 flex flex-col items-start gap-2">
+						<li>
+							<a href={`mailto:${email}`} class={linkClasses}>
+								{email}
+							</a>
+						</li>
+						{phone && (
+							<li>
+								<a
+									href={telHref(phone)}
+									class:list={[
+										linkClasses,
+										"whitespace-nowrap",
+									]}
+								>
+									{phone}
+								</a>
+							</li>
+						)}
+						<li class="text-muted">{dictionary.footer.region}</li>
+					</ul>
+					<a
+						href={getSectionHref("contact", locale)}
+						class="group mt-6 inline-flex items-center gap-2 pt-3 -my-3 font-semibold font-stretch-expanded"
+					>
+						<span class="link-underline">
+							{dictionary.footer.writeMessage}
+						</span>
+						<Arrow
+							direction="right"
+							class="size-4 motion-safe:transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1"
+						/>
+					</a>
+				</section>
+
+				<section aria-labelledby="footer-profiles">
+					<h2 id="footer-profiles" class={columnHeadingClasses}>
+						{dictionary.footer.profilesHeading}
+					</h2>
+					<ProfileLinks class="mt-4" />
+				</section>
+			</div>
+		</div>
+
+		<!-- Mobile: settings first (controls), then ©, privacy and the legal details.
+		     md: identification on the left – © and privacy on one row, legal details below –
+		     and the settings on the right. -->
+		<div class="mt-12 flex flex-col gap-6 border-t border-line pt-6 text-sm text-muted md:flex-row md:items-start md:justify-between">
 			<div class="flex items-center gap-6 md:order-last">
-				<!-- Negative margins cancel the switcher links' padding: on mobile "CS" starts at the content edge
-			     and the row is no taller than the others; on desktop the gaps to the neighbours match. -->
+				<!-- Negative margins cancel the switcher links' padding, so "CS" starts at the content edge. -->
 				{page && (
 					<LanguageSwitcher
 						locale={locale}
 						page={page}
 						params={params}
-						class="-ml-3 -my-2 md:-mx-2"
+						class="-ml-3 -my-2 font-semibold font-stretch-expanded md:-mx-2"
 						landmark={false}
 					/>
 				)}
@@ -48,24 +108,33 @@ const linkClasses = "py-3 -my-3 hover:text-foreground link-underline";
 					size="2em"
 				/>
 			</div>
-			<a href={`mailto:${email}`} class={linkClasses}>
-				{email}
-			</a>
-		</div>
 
-		<div class="flex flex-col items-start gap-6 md:order-first md:flex-row md:items-center md:gap-8">
-			<!-- Mobile: privacy, company ID, © (the link first). Desktop: ©, company ID, privacy (md:order-*). -->
-			<a href={privacyPath} class:list={[linkClasses, "md:order-last"]}>
-				{dictionary.footer.privacy}
-			</a>
-			{siteDetails.ico && (
-				<span>
-					{dictionary.footer.companyId} {siteDetails.ico}
-				</span>
-			)}
-			<span class="md:order-first">
-				© {year} {siteDetails.name}
-			</span>
+			<div class="flex flex-col items-start gap-4">
+				<div class="flex flex-col items-start gap-4 font-semibold font-stretch-expanded md:flex-row md:gap-8">
+					<p>
+						© {launchYear} {name}
+					</p>
+					<a href={getPath("privacy", locale)} class={linkClasses}>
+						{dictionary.footer.privacy}
+					</a>
+				</div>
+				{/* Legal identification: normal width, it is read rather than scanned. */}
+				{legal && (
+					<div class="flex flex-col gap-1 md:flex-row md:flex-wrap md:gap-x-6">
+						<p>{dictionary.footer.tradeRegister}</p>
+						<p>
+							{dictionary.footer.companyId} {legal.ico} ·{" "}
+							{legal.isVatPayer
+								? dictionary.footer.vatPayer
+								: dictionary.footer.notVatPayer}
+						</p>
+						<p>
+							{dictionary.footer.registeredOffice}:{" "}
+							{legal.registeredOffice}
+						</p>
+					</div>
+				)}
+			</div>
 		</div>
 	</div>
 </footer>
