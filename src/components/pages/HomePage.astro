@@ -35,5 +35,5 @@ const projects = getProjectsForLocale(await getCollection("projects"), locale, {
 	<FeaturedProjects projects={projects} locale={locale} />
 	<About locale={locale} />
 	<Process locale={locale} />
-	<Contact locale={locale} />
+	<Contact services={services} locale={locale} />
 </BaseLayout>

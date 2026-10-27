@@ -27,7 +27,7 @@ export function contactFormMessages(
 	};
 }
 
-// replaces "<" with "\u003c" to prevent </script> from ending the script tag
+// Replaces "<" with "\u003c" to prevent </script> from ending the script tag.
 export function toInlineJson(value: unknown): string {
 	return JSON.stringify(value).replaceAll("<", "\\u003c");
 }

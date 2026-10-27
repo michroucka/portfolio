@@ -143,7 +143,7 @@ export const cs = {
 	},
 	contact: {
 		title: "Kontakt",
-		intro: "Napište mi nebo zavolejte. Ozvu se do dvou pracovních dnů a domluvíme si nezávaznou konzultaci.",
+		intro: "Napište mi přes formulář níže, nebo mi rovnou pošlete e-mail či zavolejte. Ozvu se do dvou pracovních dnů a domluvíme si nezávaznou konzultaci.",
 		emailLabel: "E-mail",
 		phoneLabel: "Telefon",
 		form: {
@@ -155,6 +155,7 @@ export const cs = {
 			servicePlaceholder: "Vyberte službu…",
 			serviceOther: "Něco jiného",
 			message: "Zpráva",
+			honeypot: "Toto pole nevyplňujte",
 			submit: "Odeslat",
 			sending: "Odesílám…",
 			success: "Děkuji, zpráva odešla. Ozvu se do dvou pracovních dnů.",
@@ -163,9 +164,9 @@ export const cs = {
 			privacyLink: "zásadách ochrany osobních údajů",
 			privacyAfter: ".",
 			noScript:
-				"Formulář potřebuje JavaScript, který máte vypnutý. Napište mi prosím přímo na e-mail:",
+				"Formulář vyžaduje JavaScript, který máte vypnutý. Napište mi prosím přímo na e-mail:",
 			verificationUnavailable:
-				"Nepodařilo se načíst ochranu proti spamu (třeba kvůli blokátoru reklam). Napište mi prosím přímo na e-mail:",
+				"Nepodařilo se načíst ochranu proti spamu (např. kvůli blokátoru reklam). Napište mi prosím přímo na e-mail:",
 			errors: {
 				required: "Vyplňte prosím toto pole.",
 				invalidEmail: "Zadejte platný e-mail.",
