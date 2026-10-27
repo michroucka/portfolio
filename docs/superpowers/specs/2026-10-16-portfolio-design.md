@@ -187,25 +187,37 @@ components/
 ## 7. Kontaktní formulář
 
 ### Pole
-- jméno (povinné)
-- e-mail (povinný)
-- telefon (volitelný)
-- zájem o službu – select: prezentační web / web + systém / aplikace na míru / jiné
-- zpráva (povinná)
-- honeypot (skryté pole)
+- jméno (povinné, max. 100 znaků)
+- e-mail (povinný, mezery kolem se oříznou)
+- telefon (volitelný; `+` na začátku, číslice a mezery, 9–15 číslic)
+- zájem o službu – select: služby z kolekce (`presentation-website`, `website-with-system`,
+  `custom-application`) + `other`; přizpůsobitelný select (`appearance: base-select`), jinde nativní
+- zpráva (povinná, max. 5 000 znaků)
+- honeypot `note` (mimo obrazovku, `aria-hidden`, `tabindex="-1"`)
+- doba vyplnění `elapsedMs` (skryté pole)
 - Turnstile token
 
 Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR stránku
 (bez checkboxu – právní titul oprávněný zájem; ověřit při psaní textu GDPR).
 
 ### Tok
-1. Uživatel odešle `<form method="POST" action={actions.contact}>` (funguje i bez klientského JS
-   kromě Turnstile).
+1. Klientský skript odešle formulář přes `actions.contact(new FormData(form))` – stránka se
+   nenačítá znovu, homepage zůstává předrenderovaná a na serveru běží jen action.
+   Turnstile JS potřebuje tak jako tak, takže formulář bez JS by nefungoval ani při odeslání
+   na server; bez JS je tlačítko zakázané a `<noscript>` nabídne e-mail.
 2. Action `contact` (`accept: 'form'`):
    1. Zod validace vstupu
-   2. antispam: honeypot + časová kontrola + ověření Turnstile tokenu na serveru
-   3. odeslání e-mailu **Michalovi** přes Resend, `reply-to` = e-mail zákazníka
-3. Stránka se vykreslí znovu s potvrzením, nebo s chybami u polí a zachovanými hodnotami.
+   2. antispam: honeypot + doba vyplnění (≥ 3 s) + ověření Turnstile tokenu na serveru
+   3. odeslání e-mailu **Michalovi** přes Resend (prostý text), `reply-to` = e-mail zákazníka
+3. Skript ukáže potvrzení, nebo chyby u polí; hodnoty v polích zůstávají, protože se stránka
+   nenačítá znovu. Chyba pole zmizí, jakmile ho uživatel upraví.
+
+### Antispam – podrobnosti
+- Dobu vyplnění měří klient (`performance.now()` od načtení po odeslání) a posílá ji jako
+  `elapsedMs` – server tak neporovnává hodiny návštěvníka se svými.
+- Turnstile se načítá až u formuláře (`IntersectionObserver`), v režimu `interaction-only`
+  (většina lidí widget nevidí) a s `refresh-expired: "auto"`. Token je jednorázový, po každém
+  odeslání se widget resetuje; tlačítko je povolené jen s platným tokenem.
 
 ### Záměrně vynecháno
 - databáze (záznamem je e-mail)
@@ -216,11 +228,14 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 |---|---|
 | neplatný vstup | chyba u konkrétního pole, přeložená přes slovník (mapování Zod chyb na klíče) |
 | detekovaný spam | navenek úspěch (bez zpětné vazby pro bota), e-mail se neodešle |
+| odmítnutý Turnstile token | „ověření vypršelo, zkuste znovu“ – nejčastěji prošlý token člověka, ne bot |
 | selhání Resend / Turnstile API | obecná chyba + fallback „napište mi přímo na e-mail“ |
+| Turnstile se nenačte (blokátor, výpadek) | hláška + fallback „napište mi přímo na e-mail“, tlačítko zůstane zakázané |
 
 ### Konfigurace
 - `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY` – tajné, v proměnných prostředí Vercelu.
-- Turnstile site key – veřejný.
+- Turnstile site key (`PUBLIC_TURNSTILE_SITE_KEY`) – veřejný, vkládá se při buildu.
+- `CONTACT_EMAIL_TO` (příjemce) a `CONTACT_EMAIL_FROM` (odesílatel na ověřené doméně) – serverové.
 - Všechny proměnné definované typově přes `astro:env` (chybějící proměnná = chyba).
 - Resend vyžaduje ověřenou doménu (DNS) – **doména musí být vyřešena před spuštěním formuláře**.
   Do té doby testování s testovací adresou Resend.
