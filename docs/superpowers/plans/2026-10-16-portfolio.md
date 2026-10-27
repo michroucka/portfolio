@@ -150,6 +150,7 @@ přepínač tématu.
   - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
   - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
   - Logo v hlavičce je bez animace: hover efekt (tečka → blikající kurzor) byl odebrán (větev `feat/home-header-tweaks`), animace tečky zůstává jen pro hero (Úkol 9).
+  - Patička přestavěná (větev `feat/404-and-footer`): logo a věta, sloupce Kontakt a Profily (`ProfileLinks` + ikony GitHub/LinkedIn ze `siteDetails.profiles`), pod čarou © a ochrana osobních údajů, právní údaje ze `siteDetails.legal` (zatím ukázkové, #17) a přepínače. Na mobilu je Kontakt s Profily vedle sebe ve flex řádku, od `lg` se obal rozpustí (`contents`) do třísloupcové mřížky. Logo v hlavičce je na mobilu `w-56`. Telefonní odkaz skládá sdílené `telHref()`. 404 má u odkazů zpět šipku (`icons/Arrow.astro` se směrem).
 
 ### Úkol 5: Content collections – služby a case studies
 
