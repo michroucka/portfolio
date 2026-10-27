@@ -4,6 +4,7 @@ import { actions } from "astro:actions";
 import { getDictionary, type Locale } from "../../i18n";
 import { getPath } from "../../i18n/routes";
 import { contactFormMessages, toInlineJson } from "../../lib/contact/messages";
+import { findServiceMismatch } from "../../lib/contact/schema";
 import { siteDetails } from "../../lib/site";
 import Section from "../Section.astro";
 
@@ -17,6 +18,12 @@ const dictionary = getDictionary(locale);
 const { email, phone } = siteDetails;
 // tel: links need the number without spaces (RFC 3966).
 const phoneHref = phone && `tel:${phone.replaceAll(" ", "")}`;
+const serviceMismatch = findServiceMismatch(services.map(({ id }) => id));
+if (serviceMismatch.length > 0) {
+	throw new Error(
+		`Services collection and contactServices differ: ${serviceMismatch.join(", ")}`,
+	);
+}
 const messagesJson = toInlineJson(
 	contactFormMessages(dictionary.contact.form, email),
 );
@@ -297,8 +304,21 @@ const messagesJson = toInlineJson(
 	let widgetId: string | undefined;
 	let isSubmitting = false;
 
-	function showStatus(text: string, offerEmail: boolean): void {
-		status.classList.remove("font-medium");
+	type StatusKind = "success" | "error" | "verification";
+	let statusKind: StatusKind | undefined;
+
+	function clearStatus(): void {
+		statusKind = undefined;
+		status.replaceChildren();
+	}
+
+	function showStatus(
+		kind: StatusKind,
+		text: string,
+		offerEmail: boolean,
+	): void {
+		statusKind = kind;
+		status.classList.toggle("font-medium", kind === "success");
 		status.replaceChildren(text);
 		if (offerEmail) {
 			const link = document.createElement("a");
@@ -310,7 +330,7 @@ const messagesJson = toInlineJson(
 	}
 
 	function showFormError(key: ContactErrorKey): void {
-		showStatus(messages.errors[key], key === "unavailable");
+		showStatus("error", messages.errors[key], key === "unavailable");
 	}
 
 	// Returns the field when it was marked invalid, so the caller can focus it.
@@ -390,7 +410,7 @@ const messagesJson = toInlineJson(
 	async function handleSubmit(event: SubmitEvent): Promise<void> {
 		event.preventDefault();
 		elapsedInput.value = String(Math.round(performance.now() - loadedAt));
-		status.replaceChildren();
+		clearStatus();
 		setSubmitting(true);
 
 		try {
@@ -399,8 +419,7 @@ const messagesJson = toInlineJson(
 			if (!error) {
 				form.reset();
 				showFieldErrors({});
-				showStatus(messages.success, false);
-				status.classList.add("font-medium");
+				showStatus("success", messages.success, false);
 				loadedAt = performance.now();
 			} else if (isInputError(error)) {
 				showFieldErrors(fieldErrorKeys(error.issues));
@@ -417,7 +436,7 @@ const messagesJson = toInlineJson(
 	}
 
 	function showTurnstileUnavailable(): void {
-		showStatus(messages.verificationUnavailable, true);
+		showStatus("verification", messages.verificationUnavailable, true);
 	}
 
 	function renderWidget(): void {
@@ -438,13 +457,20 @@ const messagesJson = toInlineJson(
 				if (!isSubmitting) {
 					submitButton.disabled = false;
 				}
+				// Turnstile retries on its own: once it recovers, the "email me instead" hint is stale.
+				if (statusKind === "verification") {
+					clearStatus();
+				}
 			},
 			"expired-callback": () => {
 				submitButton.disabled = true;
 			},
 			"error-callback": () => {
 				submitButton.disabled = true;
-				showTurnstileUnavailable();
+				// A failing reset right after a send must not hide that the message went out.
+				if (statusKind !== "success") {
+					showTurnstileUnavailable();
+				}
 			},
 			// The hidden widget still renders an in-flow (zero-height) element, so the gap
 			// above the button is switched on only once a challenge is shown. The solved

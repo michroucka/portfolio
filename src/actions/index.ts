@@ -2,6 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro/zod";
 import { contactSchema, type ContactInput } from "../lib/contact/schema";
 import { getEntry } from "astro:content";
+import { cs } from "../i18n/cs";
 import {
 	RESEND_API_KEY,
 	TURNSTILE_SECRET_KEY,
@@ -14,15 +15,25 @@ import { buildContactEmail, sendContactEmail } from "../lib/contact/mail";
 import { Resend } from "resend";
 
 const contactFormSchema = contactSchema.extend({
-	note: z.string().optional(), // honeypot
+	// Honeypot under an innocuous name: bots fill it in, browsers do not autofill it.
+	note: z.string().optional(),
 	elapsedMs: z.string().optional(),
 	"cf-turnstile-response": z.string().optional(),
 });
 
+// Created on first use, not at import: the secret is read only when an email is sent,
+// and one client serves every later request of the same function instance.
+let resend: Resend | undefined;
+
+function emailClient(): Resend["emails"] {
+	resend ??= new Resend(RESEND_API_KEY);
+	return resend.emails;
+}
+
 async function serviceLabelFor(
 	service: ContactInput["service"],
 ): Promise<string> {
-	if (service === "other") return "Jiné";
+	if (service === "other") return cs.contact.form.serviceOther;
 	const entry = await getEntry("services", service);
 	return entry?.data.title.cs ?? service;
 }
@@ -52,10 +63,7 @@ export const server = {
 				from: CONTACT_EMAIL_FROM,
 				to: CONTACT_EMAIL_TO,
 			});
-			const result = await sendContactEmail(
-				new Resend(RESEND_API_KEY).emails,
-				email,
-			);
+			const result = await sendContactEmail(emailClient(), email);
 
 			if (!result.ok) {
 				throw new ActionError({ code: "INTERNAL_SERVER_ERROR" });

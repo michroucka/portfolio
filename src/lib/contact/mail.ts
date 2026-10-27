@@ -10,8 +10,15 @@ export interface ContactEmail {
 
 // Structurally matches `resend.emails`, so tests can pass a fake without the SDK.
 export interface EmailClient {
-	send(email: ContactEmail): Promise<{ error: unknown }>;
+	send(
+		email: ContactEmail,
+		options?: { signal?: AbortSignal },
+	): Promise<{ error: unknown }>;
 }
+
+// Well below the Vercel Function limit, so a hanging Resend still leaves time to
+// answer the visitor with the email fallback (same reasoning as the Turnstile timeout).
+export const EMAIL_TIMEOUT_MS = 8000;
 
 export interface ContactEmailAddresses {
 	from: string;
@@ -42,13 +49,15 @@ export function buildContactEmail(
 }
 
 // The error is logged for the server only; the caller gets no detail it could
-// leak into the page (review point 5).
+// leak into the page.
 export async function sendContactEmail(
 	client: EmailClient,
 	email: ContactEmail,
 ): Promise<SendResult> {
 	try {
-		const { error } = await client.send(email);
+		const { error } = await client.send(email, {
+			signal: AbortSignal.timeout(EMAIL_TIMEOUT_MS),
+		});
 		if (error) {
 			console.error("Resend rejected the contact email", error);
 			return { ok: false };

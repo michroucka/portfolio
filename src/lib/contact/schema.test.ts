@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { contactSchema, MESSAGE_MAX_LENGTH } from "./schema";
+import {
+	contactSchema,
+	contactServices,
+	findServiceMismatch,
+	MESSAGE_MAX_LENGTH,
+} from "./schema";
 
 const validInput = {
 	name: "Jiří Šťastný",
@@ -24,7 +29,7 @@ describe("contactSchema", () => {
 		expect(invalidFields(validInput)).toEqual([]);
 	});
 
-	it.each([{ phone: "" }, { phone: undefined }])(
+	it.each([{ phone: "" }, { phone: undefined }, { phone: "   " }])(
 		"accepts a missing phone ('$phone')",
 		({ phone }) => {
 			expect(invalidFields({ ...validInput, phone })).toEqual([]);
@@ -103,5 +108,25 @@ describe("contactSchema", () => {
 				message: "a".repeat(MESSAGE_MAX_LENGTH),
 			}),
 		).toEqual([]);
+	});
+});
+
+describe("findServiceMismatch", () => {
+	const collectionIds = contactServices.filter((id) => id !== "other");
+
+	it("finds nothing when the collection matches the schema", () => {
+		expect(findServiceMismatch(collectionIds)).toEqual([]);
+	});
+
+	it("reports a collection service the schema does not accept", () => {
+		expect(findServiceMismatch([...collectionIds, "new-service"])).toEqual([
+			"new-service",
+		]);
+	});
+
+	it("reports a schema service missing from the collection", () => {
+		expect(findServiceMismatch(collectionIds.slice(1))).toEqual([
+			collectionIds[0],
+		]);
 	});
 });

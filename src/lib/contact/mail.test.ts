@@ -1,5 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { buildContactEmail, sendContactEmail, type EmailClient } from "./mail";
+import {
+	buildContactEmail,
+	EMAIL_TIMEOUT_MS,
+	sendContactEmail,
+	type EmailClient,
+} from "./mail";
 import type { ContactInput } from "./schema";
 
 const inquiry: ContactInput = {
@@ -72,7 +77,29 @@ describe("sendContactEmail", () => {
 		await expect(sendContactEmail(client, email)).resolves.toEqual({
 			ok: true,
 		});
-		expect(client.send).toHaveBeenCalledWith(email);
+		expect(client.send).toHaveBeenCalledWith(email, expect.anything());
+	});
+
+	it("gives the request a timeout signal", async () => {
+		const timeout = vi.spyOn(AbortSignal, "timeout");
+		const client = clientAnswering(async () => ({ error: null }));
+
+		await sendContactEmail(client, email);
+
+		expect(timeout).toHaveBeenCalledWith(EMAIL_TIMEOUT_MS);
+		expect(client.send.mock.calls[0][1]).toEqual({
+			signal: timeout.mock.results[0].value,
+		});
+	});
+
+	it("fails without the error detail when Resend does not answer in time", async () => {
+		const client = clientAnswering(async () => {
+			throw new DOMException("The operation timed out.", "TimeoutError");
+		});
+
+		await expect(sendContactEmail(client, email)).resolves.toEqual({
+			ok: false,
+		});
 	});
 
 	it("fails without the error detail when Resend returns an error", async () => {
