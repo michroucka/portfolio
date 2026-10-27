@@ -12,15 +12,16 @@ interface LegalDetails {
 	isVatPayer: boolean;
 }
 
-const githubUrl = "https://github.com/michroucka";
-
 export const siteDetails = {
 	name: "Michal Roučka",
 	email: "michroucka7@gmail.com",
 	phone: "+420 774 739 180",
-	github: githubUrl,
 	profiles: [
-		{ kind: "github", label: "GitHub", url: githubUrl },
+		{
+			kind: "github",
+			label: "GitHub",
+			url: "https://github.com/michroucka",
+		},
 		{
 			kind: "linkedin",
 			label: "LinkedIn",
