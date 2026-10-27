@@ -1,8 +1,9 @@
 ---
-// The 404 page has no logical page or counterpart in the other language – Cloudflare serves it
+// The 404 page has no logical page or counterpart in the other language – Vercel serves it
 // for any missing URL (Czech or /en/…), hence bilingual.
 import { getDictionary } from "../i18n";
 import { getPath } from "../i18n/routes";
+import Arrow from "../components/icons/Arrow.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const cs = getDictionary("cs").notFound;
@@ -10,23 +11,33 @@ const en = getDictionary("en").notFound;
 
 const title = `${cs.title} / ${en.title}`;
 const description = `${cs.description} ${en.description}`;
+
+// The arrow sits in the left padding: link-underline draws from the content box,
+// so the underline covers the text only while hover and focus still work on the whole link.
+const homeLinkClass = "group relative ps-6 link-underline";
+const arrowClass =
+	"absolute top-1/2 left-0 size-4 -translate-y-1/2 motion-safe:transition-transform group-hover:-translate-x-1 group-focus-visible:-translate-x-1";
 ---
 
 <BaseLayout locale="cs" title={title} description={description} noindex>
-	<section>
-		<h1>{cs.title}</h1>
-		<p>{cs.description}</p>
-		<a href={getPath("home", "cs")} class="link-underline">
-			{cs.linkHome}
-		</a>
-	</section>
+	<div class="mt-12 flex flex-col gap-6">
+		<section>
+			<h1 class="text-lg">{cs.title}</h1>
+			<p>{cs.description}</p>
+			<a href={getPath("home", "cs")} class={homeLinkClass}>
+				<Arrow direction="left" class={arrowClass} />
+				{cs.linkHome}
+			</a>
+		</section>
 
-	<!-- lang="en" so screen readers pronounce it in English -->
-	<section lang="en">
-		<h2>{en.title}</h2>
-		<p>{en.description}</p>
-		<a href={getPath("home", "en")} class="link-underline">
-			{en.linkHome}
-		</a>
-	</section>
+		<!-- lang="en" so screen readers pronounce it in English -->
+		<section lang="en">
+			<h2 class="text-lg">{en.title}</h2>
+			<p>{en.description}</p>
+			<a href={getPath("home", "en")} class={homeLinkClass}>
+				<Arrow direction="left" class={arrowClass} />
+				{en.linkHome}
+			</a>
+		</section>
+	</div>
 </BaseLayout>
