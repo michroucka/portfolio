@@ -144,9 +144,43 @@ export const en: Dictionary = {
 	},
 	contact: {
 		title: "Contact",
-		intro: "Send me an email or give me a call. I’ll get back to you within two working days and we’ll set up a free consultation.",
+		intro: "Write to me using the form below, or send me an email or give me a call. I’ll get back to you within two working days and we’ll set up a free consultation.",
 		emailLabel: "Email",
 		phoneLabel: "Phone",
+		form: {
+			name: "Name",
+			email: "Email",
+			phone: "Phone",
+			phoneOptional: "(optional)",
+			service: "Service",
+			servicePlaceholder: "Select a service…",
+			serviceOther: "Something else",
+			message: "Message",
+			honeypot: "Don’t fill in this field",
+			submit: "Send",
+			sending: "Sending…",
+			success:
+				"Thank you, your message is on its way. I’ll get back to you within two working days.",
+			privacyBefore:
+				"I only use the details from this form to reply to your message. More in the ",
+			privacyLink: "privacy policy",
+			privacyAfter: ".",
+			noScript:
+				"The form requires JavaScript, which is turned off in your browser. Please email me directly:",
+			verificationUnavailable:
+				"The spam protection could not be loaded (perhaps because of an ad blocker). Please email me directly:",
+			errors: {
+				required: "Please fill in this field.",
+				invalidEmail: "Please enter a valid email address.",
+				invalidPhone: "Please enter a valid phone number.",
+				invalidService: "Please select a service.",
+				tooLong: "The text is too long.",
+				verificationFailed:
+					"The verification has expired. Please try sending the form again.",
+				unavailable:
+					"Your message could not be sent. Please email me directly:",
+			},
+		},
 	},
 	languageSwitcher: {
 		label: "Language",

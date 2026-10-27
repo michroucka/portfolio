@@ -22,7 +22,7 @@ Zod (`astro/zod`), Resend, Cloudflare Turnstile, Vitest, ESLint, Prettier + `pre
 - `defaultLocale: "cs"`, `locales: ["cs", "en"]`, `prefixDefaultLocale: false`; žádný automatický redirect podle jazyka.
 - Přeložené cesty: `/` ↔ `/en/`, `/projekty/[slug]` ↔ `/en/projects/[slug]`, `/ochrana-osobnich-udaju` ↔ `/en/privacy`.
 - Odkazy nikdy ručně skládanými stringy – vždy přes mapu cest / `getRelativeLocaleUrl`.
-- Komponenty `.astro`, žádný React ani UI knihovna. Klientský JS jen: Turnstile, mobilní menu, přepínač tématu, animace loga.
+- Komponenty `.astro`, žádný React ani UI knihovna. Klientský JS jen: kontaktní formulář (odeslání + Turnstile), mobilní menu, přepínač tématu, animace loga.
 - Barvy jen z palety: Ink `#0E0F11`, Graphite `#1B1D21`, Paper `#F5F3EE`, Ash `#A09F99`, Ash Deep `#64635E`,
   Signal `#FF6A3D`, Signal Deep `#C2410C`, Signal Light `#FF7F57` / Signal Dark `#9A3412` (hover CTA), Chalk `#FCFBF8` (plocha ve světlém), Line `#2A2D32` / Line Light `#DDD9D0`
   (okraje). Signal na Paper se nepoužívá. Okraje formulářových polí Ash / Ash Deep (≥ 3 : 1).
@@ -270,34 +270,52 @@ přepínač tématu.
 **Produkuje:** Zod schéma formuláře; funkci kontroly spamu (honeypot + časová kontrola); funkci ověření Turnstile tokenu;
 funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na klíče slovníku.
 
-- [ ] Přidej `@astrojs/vercel` adapter. Stránky zůstávají předrenderované; homepage s formulářem musí umět zobrazit výsledek akce – nastuduj, jak se v Astru čte výsledek form action (`Astro.getActionResult`) a co to znamená pro prerender té stránky. Docs: https://docs.astro.build/en/guides/actions/#call-actions-from-an-html-form-action – **tohle si spolu projdeme před implementací.**
-- [ ] `env.schema` v configu: `RESEND_API_KEY` a `TURNSTILE_SECRET_KEY` jako server secret, Turnstile site key jako public client proměnná, cílová adresa e-mailu jako server proměnná. Docs: https://docs.astro.build/en/guides/environment-variables/#type-safe-environment-variables
-- [ ] Testy `schema.test.ts`:
+- [x] Přidej `@astrojs/vercel` adapter. Stránky zůstávají předrenderované; homepage s formulářem musí umět zobrazit výsledek akce – nastuduj, jak se v Astru čte výsledek form action (`Astro.getActionResult`) a co to znamená pro prerender té stránky. Docs: https://docs.astro.build/en/guides/actions/#call-actions-from-an-html-form-action – **tohle si spolu projdeme před implementací.**
+- [x] `env.schema` v configu: `RESEND_API_KEY` a `TURNSTILE_SECRET_KEY` jako server secret, Turnstile site key jako public client proměnná, cílová adresa e-mailu jako server proměnná. Docs: https://docs.astro.build/en/guides/environment-variables/#type-safe-environment-variables
+- [x] Testy `schema.test.ts`:
   - platný vstup projde; telefon může chybět
   - prázdné jméno / e-mail / zpráva → chyba u konkrétního pole
   - neplatný e-mail → chyba u pole e-mail
   - `"  Jana@Example.CZ "` projde (oříznutí mezer) – Review bod 4
   - `service` mimo povolené hodnoty (`presentation`, `web-system`, `custom-app`, `other`) → chyba
   - příliš dlouhá zpráva (zvol limit, např. 5 000 znaků) → chyba
-- [ ] Testy `spam.test.ts`:
+- [x] Testy `spam.test.ts`:
   - vyplněný honeypot → spam
   - odesláno dřív než 3 s od zobrazení formuláře → spam
   - chybějící nebo nečíselný časový údaj → spam
   - prázdný honeypot a 10 s → není spam
-- [ ] Testy `turnstile.test.ts` (s podvrženým `fetch`):
+- [x] Testy `turnstile.test.ts` (s podvrženým `fetch`):
   - odpověď `success: true` → ověřeno
   - `success: false` → neověřeno
   - chybějící token → neověřeno **bez** volání sítě – Review bod 1
   - síťová chyba → rozlišitelná od „neověřeno“ (vede na obecnou chybu, ne na tichý úspěch)
-- [ ] Testy `mail.test.ts` (s podvrženým Resend klientem):
+- [x] Testy `mail.test.ts` (s podvrženým Resend klientem):
   - e-mail jde na cílovou adresu, `reply-to` = e-mail zákazníka, předmět obsahuje jméno a službu
   - chyba Resend → funkce vrátí neúspěch bez detailu chyby určeného pro uživatele – Review bod 5
-- [ ] Každá sada: spusť → selže → implementuj → projde.
-- [ ] Action `contact` (`accept: 'form'`): validace → spam (navenek úspěch, nic se neodešle) → Turnstile → e-mail. Chybové stavy přesně podle spec § 7.
-- [ ] `Contact.astro`: `<form method="POST" action={actions.contact}>`, `<label>` u každého pole, honeypot skrytý pro lidi i čtečky, skryté pole s časem zobrazení, Turnstile widget; po chybě vrácené hodnoty v polích (Review bod 4), chyby u polí přes `aria-describedby`, výsledek v oblasti s `aria-live`; pod formulářem věta s odkazem na GDPR stránku.
-- [ ] Překlad chyb: Zod kódy → klíče ve slovnících obou jazyků.
-- [ ] **Ověření:** lokálně s testovacími klíči Turnstile (https://developers.cloudflare.com/turnstile/troubleshooting/testing/) a testovacím odesílatelem Resend: úspěch, chyba validace (hodnoty zůstanou), vypnutý JS (srozumitelná chyba + e-mail).
-- [ ] Commit: `feat: contact form with validation, spam protection and email delivery`
+- [x] Každá sada: spusť → selže → implementuj → projde.
+- [x] Action `contact` (`accept: 'form'`): validace → spam (navenek úspěch, nic se neodešle) → Turnstile → e-mail. Chybové stavy přesně podle spec § 7.
+- [x] `Contact.astro`: `<form method="POST" action={actions.contact}>`, `<label>` u každého pole, honeypot skrytý pro lidi i čtečky, skryté pole s časem zobrazení, Turnstile widget; po chybě vrácené hodnoty v polích (Review bod 4), chyby u polí přes `aria-describedby`, výsledek v oblasti s `aria-live`; pod formulářem věta s odkazem na GDPR stránku.
+- [x] Překlad chyb: Zod kódy → klíče ve slovnících obou jazyků.
+- [x] **Ověření:** lokálně s testovacími klíči Turnstile (https://developers.cloudflare.com/turnstile/troubleshooting/testing/) a testovacím odesílatelem Resend: úspěch, chyba validace (hodnoty zůstanou), vypnutý JS (srozumitelná chyba + e-mail).
+- [x] Commit: `feat: contact form with validation, spam protection and email delivery`
+
+**Poznámky k provedení** (větev `feat/contact-form`):
+
+- *Rozhodnutí:*
+  - Odeslání přes klientský skript (`actions.contact()`), ne přes vykreslení na serveru: homepage zůstává předrenderovaná a Turnstile JS stejně potřebuje, takže formulář bez JS by nefungoval ani tak. Bez JS je tlačítko zakázané a `<noscript>` nabídne e-mail (Review bod 1). Hodnoty po chybě zůstávají samy, protože se stránka nenačítá (Review bod 4).
+  - Dobu vyplnění měří klient (`elapsedMs`, `performance.now()`), ne čas zobrazení: server neporovnává hodiny návštěvníka se svými.
+  - Služby ve schématu = id z kolekce (`presentation-website`, `website-with-system`, `custom-application`) + `other`, ne hodnoty z plánu – `<select>` se plní přímo z kolekce.
+  - Telefon se kontroluje (`+` na začátku, číslice a mezery, 9–15 číslic), jméno má limit 100 znaků.
+  - Turnstile vrací `verified` / `rejected` / `unavailable` s 5s timeoutem; action mapuje `rejected` → `FORBIDDEN` („ověření vypršelo, zkuste znovu“), výpadek Turnstile → `SERVICE_UNAVAILABLE`, selhání Resend → `INTERNAL_SERVER_ERROR` (obojí obecná chyba s e-mailem).
+  - E-mail je prostý text (vstup návštěvníka se nedostane do HTML), předmět „Poptávka z webu: jméno – služba“; česky přímo v kódu, ne ve slovníku – čte ho jen Michal.
+  - Turnstile: líné načtení (`IntersectionObserver`), `interaction-only`, `refresh-expired: "auto"`, reset po každém odeslání. Mezera nad tlačítkem jen při zobrazené výzvě (`before-interactive-callback` → `data-interactive`): skrytý widget vykresluje prvek s nulovou výškou.
+  - Jedna hláška na pole (první chyba vyhrává); e-mail a služba mají jednu hlášku pro prázdnou i neplatnou hodnotu, protože Zod pro obě vrací stejný kód. Chyba pole zmizí při jeho úpravě (`input` na formuláři); klientská validace není – Zod by šel do bundlu.
+- *Nad rámec plánu:*
+  - `src/lib/contact/errors.ts` – mapování Zod issues a kódů `ActionError` na klíče slovníku, s testy.
+  - `src/lib/contact/messages.ts` – texty pro klientský skript jako inline JSON (`<` escapované jako `\u003c`, aby `</script>` v textu neukončil element), s testy.
+  - Proměnná `CONTACT_EMAIL_FROM` (odesílatel); `.env.example` s testovacími klíči; CI build dostává testovací `PUBLIC_TURNSTILE_SITE_KEY`.
+  - Utility `contact-form-field`, `contact-form-label`, `contact-form-error`, `contact-select` (přizpůsobitelný select s animovanou šipkou a seznamem); stav `disabled` v utilitě `button`.
+  - `.vercel/` v ignorovaných souborech ESLintu (výstup buildu s Vercel adapterem).
 
 ### Úkol 9: Animace loga v hero
 

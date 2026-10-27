@@ -1,14 +1,18 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel";
 
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
 	integrations: [mdx(), sitemap()],
+
+	// Pages stay prerendered; only the contact action runs as a Vercel Function.
+	adapter: vercel(),
 
 	site: "https://example.com",
 
@@ -20,6 +24,31 @@ export default defineConfig({
 		locales: ["cs", "en"],
 		routing: {
 			prefixDefaultLocale: false,
+		},
+	},
+
+	env: {
+		schema: {
+			RESEND_API_KEY: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+			TURNSTILE_SECRET_KEY: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+			PUBLIC_TURNSTILE_SITE_KEY: envField.string({
+				context: "client",
+				access: "public",
+			}),
+			CONTACT_EMAIL_TO: envField.string({
+				context: "server",
+				access: "secret",
+			}),
+			CONTACT_EMAIL_FROM: envField.string({
+				context: "server",
+				access: "secret",
+			}),
 		},
 	},
 

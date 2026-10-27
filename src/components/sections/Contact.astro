@@ -1,17 +1,32 @@
 ---
+import type { CollectionEntry } from "astro:content";
+import { actions } from "astro:actions";
 import { getDictionary, type Locale } from "../../i18n";
+import { getPath } from "../../i18n/routes";
+import { contactFormMessages, toInlineJson } from "../../lib/contact/messages";
+import { findServiceMismatch } from "../../lib/contact/schema";
 import { siteDetails } from "../../lib/site";
 import Section from "../Section.astro";
 
 interface Props {
+	services: CollectionEntry<"services">[];
 	locale: Locale;
 }
 
-const { locale } = Astro.props;
+const { services, locale } = Astro.props;
 const dictionary = getDictionary(locale);
 const { email, phone } = siteDetails;
 // tel: links need the number without spaces (RFC 3966).
 const phoneHref = phone && `tel:${phone.replaceAll(" ", "")}`;
+const serviceMismatch = findServiceMismatch(services.map(({ id }) => id));
+if (serviceMismatch.length > 0) {
+	throw new Error(
+		`Services collection and contactServices differ: ${serviceMismatch.join(", ")}`,
+	);
+}
+const messagesJson = toInlineJson(
+	contactFormMessages(dictionary.contact.form, email),
+);
 ---
 
 <Section id="contact" title={dictionary.contact.title}>
@@ -43,4 +58,452 @@ const phoneHref = phone && `tel:${phone.replaceAll(" ", "")}`;
 			</div>
 		)}
 	</dl>
+
+	<script
+		type="application/json"
+		data-contact-messages
+		set:html={messagesJson}
+	/>
+	<form
+		method="POST"
+		action={actions.contact}
+		class="mt-12 md:max-w-2xl grid gap-6"
+		data-contact-form
+		novalidate
+	>
+		<div>
+			<label for="contact-name" class="contact-form-label">
+				{dictionary.contact.form.name}
+			</label>
+			<input
+				type="text"
+				name="name"
+				id="contact-name"
+				required
+				aria-describedby="contact-name-error"
+				autocomplete="name"
+				class="contact-form-field"
+			/>
+			<p
+				id="contact-name-error"
+				class="contact-form-error"
+				data-field-error="name"
+			></p>
+		</div>
+		<div>
+			<label for="contact-email" class="contact-form-label">
+				{dictionary.contact.form.email}
+			</label>
+			<input
+				type="email"
+				name="email"
+				id="contact-email"
+				required
+				aria-describedby="contact-email-error"
+				autocomplete="email"
+				class="contact-form-field"
+			/>
+			<p
+				id="contact-email-error"
+				class="contact-form-error"
+				data-field-error="email"
+			></p>
+		</div>
+		<div>
+			<label for="contact-phone" class="contact-form-label">
+				{dictionary.contact.form.phone}{" "}
+				<span class="text-sm text-muted font-normal">
+					{dictionary.contact.form.phoneOptional}
+				</span>
+			</label>
+			<input
+				type="tel"
+				name="phone"
+				id="contact-phone"
+				aria-describedby="contact-phone-error"
+				autocomplete="tel"
+				class="contact-form-field"
+			/>
+			<p
+				id="contact-phone-error"
+				class="contact-form-error"
+				data-field-error="phone"
+			></p>
+		</div>
+		<div>
+			<label for="contact-service" class="contact-form-label">
+				{dictionary.contact.form.service}
+			</label>
+			<select
+				name="service"
+				id="contact-service"
+				required
+				aria-describedby="contact-service-error"
+				class="contact-form-field contact-select"
+			>
+				<option value="">
+					{dictionary.contact.form.servicePlaceholder}
+				</option>
+				{services.map((service) => (
+					<option value={service.id}>
+						{service.data.title[locale]}
+					</option>
+				))}
+				<option value="other">
+					{dictionary.contact.form.serviceOther}
+				</option>
+			</select>
+			<p
+				id="contact-service-error"
+				class="contact-form-error"
+				data-field-error="service"
+			></p>
+		</div>
+		<div>
+			<label for="contact-message" class="contact-form-label">
+				{dictionary.contact.form.message}
+			</label>
+			<textarea
+				rows={6}
+				name="message"
+				id="contact-message"
+				required
+				aria-describedby="contact-message-error"
+				class="contact-form-field resize-y"
+			/>
+			<p
+				id="contact-message-error"
+				class="contact-form-error"
+				data-field-error="message"
+			></p>
+		</div>
+
+		<div class="absolute left-[-9999px]" aria-hidden="true">
+			<label for="contact-note">{dictionary.contact.form.honeypot}</label>
+			<input
+				type="text"
+				tabindex="-1"
+				autocomplete="off"
+				name="note"
+				id="contact-note"
+			/>
+		</div>
+
+		<input type="hidden" name="elapsedMs" value="" data-elapsed />
+		{/* One grid item, so empty Turnstile and status containers add no form gap. */}
+		<div class="flex flex-col items-start">
+			<div data-turnstile class="data-interactive:mb-4"></div>
+			{/* Status beside the button from sm up, where the row has room for it. */}
+			<div class="flex flex-col items-start sm:flex-row sm:items-center">
+				<button
+					type="submit"
+					class="button-primary shrink-0"
+					disabled
+					data-form-submit
+				>
+					{dictionary.contact.form.submit}
+				</button>
+				<p
+					role="status"
+					data-form-status
+					class="not-empty:mt-6 sm:not-empty:ms-6 sm:not-empty:mt-0"
+				></p>
+				<noscript>
+					<p class="mt-6 sm:ms-6 sm:mt-0">
+						{dictionary.contact.form.noScript}{" "}
+						<a href={`mailto:${email}`} class="link-underline">
+							{email}
+						</a>
+					</p>
+				</noscript>
+			</div>
+		</div>
+		<p class="text-sm text-muted">
+			{dictionary.contact.form.privacyBefore}
+			<a
+				href={getPath("privacy", locale)}
+				class="link-underline font-medium"
+			>
+				{dictionary.contact.form.privacyLink}
+			</a>
+			{dictionary.contact.form.privacyAfter}
+		</p>
+	</form>
 </Section>
+
+<script>
+	import { actions, isInputError } from "astro:actions";
+	import { PUBLIC_TURNSTILE_SITE_KEY } from "astro:env/client";
+	import {
+		fieldErrorKeys,
+		formErrorKey,
+		type ContactErrorKey,
+		type FieldErrorKeys,
+	} from "../../lib/contact/errors";
+	import type { ContactFormMessages } from "../../lib/contact/messages";
+
+	// Only the part of the Turnstile API this script uses; Cloudflare ships no package for it.
+	// https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/
+	interface TurnstileOptions {
+		sitekey: string;
+		appearance: "always" | "execute" | "interaction-only";
+		theme: "light" | "dark";
+		language: string;
+		"refresh-expired": "auto" | "manual" | "never";
+		callback: () => void;
+		"expired-callback": () => void;
+		"error-callback": () => void;
+		"before-interactive-callback": () => void;
+	}
+
+	interface TurnstileApi {
+		render(container: HTMLElement, options: TurnstileOptions): string;
+		reset(widgetId: string): void;
+	}
+
+	declare global {
+		interface Window {
+			turnstile?: TurnstileApi;
+		}
+	}
+
+	const TURNSTILE_SCRIPT_URL =
+		"https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+
+	function requireElement<T extends Element>(
+		selector: string,
+		type: new () => T,
+	): T {
+		const element = document.querySelector(selector);
+		if (!(element instanceof type)) {
+			throw new Error(`Contact form element ${selector} not found`);
+		}
+		return element;
+	}
+
+	function readMessages(): ContactFormMessages {
+		const element = requireElement(
+			"[data-contact-messages]",
+			HTMLScriptElement,
+		);
+		return JSON.parse(element.textContent ?? "");
+	}
+
+	const form = requireElement("[data-contact-form]", HTMLFormElement);
+	const submitButton = requireElement(
+		"[data-form-submit]",
+		HTMLButtonElement,
+	);
+	const status = requireElement("[data-form-status]", HTMLElement);
+	const turnstileContainer = requireElement("[data-turnstile]", HTMLElement);
+	const elapsedInput = requireElement("[data-elapsed]", HTMLInputElement);
+	const messages = readMessages();
+
+	// performance.now() is monotonic, so changing the system clock cannot skew the fill time.
+	let loadedAt = performance.now();
+	let widgetId: string | undefined;
+	let isSubmitting = false;
+
+	type StatusKind = "success" | "error" | "verification";
+	let statusKind: StatusKind | undefined;
+
+	function clearStatus(): void {
+		statusKind = undefined;
+		status.replaceChildren();
+	}
+
+	function showStatus(
+		kind: StatusKind,
+		text: string,
+		offerEmail: boolean,
+	): void {
+		statusKind = kind;
+		status.classList.toggle("font-medium", kind === "success");
+		status.replaceChildren(text);
+		if (offerEmail) {
+			const link = document.createElement("a");
+			link.href = `mailto:${messages.email}`;
+			link.className = "link-underline font-medium";
+			link.textContent = messages.email;
+			status.append(" ", link);
+		}
+	}
+
+	function showFormError(key: ContactErrorKey): void {
+		showStatus("error", messages.errors[key], key === "unavailable");
+	}
+
+	// Returns the field when it was marked invalid, so the caller can focus it.
+	function setFieldError(
+		errorElement: HTMLElement,
+		message: string | undefined,
+	): HTMLElement | undefined {
+		const field = form.elements.namedItem(
+			errorElement.dataset.fieldError ?? "",
+		);
+		errorElement.textContent = message ?? "";
+		if (!(field instanceof HTMLElement)) {
+			return undefined;
+		}
+		if (message) {
+			field.setAttribute("aria-invalid", "true");
+			return field;
+		}
+		field.removeAttribute("aria-invalid");
+		return undefined;
+	}
+
+	function showFieldErrors(errors: FieldErrorKeys): void {
+		let firstInvalidField: HTMLElement | undefined;
+
+		for (const errorElement of form.querySelectorAll<HTMLElement>(
+			"[data-field-error]",
+		)) {
+			const fieldName = errorElement.dataset
+				.fieldError as keyof FieldErrorKeys;
+			const key = errors[fieldName];
+			const invalidField = setFieldError(
+				errorElement,
+				key && messages.errors[key],
+			);
+			firstInvalidField ??= invalidField;
+		}
+
+		firstInvalidField?.focus();
+	}
+
+	// The server re-checks the field on the next submit; until then the old
+	// message would only get in the way of fixing it.
+	function clearFieldError(event: Event): void {
+		if (!(event.target instanceof HTMLElement)) {
+			return;
+		}
+		const fieldName = event.target.getAttribute("name");
+		const errorElement = fieldName
+			? form.querySelector<HTMLElement>(
+					`[data-field-error="${CSS.escape(fieldName)}"]`,
+				)
+			: null;
+		if (errorElement) {
+			setFieldError(errorElement, undefined);
+		}
+	}
+
+	function setSubmitting(submitting: boolean): void {
+		isSubmitting = submitting;
+		submitButton.disabled = submitting;
+		submitButton.textContent = submitting
+			? messages.sending
+			: messages.submit;
+	}
+
+	// The token is single-use: every attempt, successful or not, needs a fresh one.
+	// The widget's callback re-enables the button once the new token is ready.
+	function resetTurnstile(): void {
+		submitButton.disabled = true;
+		delete turnstileContainer.dataset.interactive;
+		if (widgetId !== undefined) {
+			window.turnstile?.reset(widgetId);
+		}
+	}
+
+	async function handleSubmit(event: SubmitEvent): Promise<void> {
+		event.preventDefault();
+		elapsedInput.value = String(Math.round(performance.now() - loadedAt));
+		clearStatus();
+		setSubmitting(true);
+
+		try {
+			const { error } = await actions.contact(new FormData(form));
+
+			if (!error) {
+				form.reset();
+				showFieldErrors({});
+				showStatus("success", messages.success, false);
+				loadedAt = performance.now();
+			} else if (isInputError(error)) {
+				showFieldErrors(fieldErrorKeys(error.issues));
+			} else {
+				showFieldErrors({});
+				showFormError(formErrorKey(error.code));
+			}
+		} catch {
+			showFormError("unavailable");
+		} finally {
+			setSubmitting(false);
+			resetTurnstile();
+		}
+	}
+
+	function showTurnstileUnavailable(): void {
+		showStatus("verification", messages.verificationUnavailable, true);
+	}
+
+	function renderWidget(): void {
+		if (!window.turnstile) {
+			showTurnstileUnavailable();
+			return;
+		}
+		const root = document.documentElement;
+
+		widgetId = window.turnstile.render(turnstileContainer, {
+			sitekey: PUBLIC_TURNSTILE_SITE_KEY,
+			appearance: "interaction-only",
+			// Read once at render: the widget keeps its theme if the visitor toggles it later.
+			theme: root.dataset.theme === "light" ? "light" : "dark",
+			language: root.lang,
+			"refresh-expired": "auto",
+			callback: () => {
+				if (!isSubmitting) {
+					submitButton.disabled = false;
+				}
+				// Turnstile retries on its own: once it recovers, the "email me instead" hint is stale.
+				if (statusKind === "verification") {
+					clearStatus();
+				}
+			},
+			"expired-callback": () => {
+				submitButton.disabled = true;
+			},
+			"error-callback": () => {
+				submitButton.disabled = true;
+				// A failing reset right after a send must not hide that the message went out.
+				if (statusKind !== "success") {
+					showTurnstileUnavailable();
+				}
+			},
+			// The hidden widget still renders an in-flow (zero-height) element, so the gap
+			// above the button is switched on only once a challenge is shown. The solved
+			// challenge stays visible, so the gap stays until the widget is reset.
+			"before-interactive-callback": () => {
+				turnstileContainer.dataset.interactive = "";
+			},
+		});
+	}
+
+	function loadTurnstile(): void {
+		const script = document.createElement("script");
+		script.src = TURNSTILE_SCRIPT_URL;
+		script.async = true;
+		script.addEventListener("load", renderWidget);
+		script.addEventListener("error", showTurnstileUnavailable);
+		document.head.append(script);
+	}
+
+	// Turnstile loads only when the form gets close, so it never slows down the first paint.
+	const nearViewport = new IntersectionObserver(
+		(entries) => {
+			if (entries.some((entry) => entry.isIntersecting)) {
+				nearViewport.disconnect();
+				loadTurnstile();
+			}
+		},
+		{ rootMargin: "200px" },
+	);
+
+	nearViewport.observe(form);
+	form.addEventListener("input", clearFieldError);
+	form.addEventListener("submit", (event) => {
+		void handleSubmit(event);
+	});
+</script>

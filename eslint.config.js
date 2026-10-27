@@ -6,7 +6,14 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 import globals from "globals";
 
 export default defineConfig([
-	globalIgnores(["dist/", ".astro/", ".claude/", ".agents/", "brand/"]),
+	globalIgnores([
+		"dist/",
+		".astro/",
+		".vercel/",
+		".claude/",
+		".agents/",
+		"brand/",
+	]),
 	js.configs.recommended,
 	tseslint.configs.recommended,
 	astro.configs["flat/recommended"],

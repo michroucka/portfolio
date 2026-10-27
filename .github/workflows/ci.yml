@@ -23,4 +23,7 @@ jobs:
             - run: npm run format:check
             - run: npm test
             - run: npm run build
+              env:
+                  # Public values are inlined at build time; Turnstile's always-pass test key.
+                  PUBLIC_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
             - run: npm run verify:dist

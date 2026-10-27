@@ -280,6 +280,10 @@ body {
 		transition-duration: var(--default-transition-duration);
 		transition-timing-function: var(--default-transition-timing-function);
 	}
+
+	&:disabled {
+		@apply opacity-40 cursor-not-allowed;
+	}
 }
 
 /* Accent pair from brand/README.md § 2: Signal + Ink on dark, Signal Deep + Paper on light.
@@ -287,7 +291,7 @@ body {
 @utility button-primary {
 	@apply button border-accent bg-accent text-accent-foreground;
 
-	&:hover {
+	&:hover:not(:disabled) {
 		@apply border-accent-hover bg-accent-hover;
 	}
 }
@@ -296,7 +300,131 @@ body {
 @utility button-secondary {
 	@apply button border-muted bg-transparent text-foreground;
 
-	&:hover {
+	&:hover:not(:disabled) {
 		@apply border-foreground;
 	}
+}
+
+/* Input (Ash / Ash Deep) border: Line is ~1.4 : 1 on Ink, below the 3 : 1 needed for a control outline. */
+@utility contact-form-field {
+	@apply w-full border border-input bg-background p-4 text-base font-normal text-foreground;
+
+	&:focus-visible {
+		@apply outline-2 outline-offset-2 outline-accent;
+	}
+
+	&[aria-invalid="true"] {
+		@apply border-accent;
+	}
+}
+
+@utility contact-form-label {
+	@apply text-base font-semibold text-foreground block mb-2 font-stretch-expanded;
+}
+
+@utility contact-form-error {
+	@apply text-sm text-accent not-empty:mt-2;
+}
+
+/* Customizable select (appearance: base-select) styles the picker like the rest of the site.
+   Browsers without support keep the native select, which still follows color-scheme.
+   The arrow rotates via :open, which only exists for base-select. */
+@utility contact-select {
+	@supports (appearance: base-select) {
+		&,
+		&::picker(select) {
+			appearance: base-select;
+		}
+
+		/* The base-select button lays out the selected text and the icon in a row;
+		   without this the icon sits on the text baseline instead of the middle. */
+		& {
+			@apply flex items-center justify-between gap-4;
+		}
+
+		&:has(option[value=""]:checked) {
+			@apply text-muted;
+		}
+
+		&::picker-icon {
+			content: "";
+			@apply size-5 shrink-0 bg-current;
+			mask: var(--chevron-down) center / contain no-repeat;
+		}
+
+		&:open::picker-icon {
+			rotate: 180deg;
+		}
+
+		&::picker(select) {
+			@apply mt-1 border border-line bg-surface p-1 text-foreground;
+		}
+
+		& option {
+			@apply cursor-pointer px-3 py-2;
+		}
+
+		& option::checkmark {
+			@apply text-accent;
+		}
+
+		& option:hover,
+		& option:focus-visible {
+			@apply bg-background outline-none;
+		}
+
+		& option:checked {
+			@apply font-semibold;
+		}
+
+		& option[value=""] {
+			@apply hidden;
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			& option {
+				transition-property: background-color;
+				transition-duration: var(--default-transition-duration);
+				transition-timing-function: var(
+					--default-transition-timing-function
+				);
+			}
+
+			&::picker-icon {
+				transition-property: rotate;
+				transition-duration: var(--default-transition-duration);
+				transition-timing-function: var(
+					--default-transition-timing-function
+				);
+			}
+
+			/* The picker is a top-layer popover: display and overlay switch discretely,
+			   so they need allow-discrete to stay until the fade-out ends, and
+			   @starting-style gives the opening transition a state to start from. */
+			&::picker(select) {
+				opacity: 0;
+				translate: 0 -0.5rem;
+				transition-property: opacity, translate, display, overlay;
+				transition-duration: var(--default-transition-duration);
+				transition-timing-function: var(
+					--default-transition-timing-function
+				);
+				transition-behavior: allow-discrete;
+			}
+
+			&:open::picker(select) {
+				opacity: 1;
+				translate: 0 0;
+			}
+
+			@starting-style {
+				&:open::picker(select) {
+					opacity: 0;
+					translate: 0 -0.5rem;
+				}
+			}
+		}
+	}
+
+	--chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
 }
