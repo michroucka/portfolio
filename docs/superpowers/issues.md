@@ -480,7 +480,7 @@ Patička obsahuje identifikační údaje podnikatele, jakmile bude založena ži
 
 ### Co udělat
 
-1. Po založení živnosti doplnit `ico` v `src/lib/site.ts` (patička ho pak zobrazí).
+1. Po založení živnosti nahradit ukázkové hodnoty v `siteDetails.legal` (`src/lib/site.ts`): `ico`, `registeredOffice`, `isVatPayer`. Patička je už zobrazuje.
 
 ### Hotovo, když
 

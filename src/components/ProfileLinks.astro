@@ -1,0 +1,38 @@
+---
+import type { ProfileKind } from "../lib/site";
+import { siteDetails } from "../lib/site";
+import GitHubIcon from "./icons/GitHubIcon.astro";
+import LinkedInIcon from "./icons/LinkedInIcon.astro";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// A new profile is one entry in siteDetails.profiles plus its icon here.
+const icons: Record<ProfileKind, typeof GitHubIcon> = {
+	github: GitHubIcon,
+	linkedin: LinkedInIcon,
+};
+---
+
+<ul class:list={["flex flex-wrap items-center gap-6", className]}>
+	{siteDetails.profiles.map(({ kind, label, url }) => {
+		const Icon = icons[kind];
+		return (
+			<li>
+				{/* p-3 -m-3: ≥ 44 px touch target, the icon stays in place */}
+				<a
+					href={url}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label={label}
+					class="-m-3 block p-3 text-muted hover:text-foreground motion-safe:transition-colors"
+				>
+					<Icon size="1.5em" />
+				</a>
+			</li>
+		);
+	})}
+</ul>

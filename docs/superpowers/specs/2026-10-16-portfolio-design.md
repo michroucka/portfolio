@@ -38,7 +38,12 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
 - **Značka:** vystupování pod vlastním jménem + vlastní vizuální identita (monogram/logo, barvy, typografie).
 - **Doména:** otevřená. K dispozici `michroucka.dev`; zvažuje se dokoupení čitelnější `.cz` domény.
 - **Technické školní projekty** (InodeFS, Oko-Bere, …) na web nepatří.
-- Patička bude obsahovat identifikační údaje podnikatele (IČO), jakmile bude živnost založena.
+- Patička obsahuje identifikační údaje podnikatele podle § 435 občanského zákoníku: jméno, IČO, sídlo,
+  zápis v živnostenském rejstříku a údaj o DPH (`siteDetails.legal`). Do založení živnosti jsou to
+  ukázkové hodnoty – s nimi web nesmí jít do provozu (issue #17).
+- Patička: logo a krátká věta, sloupec Kontakt (e-mail, telefon, Plzeňský kraj, odkaz na formulář),
+  sloupec Profily (GitHub, LinkedIn jako ikony), pod čarou ©, ochrana osobních údajů, právní údaje
+  a přepínač jazyka a tématu.
 
 ---
 

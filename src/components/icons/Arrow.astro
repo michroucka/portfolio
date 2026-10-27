@@ -1,0 +1,27 @@
+---
+// Same 32-unit stroke on the 256 grid as MenuIcon and CloseIcon. Decorative: the parent
+// must provide the accessible name.
+interface Props {
+	direction: "left" | "right";
+	class?: string;
+	size?: string;
+}
+
+const { direction, class: className, size = "1em" } = Astro.props;
+---
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 256 256"
+	width={size}
+	height={size}
+	fill="none"
+	stroke="currentColor"
+	stroke-width="32"
+	aria-hidden="true"
+	focusable="false"
+	class:list={[className, direction === "right" && "-scale-x-100"]}
+>
+	<path d="M240 128H48"></path>
+	<path d="M136 40 48 128l88 88"></path>
+</svg>

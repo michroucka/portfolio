@@ -5,7 +5,7 @@ import { getDictionary, type Locale } from "../../i18n";
 import { getPath } from "../../i18n/routes";
 import { contactFormMessages, toInlineJson } from "../../lib/contact/messages";
 import { findServiceMismatch } from "../../lib/contact/schema";
-import { siteDetails } from "../../lib/site";
+import { siteDetails, telHref } from "../../lib/site";
 import Section from "../Section.astro";
 
 interface Props {
@@ -16,8 +16,7 @@ interface Props {
 const { services, locale } = Astro.props;
 const dictionary = getDictionary(locale);
 const { email, phone } = siteDetails;
-// tel: links need the number without spaces (RFC 3966).
-const phoneHref = phone && `tel:${phone.replaceAll(" ", "")}`;
+const phoneHref = phone && telHref(phone);
 const serviceMismatch = findServiceMismatch(services.map(({ id }) => id));
 if (serviceMismatch.length > 0) {
 	throw new Error(

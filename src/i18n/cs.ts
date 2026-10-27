@@ -14,9 +14,19 @@ export const cs = {
 		menu: "Menu",
 	},
 	footer: {
+		tagline:
+			"Weby a aplikace pro živnostníky a malé firmy z Plzeňského kraje.",
+		contactHeading: "Kontakt",
+		region: "Plzeňský kraj",
+		writeMessage: "Napsat zprávu",
+		profilesHeading: "Profily",
 		lightThemeToggle: "Světlé téma",
 		privacy: "Ochrana osobních údajů",
 		companyId: "IČO",
+		registeredOffice: "Sídlo",
+		tradeRegister: "Fyzická osoba zapsaná v živnostenském rejstříku",
+		notVatPayer: "Neplátce DPH",
+		vatPayer: "Plátce DPH",
 	},
 	layout: {
 		skipToMain: "Přeskočit na obsah",
@@ -24,12 +34,12 @@ export const cs = {
 	home: {
 		title: "Michal Roučka – weby a aplikace pro malé firmy",
 		description:
-			"Navrhuji a stavím weby, rezervační systémy a aplikace na míru pro malé firmy z Plzně a okolí. Orientační ceny předem, první konzultace zdarma.",
+			"Navrhuji a stavím weby, rezervační systémy a aplikace na míru pro malé firmy z Plzně a celého Plzeňského kraje. Orientační ceny předem, první konzultace zdarma.",
 	},
 	hero: {
 		title: "Weby a aplikace pro malé firmy",
 		subtitle:
-			"Od prezentačního webu po rezervační systém na míru. Osobně, srozumitelně a bez agenturních přirážek. Plzeň a okolí.",
+			"Od prezentačního webu po rezervační systém na míru. Osobně, srozumitelně a bez agenturních přirážek. Plzeňský kraj.",
 		primaryCta: "Nezávazná konzultace",
 		secondaryCta: "Ukázky práce",
 	},
