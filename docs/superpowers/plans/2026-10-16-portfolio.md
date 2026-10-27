@@ -200,7 +200,7 @@ přepínač tématu.
 - [x] `Hero`: nadpis jako celá věta zakončená `BrandDot`, podnadpis, CTA „Nezávazná konzultace“ (kotva na kontakt) a vedlejší CTA „Ukázky práce“.
 - [x] `Services` + `ServiceCard`: data z kolekce, cena formátovaná podle jazyka (`Intl.NumberFormat`, „od 15 000 Kč“ / „from CZK 15,000“), věta „přesná cena po nezávazné konzultaci“. Pod kartami řádek „Potřebujete něco jiného? Pojďme se pobavit.“ s odkazem na kontakt – text ze slovníku, ne čtvrtý záznam v kolekci (nemá cenu ani `features`, rozbil by schéma). Čtvrtou kartu zamítnuto: překrývala by se s „Aplikací na míru“ a 3 + 1 se hůř skládá do mřížky.
 - [x] `FeaturedProjects` + `ProjectCard`: jen `featured`, seřazené; cover přes `<Image>`; odkaz z mapy cest; štítek `type`.
-- [x] `Process`: 4–5 kroků ze slovníku (konzultace → návrh → vývoj → spuštění → podpora).
+- [x] `Process`: 6 kroků ze slovníku (konzultace → návrh → podklady → vývoj → spuštění → podpora).
 - [x] `About`: krátký text, fotka přes `<Image>`, okolí Plzně.
 - [x] `Contact`: zatím jen sekce s nadpisem a e-mailem/telefonem; formulář přijde v Úkolu 8.
 - [x] Každá sekce má `id` pro kotvy z hlavičky a nadpis `<h2>`; na stránce je jediný `<h1>` (v Hero).
@@ -218,7 +218,7 @@ přepínač tématu.
   - Karta projektu: odkazem je jen nadpis, `::after` ho roztáhne přes kartu. Cover má `alt=""`, název je hned vedle.
   - Obsah je omezený na `max-w-7xl` (1280 px): `pagePaddingX` nahradil `pageContainer` (`mx-auto w-full max-w-7xl px-6`) v hlavičce, mobilním menu, `<main>` i patičce. Okraj patičky zůstává přes celou šířku, kontejner je vnitřní `div`.
   - Fotka v About je `src/assets/about/portrait.jpg` (1600 px, zmenšený originál), texty sekcí jsou pracovní (#15).
-  - Kroky spolupráce tvoří časovou osu: od čísla vede čára k dalšímu číslu – na desktopu vodorovně v jedné řadě, na mobilu svisle po levém okraji. Poslední krok čáru nemá.
+  - Kroky spolupráce tvoří časovou osu: od čísla vede čára k dalšímu číslu – na mobilu svisle po levém okraji, od `md` vodorovně ve dvou řadách po třech (šest v jedné řadě nechá textům málo místa). Čára na konci řady vybledne a další řada začíná krátkým náběhem v okraji stránky, takže osa působí souvisle. Poslední krok čáru nemá (větev `feat/branding-and-materials`).
   - Pozadí hero (větev `feat/hero-grid`): mřížka čtyřcípých hvězd s rovnými hranami (buňka 4 rem, jedna hvězda na levém okraji obsahu). SVG je jen maska, barva je token Line (`#2A2D32` / `#DDD9D0`), takže se přepíná s tématem. Mizí ke všem okrajům a pod textem, na mobilu je slabší. Prohnutá hvězda ✦ zamítnuta – čte se jako ikona AI. Pravá strana hero zůstává pro velkou značku z úkolu 9.
 - *Otevřené:* odkaz z karty projektu vede na stránku case study, která vznikne až v úkolu 7.
 
