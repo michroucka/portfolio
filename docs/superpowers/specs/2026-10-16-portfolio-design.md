@@ -276,6 +276,15 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 - formulář: `<label>` u každého pole, chyby přes `aria-describedby`, výsledek přes `aria-live`
 - viditelné focus stavy, kontrast WCAG AA
 
+### Bezpečnost
+- **CSP** přes `security.csp` v Astru: každá stránka dostane `<meta>` s hashi svých inline skriptů a stylů.
+  Mimo vlastní doménu povoluje jen Turnstile (`challenges.cloudflare.com`), na preview nasazeních
+  (`VERCEL_ENV=preview`) navíc Vercel Toolbar. Inline `style` atributy jsou povolené (`style-src-attr 'unsafe-inline'`).
+  `<meta>` CSP neumí `frame-ancestors` ani režim Report-Only.
+- **Hlavičky** ve `vercel.json`: `X-Content-Type-Options`, `X-Frame-Options: DENY` (místo `frame-ancestors`),
+  `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy`. HSTS posílá Vercel sám.
+- `npm run verify:dist` kontroluje, že každý inline skript a styl v buildu má hash v CSP své stránky.
+
 ---
 
 ## 9. Testování, nástroje, nasazení
