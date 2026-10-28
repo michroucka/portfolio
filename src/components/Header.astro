@@ -188,7 +188,15 @@ const menuIconSize = "1.75em";
 		overflow: hidden;
 	}
 
-	dialog[data-menu] {
+	/* h-dvh ends above Safari's floating toolbar on iOS, but the page still renders beneath it,
+	   so the page would show through the strip below the dialog. The backdrop covers the whole
+	   viewport and hides it; it fades with the dialog so the opening transition stays the same. */
+	dialog[data-menu]::backdrop {
+		background-color: var(--theme-background);
+	}
+
+	dialog[data-menu],
+	dialog[data-menu]::backdrop {
 		opacity: 0;
 	}
 
@@ -197,7 +205,8 @@ const menuIconSize = "1.75em";
 		translate: 0 -1rem;
 	}
 
-	dialog[data-menu][open] {
+	dialog[data-menu][open],
+	dialog[data-menu][open]::backdrop {
 		opacity: 1;
 	}
 
@@ -207,7 +216,8 @@ const menuIconSize = "1.75em";
 	}
 
 	@starting-style {
-		dialog[data-menu][open] {
+		dialog[data-menu][open],
+		dialog[data-menu][open]::backdrop {
 			opacity: 0;
 		}
 		dialog[data-menu][open] nav a {
@@ -218,7 +228,8 @@ const menuIconSize = "1.75em";
 
 	@media (prefers-reduced-motion: no-preference) {
 		/* display + overlay (allow-discrete) keep the dialog visible until the close transition ends */
-		dialog[data-menu] {
+		dialog[data-menu],
+		dialog[data-menu]::backdrop {
 			transition-property: opacity, display, overlay;
 			transition-behavior: allow-discrete;
 			transition-duration: var(--default-transition-duration);
