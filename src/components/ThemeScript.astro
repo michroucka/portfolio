@@ -39,11 +39,12 @@ const themeScript = `(() => {
 		?.setAttribute("content", ${JSON.stringify(themeColors)}[theme]);
 })();`;
 
-// Astro hashes only the scripts it processes, so the CSP must be told about this is:inline one.
+// Astro hashes only the scripts it processes. The CSP <meta> currently comes after this script,
+// so the browser does not enforce it here; the hash keeps the script allowed if that order changes.
 const themeScriptHash = createHash("sha256")
 	.update(themeScript)
 	.digest("base64");
-Astro.csp.insertScriptHash(`sha256-${themeScriptHash}`);
+Astro.csp?.insertScriptHash(`sha256-${themeScriptHash}`);
 ---
 
 <!-- data-theme-script: lets scripts/verify-theme-script.mjs find this script -->
