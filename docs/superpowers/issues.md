@@ -411,7 +411,7 @@ Vybrat a koupit doménu – je potřeba pro `site`, ověření domény v Resend 
 
 K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 
-**Rozhodnuto:** `michalroucka.cz` (WEDOS), `michroucka.dev` se přesměrovává na ni. Pošta Seznam Email Profi.
+**Rozhodnuto:** `michalroucka.cz` (WEDOS), Kanonická je `www.michalroucka.cz`, kořenová doména i `michroucka.dev` na ni přesměrovávají. Pošta Seznam Email Profi.
 
 ### Co udělat
 
@@ -483,7 +483,7 @@ Patička obsahuje identifikační údaje podnikatele, jakmile bude založena ži
 
 ### Co udělat
 
-1. Po založení živnosti nahradit ukázkové hodnoty v `siteDetails.legal` (`src/lib/site.ts`): `ico`, `registeredOffice`, `isVatPayer`. Patička je už zobrazuje.
+1. Po založení živnosti vyplnit `siteDetails.legal` (`src/lib/site.ts`): `ico`, `registeredOffice`, `isVatPayer`. Teď je `undefined`, takže patička a GDPR stránka blok skrývají; po vyplnění ho zobrazí.
 
 ### Hotovo, když
 
