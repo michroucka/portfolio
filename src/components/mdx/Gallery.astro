@@ -65,8 +65,9 @@ const controlClasses =
 
 	<dialog
 		data-gallery-dialog
+		tabindex="-1"
 		aria-label={dictionary.gallery.label}
-		class="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col border-0 bg-background p-0 text-foreground open:flex"
+		class="fixed inset-0 m-0 outline-none h-dvh max-h-none w-full max-w-none flex-col border-0 bg-background p-0 text-foreground open:flex"
 	>
 		<div class="flex justify-end p-3">
 			<button
@@ -265,6 +266,8 @@ const controlClasses =
 			item.addEventListener("click", (event) => {
 				event.preventDefault();
 				dialog.showModal();
+				// Same Safari focus ring as in the mobile menu (Header.astro), here on the close button.
+				dialog.focus();
 				// The track has no width until the dialog is shown, so it can only jump to the image now.
 				scrollToImage(index, "instant");
 				updateControls();

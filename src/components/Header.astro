@@ -79,8 +79,9 @@ const menuIconSize = "1.75em";
 	     so its position and layout must not depend on [open] (fixed inset-0, flex-col always) – only display (open:flex). -->
 	<dialog
 		data-menu
+		tabindex="-1"
 		aria-label={dictionary.header.menu}
-		class="fixed inset-0 open:flex flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
+		class="fixed inset-0 outline-none open:flex flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
 	>
 		<div class={headerClasses}>
 			<a href={homePath}>
@@ -247,8 +248,12 @@ const menuIconSize = "1.75em";
 		throw new Error("Menu elements not found");
 	}
 
+	// showModal() focuses the first link, and Safari, which does not focus a tapped button,
+	// treats that as keyboard focus and draws a focus ring around the logo. Focusing the dialog
+	// itself avoids it; Tab still reaches the first link.
 	const openMenu = (): void => {
 		menu.showModal();
+		menu.focus();
 	};
 
 	const closeMenu = (): void => {
