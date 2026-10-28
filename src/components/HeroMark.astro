@@ -1,0 +1,56 @@
+---
+import symbol from "../../brand/logo/mr-symbol-negative.svg?raw";
+import {
+	dotToRect,
+	fitViewBoxToCenteredMark,
+	removeTitleAndAttributes,
+} from "../lib/logo-svg";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const mark = dotToRect(
+	fitViewBoxToCenteredMark(removeTitleAndAttributes(symbol)),
+);
+---
+
+<!-- Decorative: the heading carries the content and the header has the labelled logo. -->
+<div data-hero-mark class={className} aria-hidden="true" set:html={mark} />
+
+<style>
+	/* One SVG for both themes: CSS fills override the brand file's presentation attributes,
+	   so the letters follow the text colour and the dot is Signal / Signal Deep. */
+	/* The viewBox ends at the dot, but the cursor is 1.933 dot wide and grows to the right
+	   (@keyframes dot-cursor). Its overhang of 0.933 × 35.7 = 33.3 units on a 199.9 wide mark is
+	   14.3 % of the whole, so the padding keeps the cursor inside the layout and the SVG may overflow into it. */
+	[data-hero-mark] {
+		padding-inline-end: 14.3%;
+	}
+
+	[data-hero-mark] :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+
+	[data-hero-mark] :global(path) {
+		fill: var(--color-foreground);
+	}
+
+	[data-hero-mark] :global(rect) {
+		fill: var(--color-accent);
+	}
+
+	/* Runs once after load (brand/README.md § 5); the delay lets the page settle so the morph is noticed.
+	   Without the animation the <rect> attributes keep the dot, so the rest state is always "mr.". */
+	@media (prefers-reduced-motion: no-preference) {
+		[data-hero-mark] :global(rect) {
+			animation: var(--animate-dot-cursor);
+			animation-delay: 600ms;
+		}
+	}
+</style>

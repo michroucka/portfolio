@@ -291,9 +291,9 @@ Po načtení homepage tečka v hero jednou zabliká jako kurzor a vrátí se.
 
 ### Hotovo, když
 
-- [ ] animace podle manuálu značky, jen jednou
-- [ ] reduced motion respektován
-- [ ] dokumentace odpovídá implementaci
+- [x] animace podle manuálu značky, jen jednou
+- [x] reduced motion respektován
+- [x] dokumentace odpovídá implementaci
 
 ---
 
