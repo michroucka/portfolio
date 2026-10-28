@@ -411,6 +411,8 @@ Vybrat a koupit doménu – je potřeba pro `site`, ověření domény v Resend 
 
 K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 
+**Rozhodnuto:** `michalroucka.cz` (WEDOS), `michroucka.dev` se přesměrovává na ni. Pošta Seznam Email Profi.
+
 ### Co udělat
 
 1. Rozhodnout a koupit doménu, napojit na Vercel.
@@ -420,9 +422,9 @@ K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 
 ### Hotovo, když
 
-- [ ] `site` má skutečnou doménu
+- [x] `site` má skutečnou doménu
 - [ ] Resend posílá z ověřené domény
-- [ ] Web ukazuje e-mail na vlastní doméně
+- [x] Web ukazuje e-mail na vlastní doméně
 
 ---
 
