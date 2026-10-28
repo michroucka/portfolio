@@ -65,8 +65,9 @@ const controlClasses =
 
 	<dialog
 		data-gallery-dialog
+		tabindex="-1"
 		aria-label={dictionary.gallery.label}
-		class="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col border-0 bg-background p-0 text-foreground open:flex"
+		class="fixed inset-0 m-0 outline-none h-dvh max-h-none w-full max-w-none flex-col border-0 bg-background p-0 text-foreground open:flex"
 	>
 		<div class="flex justify-end p-3">
 			<button
@@ -140,7 +141,13 @@ const controlClasses =
 <style>
 	/* Same open/close pattern as the mobile menu in Header.astro: fade the dialog,
 	   and let the track settle from a slightly smaller scale. */
-	dialog[data-gallery-dialog] {
+	/* Covers the strip below the h-dvh dialog under Safari's floating toolbar, see Header.astro. */
+	dialog[data-gallery-dialog]::backdrop {
+		background-color: var(--theme-background);
+	}
+
+	dialog[data-gallery-dialog],
+	dialog[data-gallery-dialog]::backdrop {
 		opacity: 0;
 	}
 
@@ -148,7 +155,8 @@ const controlClasses =
 		scale: 0.96;
 	}
 
-	dialog[data-gallery-dialog][open] {
+	dialog[data-gallery-dialog][open],
+	dialog[data-gallery-dialog][open]::backdrop {
 		opacity: 1;
 	}
 
@@ -157,7 +165,8 @@ const controlClasses =
 	}
 
 	@starting-style {
-		dialog[data-gallery-dialog][open] {
+		dialog[data-gallery-dialog][open],
+		dialog[data-gallery-dialog][open]::backdrop {
 			opacity: 0;
 		}
 		dialog[data-gallery-dialog][open] [data-gallery-track] {
@@ -167,7 +176,8 @@ const controlClasses =
 
 	@media (prefers-reduced-motion: no-preference) {
 		/* display + overlay (allow-discrete) keep the dialog visible until the close transition ends */
-		dialog[data-gallery-dialog] {
+		dialog[data-gallery-dialog],
+		dialog[data-gallery-dialog]::backdrop {
 			transition-property: opacity, display, overlay;
 			transition-behavior: allow-discrete;
 			transition-duration: var(--default-transition-duration);
@@ -265,6 +275,8 @@ const controlClasses =
 			item.addEventListener("click", (event) => {
 				event.preventDefault();
 				dialog.showModal();
+				// Same Safari focus ring as in the mobile menu (Header.astro), here on the close button.
+				dialog.focus();
 				// The track has no width until the dialog is shown, so it can only jump to the image now.
 				scrollToImage(index, "instant");
 				updateControls();

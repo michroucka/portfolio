@@ -79,8 +79,9 @@ const menuIconSize = "1.75em";
 	     so its position and layout must not depend on [open] (fixed inset-0, flex-col always) – only display (open:flex). -->
 	<dialog
 		data-menu
+		tabindex="-1"
 		aria-label={dictionary.header.menu}
-		class="fixed inset-0 open:flex flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
+		class="fixed inset-0 outline-none open:flex flex-col w-full h-dvh bg-background text-foreground border-0 p-0 m-0 max-w-none max-h-none"
 	>
 		<div class={headerClasses}>
 			<a href={homePath}>
@@ -187,7 +188,15 @@ const menuIconSize = "1.75em";
 		overflow: hidden;
 	}
 
-	dialog[data-menu] {
+	/* h-dvh ends above Safari's floating toolbar on iOS, but the page still renders beneath it,
+	   so the page would show through the strip below the dialog. The backdrop covers the whole
+	   viewport and hides it; it fades with the dialog so the opening transition stays the same. */
+	dialog[data-menu]::backdrop {
+		background-color: var(--theme-background);
+	}
+
+	dialog[data-menu],
+	dialog[data-menu]::backdrop {
 		opacity: 0;
 	}
 
@@ -196,7 +205,8 @@ const menuIconSize = "1.75em";
 		translate: 0 -1rem;
 	}
 
-	dialog[data-menu][open] {
+	dialog[data-menu][open],
+	dialog[data-menu][open]::backdrop {
 		opacity: 1;
 	}
 
@@ -206,7 +216,8 @@ const menuIconSize = "1.75em";
 	}
 
 	@starting-style {
-		dialog[data-menu][open] {
+		dialog[data-menu][open],
+		dialog[data-menu][open]::backdrop {
 			opacity: 0;
 		}
 		dialog[data-menu][open] nav a {
@@ -217,7 +228,8 @@ const menuIconSize = "1.75em";
 
 	@media (prefers-reduced-motion: no-preference) {
 		/* display + overlay (allow-discrete) keep the dialog visible until the close transition ends */
-		dialog[data-menu] {
+		dialog[data-menu],
+		dialog[data-menu]::backdrop {
 			transition-property: opacity, display, overlay;
 			transition-behavior: allow-discrete;
 			transition-duration: var(--default-transition-duration);
@@ -247,8 +259,12 @@ const menuIconSize = "1.75em";
 		throw new Error("Menu elements not found");
 	}
 
+	// showModal() focuses the first link, and Safari, which does not focus a tapped button,
+	// treats that as keyboard focus and draws a focus ring around the logo. Focusing the dialog
+	// itself avoids it; Tab still reaches the first link.
 	const openMenu = (): void => {
 		menu.showModal();
+		menu.focus();
 	};
 
 	const closeMenu = (): void => {
