@@ -37,7 +37,7 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
   Sekce „Reference“ se přidá až při 2–3 zakázkách.
 - **Značka:** vystupování pod vlastním jménem + vlastní vizuální identita (monogram/logo, barvy, typografie).
 - **Doména:** `michalroucka.cz` – celé jméno se dobře diktuje a `.cz` působí na české zákazníky důvěryhodněji
-  než `.dev`. `michroucka.dev` zůstává jako osobní adresa a na webu se přesměrovává (301) na `.cz`.
+  než `.dev`. `michroucka.dev` se nenapojuje a nechá se vypršet.
   DNS u WEDOSu, pošta přes Seznam Email Profi (`michal@michalroucka.cz`).
   Kanonická adresa je `www.michalroucka.cz` (výchozí a doporučené nastavení Vercelu: `www` jde přes `CNAME`),
   kořenová doména na ni přesměrovává.

@@ -411,7 +411,7 @@ Vybrat a koupit doménu – je potřeba pro `site`, ověření domény v Resend 
 
 K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 
-**Rozhodnuto:** `michalroucka.cz` (WEDOS), Kanonická je `www.michalroucka.cz`, kořenová doména i `michroucka.dev` na ni přesměrovávají. Pošta Seznam Email Profi.
+**Rozhodnuto:** `michalroucka.cz` (WEDOS), kanonická je `www.michalroucka.cz` a kořenová doména na ni přesměrovává. `michroucka.dev` se nenapojuje a nechá se vypršet. Pošta Seznam Email Profi.
 
 ### Co udělat
 
