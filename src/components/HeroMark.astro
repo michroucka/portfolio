@@ -45,7 +45,7 @@ const mark = dotToRect(
 		fill: var(--color-accent);
 	}
 
-	/* Runs once after load (brand/README.md § 5); the delay lets the page settle so the morph is noticed.
+	/* Runs once after load and again on hover (brand/README.md § 5); the delay lets the page settle so the morph is noticed.
 	   Without the animation the <rect> attributes keep the dot, so the rest state is always "mr.". */
 	@media (prefers-reduced-motion: no-preference) {
 		[data-hero-mark] :global(rect) {
@@ -54,3 +54,25 @@ const mark = dotToRect(
 		}
 	}
 </style>
+
+<script>
+	// Replays the finished CSS animation instead of restarting it from CSS: a CSS-only :hover would
+	// cut the cursor off when the pointer leaves. With reduced motion there is no animation to replay.
+	function replayWithoutDelay(animation: Animation): void {
+		if (animation.playState !== "finished") return;
+
+		animation.currentTime = Number(
+			animation.effect?.getTiming().delay ?? 0,
+		);
+		animation.play();
+	}
+
+	for (const mark of document.querySelectorAll("[data-hero-mark]")) {
+		// Captured while running: once finished, getAnimations() no longer lists an animation without fill.
+		const animations = mark.querySelector("rect")?.getAnimations() ?? [];
+
+		mark.addEventListener("pointerenter", () =>
+			animations.forEach(replayWithoutDelay),
+		);
+	}
+</script>

@@ -338,6 +338,8 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
   - Samostatná `HeroMark.astro` se symbolem `mr.` vpravo od textu, jen od `md`. Na telefonu je skrytá, aby CTA zůstalo nahoře, takže tam animace není.
   - Jedno SVG pro obě témata: barvy přepisuje CSS (písmena `--color-foreground`, tečka `--color-accent`), nevykreslují se dvě kopie jako v `Logo.astro`. Značka je `aria-hidden`: obsah nese `<h1>`, logo s popiskem je v hlavičce.
   - Bez JS: CSS animace se zpožděním 600 ms uvnitř `@media (prefers-reduced-motion: no-preference)`. Bez animace drží tečku atributy `<rect>`, takže klidový stav je vždy „mr.“.
+  - Po načtení proběhne jednou, pak znovu při najetí myší (volitelný hover z manuálu značky). Interval zamítnutý: manuál chce jedno přehrání a opakované blikání delší než 5 s by podle WCAG 2.2.2 potřebovalo ovládání pauzy.
+  - Hover řeší malý skript přes Web Animations API, ne `:hover` v CSS: přehraje dokončenou CSS animaci bez úvodního zpoždění, běžící nerestartuje a odjetí myši ji neusekne. Referenci na animaci bere hned při načtení, protože hotová animace bez `fill-mode` z `getAnimations()` zmizí.
   - Symbol má jinou ochrannou zónu než horizontální logo (vycentrovaný na čtverci 256), proto se viewBox počítá z jeho `translate` (`fitViewBoxToCenteredMark`), ne přes `cropProtectiveZone`. Kurzor je širší než tečka a přesahuje viewBox doprava; `padding-inline-end: 14.3%` mu vyhrazuje místo uvnitř layoutu.
 - *Nad rámec plánu:* SVG helpery z `Logo.astro` přesunuté do `src/lib/logo-svg.ts` s testy, aby je sdílely obě komponenty.
 
