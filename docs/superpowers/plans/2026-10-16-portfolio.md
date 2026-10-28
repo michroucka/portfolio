@@ -389,7 +389,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - *Rozhodnutí:*
   - Web Analytics zapnuté v adaptéru (`webAnalytics: { enabled: true }`). Adaptér vloží do každé stránky malý inline stub a odložený `/_vercel/insights/script.js`; `@vercel/analytics` přichází jako jeho závislost, nic se nedoinstalovává. Mimo Vercel (lokální `preview`) skript vrátí 404 a nic nesbírá.
   - `vercel.json` není potřeba: preset Astro, výstup `.vercel/output` i verzi Node (z `engines`) si Vercel vezme sám.
-  - `site` zůstává `https://example.com`, dokud není doména (#14). Canonical, sitemapa, `robots.txt` a OG na `*.vercel.app` proto míří na example.com – pro preview v pořádku, před spuštěním produkce se musí opravit.
+  - Doména (#14) je `michalroucka.cz` (DNS u WEDOSu), `site` je nastavený na ni. Canonical, sitemapa, `robots.txt` a OG proto i na preview (`*.vercel.app`) míří na produkční doménu – záměrně, preview se nemá indexovat. `michroucka.dev` se na Vercelu přesměruje (301) na `.cz`. Pošta přes Seznam Email Profi (MX na kořenové doméně), Resend na subdoméně `send`, takže se SPF záznamy nepletou.
 - *Ruční kroky na Vercelu* (projekt, Git integrace, proměnné prostředí, zapnutí Web Analytics v projektu, kontrola na preview URL) dělá Michal; Turnstile klíče musí povolovat hostname `*.vercel.app`, Resend bez domény posílá jen z `onboarding@resend.dev` na adresu účtu.
 
 ---

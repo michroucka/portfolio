@@ -26,7 +26,7 @@ export default defineConfig({
 		webAnalytics: { enabled: true },
 	}),
 
-	site: "https://example.com",
+	site: "https://michalroucka.cz",
 
 	// One canonical URL form: every path ends with a slash.
 	trailingSlash: "always",
