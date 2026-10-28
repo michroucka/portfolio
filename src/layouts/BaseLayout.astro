@@ -6,7 +6,7 @@ import ThemeScript from "../components/ThemeScript.astro";
 import Seo from "../components/Seo.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { defaultOgImage, pageContainer } from "../lib/site.ts";
+import { getDefaultOgImage, pageContainer } from "../lib/site.ts";
 
 type BaseProps = {
 	locale: Locale;
@@ -31,7 +31,7 @@ const {
 	description,
 	page,
 	params,
-	ogImage = defaultOgImage,
+	ogImage = getDefaultOgImage(locale),
 	noindex,
 } = Astro.props;
 const dictionary = getDictionary(locale);

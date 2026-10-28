@@ -24,9 +24,9 @@ describe("buildProfessionalService", () => {
 		},
 	);
 
-	it("obrázek je absolutní URL", () => {
-		expect(buildProfessionalService("cs", site).image).toBe(
-			"https://example.com/og-default.png",
+	it("obrázek je absolutní URL ve stejném jazyce", () => {
+		expect(buildProfessionalService("en", site).image).toBe(
+			"https://example.com/og-default-en.png",
 		);
 	});
 });

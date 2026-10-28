@@ -324,7 +324,7 @@ je placeholder do vyřešení domény (#14).
 - `src/pages/ochrana-osobnich-udaju.astro`, `src/pages/en/privacy.astro`
 - `src/components/pages/PrivacyPage.astro`
 - `src/components/JsonLd.astro`
-- `src/pages/robots.txt.ts` (endpoint, adresa sitemapy podle `site`), `public/og-default.png`
+- `src/pages/robots.txt.ts` (endpoint, adresa sitemapy podle `site`), `public/og-default-{cs,en}.png`
 - `src/lib/sitemap.ts`, `src/lib/structured-data.ts` (+ testy)
 
 **Upravit**

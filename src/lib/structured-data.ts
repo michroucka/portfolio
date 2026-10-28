@@ -1,6 +1,6 @@
 import { getDictionary, type Locale } from "../i18n";
 import { getPath } from "../i18n/routes";
-import { defaultOgImage, siteDetails } from "./site";
+import { getDefaultOgImage, siteDetails } from "./site";
 
 // https://schema.org/ProfessionalService – no address until the registered office is real (#17).
 export function buildProfessionalService(locale: Locale, site: URL) {
@@ -12,7 +12,7 @@ export function buildProfessionalService(locale: Locale, site: URL) {
 		name: siteDetails.name,
 		description: dictionary.home.description,
 		url: new URL(getPath("home", locale), site).href,
-		image: new URL(defaultOgImage, site).href,
+		image: new URL(getDefaultOgImage(locale), site).href,
 		email: siteDetails.email,
 		telephone: siteDetails.phone,
 		areaServed: [

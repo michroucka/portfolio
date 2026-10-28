@@ -349,7 +349,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 **Issue:** #12 · **Milestone:** Dokončení a spuštění
 
 **Soubory:** `src/pages/ochrana-osobnich-udaju.astro`, `src/pages/en/privacy.astro`, `src/components/pages/PrivacyPage.astro`,
-`src/pages/robots.txt.ts`, `src/components/JsonLd.astro`, výchozí OG obrázek `public/og-default.png`, `astro.config.mjs` (sitemap i18n).
+`src/pages/robots.txt.ts`, `src/components/JsonLd.astro`, výchozí OG obrázky `public/og-default-{cs,en}.png`, `astro.config.mjs` (sitemap i18n).
 
 - [x] GDPR stránka v obou jazycích (text je otevřený bod spec § 10 – zatím kostra: správce, účel, právní titul, doba uchování, práva subjektu, kontakt).
 - [x] Sitemap s i18n volbou, aby obsahovala jazykové alternativy. Docs: https://docs.astro.build/en/guides/integrations-guide/sitemap/#i18n
@@ -366,7 +366,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
   - Volba `i18n` u `@astrojs/sitemap` páruje jazyky jen podle prefixu (`/x/` ↔ `/en/x/`) a přeložené cesty (`/ochrana-osobnich-udaju/` ↔ `/en/privacy/`, `/projekty/…` ↔ `/en/projects/…`) by zůstaly bez alternativ. Místo ní `serialize` s `getSitemapLinks` (`src/lib/sitemap.ts`), která alternativy bere z mapy cest přes nové `matchPath` – stejné `hreflang` včetně `x-default` jako v `Seo.astro`. 404 sitemapa vynechává sama.
   - GDPR stránka záměrně stručná: správce, údaje a právní titul, doba uchování, příjemci (Vercel, Cloudflare Turnstile, Resend, Gmail) s předáním do USA, cookies, práva a stížnost u ÚOOÚ. Texty ve slovnících (`privacy`), typografie sdílí utilitu `case-study`. Finální znění je #15 (doba uchování, seznam zpracovatelů po spuštění Web Analytics a domény).
   - JSON-LD skládá `buildProfessionalService` (`src/lib/structured-data.ts`), `JsonLd.astro` ho vloží přes nový slot `head` v `BaseLayout`, jen na homepage. Bez adresy, dokud je sídlo placeholder (#17). `<` se escapuje, aby hodnota nemohla ukončit `<script>`.
-  - OG obrázek: horizontální negativní logo na Ink, bez textu, aby fungoval pro oba jazyky. Zdroj `brand/og/og-default.svg` generuje `brand/og/build-og-image.mjs` (sharp), `BaseLayout` ho použije, když stránka nemá vlastní obrázek.
+  - OG obrázek pro každý jazyk: horizontální negativní logo na Ink a pod ním tlumený podnadpis (Ash) z `hero.title`. Skript `brand/og/build-og-image.mjs` text převede do křivek přes `fontkit` z `brand/source/fonts/Archivo.ttf` (sharp neumí načíst woff2, vykreslil by náhradní písmo), uloží SVG zdroje do `brand/og/` a PNG do `public/`. `BaseLayout` použije obrázek v jazyce stránky, když stránka nemá vlastní.
 - *Ověření JSON-LD v https://validator.schema.org/ je ruční krok* – výstup z `dist/client/index.html`.
 
 ### Úkol 11: Nasazení na Vercel a finální kontrola
