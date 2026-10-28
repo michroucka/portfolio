@@ -74,7 +74,13 @@ const dataProtectionOfficeUrl =
 			</p>
 			<p>
 				{privacy.complaintBefore}
-				<a href={dataProtectionOfficeUrl}>{privacy.complaintLink}</a>
+				<a
+					href={dataProtectionOfficeUrl}
+					target="_blank"
+					rel="noopener"
+				>
+					{privacy.complaintLink}
+				</a>
 				{privacy.complaintAfter}
 			</p>
 		</div>
