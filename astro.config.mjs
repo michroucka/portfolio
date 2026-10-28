@@ -39,6 +39,36 @@ export default defineConfig({
 		},
 	},
 
+	// Shiki colours code with inline styles, which the CSP below would block; the site has no code blocks.
+	markdown: {
+		syntaxHighlight: false,
+	},
+
+	// Astro hashes its own inline scripts and styles into a per-page <meta> CSP.
+	security: {
+		csp: {
+			directives: [
+				"default-src 'self'",
+				"img-src 'self' data:",
+				// Turnstile renders its challenge in an iframe from this origin.
+				"frame-src https://challenges.cloudflare.com",
+				"object-src 'none'",
+				"base-uri 'self'",
+				"form-action 'self'",
+			],
+			scriptDirective: {
+				resources: ["'self'", "https://challenges.cloudflare.com"],
+			},
+			styleDirective: {
+				// Components pass computed values as inline style attributes (e.g. --dot).
+				resources: [
+					"'self'",
+					{ resource: "'unsafe-inline'", kind: "attribute" },
+				],
+			},
+		},
+	},
+
 	env: {
 		schema: {
 			RESEND_API_KEY: envField.string({
