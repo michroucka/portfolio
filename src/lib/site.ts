@@ -1,3 +1,5 @@
+import type { Locale } from "../i18n";
+
 export type ProfileKind = "github" | "linkedin";
 
 interface Profile {
@@ -37,6 +39,11 @@ export const siteDetails = {
 	} as LegalDetails | undefined,
 	launchYear: 2026,
 };
+
+// Preview for pages without their own image; 1200 × 630, generated from brand/og/.
+export function getDefaultOgImage(locale: Locale): string {
+	return `/og-default-${locale}.png`;
+}
 
 // tel: links need the number without spaces (RFC 3966).
 export function telHref(phone: string): string {

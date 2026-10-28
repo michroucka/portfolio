@@ -193,6 +193,49 @@ export const cs = {
 			},
 		},
 	},
+	privacy: {
+		title: "Ochrana osobních údajů",
+		description:
+			"Jaké osobní údaje zpracovávám, když mi napíšete, proč, jak dlouho a jaká máte práva.",
+		updated: "Platné od 28. 10. 2026",
+		controllerTitle: "Kdo údaje zpracovává",
+		controllerText: "Správcem osobních údajů jsem já:",
+		dataTitle: "Jaké údaje a proč",
+		dataText:
+			"Když mi napíšete přes formulář nebo e-mailem, zpracovávám vaše jméno, e-mail, telefon (pokud ho uvedete) a text zprávy. Použiju je jen k tomu, abych vám odpověděl a případně připravil nabídku.",
+		legalBasisText:
+			"Právním základem je můj oprávněný zájem odpovědět na váš dotaz (čl. 6 odst. 1 písm. f GDPR). Pokud se domluvíme na spolupráci, jde o jednání o smlouvě a její plnění (čl. 6 odst. 1 písm. b GDPR).",
+		retentionTitle: "Jak dlouho",
+		retentionText:
+			"Zprávu uchovávám nejdéle rok od naší poslední komunikace. Pokud spolu uzavřeme smlouvu, uchovávám údaje po dobu, kterou vyžadují zákony (např. účetní a daňové).",
+		recipientsTitle: "Kdo k údajům má přístup",
+		recipientsIntro:
+			"Údaje nikomu neprodávám ani nepředávám k marketingu. Zpracovávají je jen tyto služby, které pro provoz webu používám:",
+		recipients: [
+			{
+				name: "Vercel",
+				purpose: "provoz webu a anonymní měření návštěvnosti",
+			},
+			{
+				name: "Cloudflare Turnstile",
+				purpose: "ochrana formuláře proti spamu",
+			},
+			{ name: "Resend", purpose: "doručení zprávy z formuláře" },
+			{ name: "Google (Gmail)", purpose: "e-mailová schránka" },
+		],
+		transferText:
+			"Tyto služby mohou údaje zpracovávat i v USA, a to na základě rámce EU–USA pro ochranu osobních údajů nebo standardních smluvních doložek EU.",
+		cookiesTitle: "Cookies",
+		cookiesText:
+			"Web nepoužívá cookies ke sledování ani k reklamě. Návštěvnost měřím anonymně bez cookies. Volbu světlého nebo tmavého vzhledu si pamatuje jen váš prohlížeč.",
+		rightsTitle: "Vaše práva",
+		rightsText:
+			"Máte právo na přístup ke svým údajům, jejich opravu nebo výmaz, omezení zpracování a přenositelnost a můžete vznést námitku proti zpracování. Stačí mi napsat na",
+		complaintBefore:
+			"Pokud si myslíte, že s údaji nakládám v rozporu se zákonem, můžete podat stížnost u ",
+		complaintLink: "Úřadu pro ochranu osobních údajů",
+		complaintAfter: ".",
+	},
 	languageSwitcher: {
 		label: "Jazyk",
 	},

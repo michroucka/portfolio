@@ -349,15 +349,25 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 **Issue:** #12 · **Milestone:** Dokončení a spuštění
 
 **Soubory:** `src/pages/ochrana-osobnich-udaju.astro`, `src/pages/en/privacy.astro`, `src/components/pages/PrivacyPage.astro`,
-`public/robots.txt`, `src/components/JsonLd.astro`, výchozí OG obrázek `public/og-default.png`, `astro.config.mjs` (sitemap i18n).
+`src/pages/robots.txt.ts`, `src/components/JsonLd.astro`, výchozí OG obrázky `public/og-default-{cs,en}.png`, `astro.config.mjs` (sitemap i18n).
 
-- [ ] GDPR stránka v obou jazycích (text je otevřený bod spec § 10 – zatím kostra: správce, účel, právní titul, doba uchování, práva subjektu, kontakt).
-- [ ] Sitemap s i18n volbou, aby obsahovala jazykové alternativy. Docs: https://docs.astro.build/en/guides/integrations-guide/sitemap/#i18n
-- [ ] `robots.txt` s odkazem na sitemap.
-- [ ] JSON-LD `ProfessionalService` (jméno, oblast Plzeň a okolí, kontakt, URL) na homepage obou jazyků.
-- [ ] Výchozí OG obrázek 1200 × 630 v barvách značky (můžeš vyjít z brand boardu).
+- [x] GDPR stránka v obou jazycích (text je otevřený bod spec § 10 – zatím kostra: správce, účel, právní titul, doba uchování, práva subjektu, kontakt).
+- [x] Sitemap s i18n volbou, aby obsahovala jazykové alternativy. Docs: https://docs.astro.build/en/guides/integrations-guide/sitemap/#i18n
+- [x] `robots.txt` s odkazem na sitemap.
+- [x] JSON-LD `ProfessionalService` (jméno, oblast Plzeň a okolí, kontakt, URL) na homepage obou jazyků.
+- [x] Výchozí OG obrázek 1200 × 630 v barvách značky (můžeš vyjít z brand boardu).
 - [ ] **Ověření:** `dist/sitemap-index.xml` obsahuje všechny stránky obou jazyků s `xhtml:link` alternativami; JSON-LD projde https://validator.schema.org/.
-- [ ] Commit: `feat: privacy page, sitemap, robots and structured data`
+- [x] Commit: `feat: privacy page, sitemap, robots and structured data`
+
+**Poznámky k provedení** (větev `feat/privacy-seo`):
+
+- *Rozhodnutí:*
+  - `robots.txt` je endpoint `src/pages/robots.txt.ts`, ne soubor v `public/`: adresa sitemapy se skládá z `site`, takže po vyřešení domény (#14) se opraví sama.
+  - Volba `i18n` u `@astrojs/sitemap` páruje jazyky jen podle prefixu (`/x/` ↔ `/en/x/`) a přeložené cesty (`/ochrana-osobnich-udaju/` ↔ `/en/privacy/`, `/projekty/…` ↔ `/en/projects/…`) by zůstaly bez alternativ. Místo ní `serialize` s `getSitemapLinks` (`src/lib/sitemap.ts`), která alternativy bere z mapy cest přes nové `matchPath` – stejné `hreflang` včetně `x-default` jako v `Seo.astro`. 404 sitemapa vynechává sama.
+  - GDPR stránka záměrně stručná: správce, údaje a právní titul, doba uchování, příjemci (Vercel, Cloudflare Turnstile, Resend, Gmail) s předáním do USA, cookies, práva a stížnost u ÚOOÚ. Texty ve slovnících (`privacy`), typografie sdílí utilitu `case-study`. Finální znění je #15 (doba uchování, seznam zpracovatelů po spuštění Web Analytics a domény).
+  - JSON-LD skládá `buildProfessionalService` (`src/lib/structured-data.ts`), `JsonLd.astro` ho vloží přes nový slot `head` v `BaseLayout`, jen na homepage. Bez adresy, dokud je sídlo placeholder (#17). `<` se escapuje, aby hodnota nemohla ukončit `<script>`.
+  - OG obrázek pro každý jazyk: horizontální negativní logo na Ink a pod ním tlumený podnadpis (Ash) z `hero.title`. Skript `brand/og/build-og-image.mjs` text převede do křivek přes `fontkit` z `brand/source/fonts/Archivo.ttf` (sharp neumí načíst woff2, vykreslil by náhradní písmo), uloží SVG zdroje do `brand/og/` a PNG do `public/`. `BaseLayout` použije obrázek v jazyce stránky, když stránka nemá vlastní.
+- *Ověření JSON-LD v https://validator.schema.org/ je ruční krok* – výstup z `dist/client/index.html`.
 
 ### Úkol 11: Nasazení na Vercel a finální kontrola
 
@@ -371,7 +381,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [ ] Zapni Vercel Web Analytics (v projektu i v adaptéru: https://docs.astro.build/en/guides/integrations-guide/vercel/#webanalytics).
 - [ ] Preview chrání Deployment Protection – pro Lighthouse proti preview URL buď měř přihlášený v prohlížeči, nebo použij bypass.
 - [ ] **Ověření na preview URL:** Lighthouse (mobil) ≥ 95 ve všech kategoriích na `/`, `/en/` a jedné case study; formulář odešle e-mail; obě témata; přepínač jazyka na všech stránkách; 404.
-- [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`).
+- [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`). GDPR stránka (Úkol 10) uvádí anonymní měření návštěvnosti přes Vercel – pokud Web Analytics nezapneš, odeber větu z `privacy.cookiesText` a účel u Vercelu v `privacy.recipients` (cs i en).
 - [ ] Commit + PR → merge do `main`.
 
 ---
