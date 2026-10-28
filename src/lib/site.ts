@@ -31,12 +31,8 @@ export const siteDetails = {
 		},
 	] as Profile[],
 	// Identification a sole trader must show on the website (§ 435 of the Civil Code).
-	// Placeholder values until the business is registered (issue #17) – do not launch with them.
-	legal: {
-		ico: "12345678",
-		registeredOffice: "Náměstí 1, 330 00 Město",
-		isVatPayer: false,
-	} as LegalDetails | undefined,
+	// Unset until the business is registered (issue #17); the footer and privacy page hide it.
+	legal: undefined as LegalDetails | undefined,
 	launchYear: 2026,
 };
 
