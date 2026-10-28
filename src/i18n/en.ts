@@ -204,7 +204,7 @@ export const en: Dictionary = {
 		controllerText: "I am the controller of your personal data:",
 		dataTitle: "What data and why",
 		dataText:
-			"When you write to me through the form or by e-mail, I process your name, e-mail, phone number (if you provide it) and the text of your message. I use them only to reply to you and, if relevant, to prepare an offer.",
+			"When you contact me through the form or by e-mail, I process your name, e-mail, phone number (if you provide it) and the text of your message. I use them only to reply to you and, if relevant, to prepare an offer.",
 		legalBasisText:
 			"The legal basis is my legitimate interest in answering your enquiry (Art. 6(1)(f) GDPR). If we agree to work together, it is entering into and performing a contract (Art. 6(1)(b) GDPR).",
 		retentionTitle: "For how long",
