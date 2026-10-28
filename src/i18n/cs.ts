@@ -212,7 +212,10 @@ export const cs = {
 		recipientsIntro:
 			"Údaje nikomu neprodávám ani nepředávám k marketingu. Zpracovávají je jen tyto služby, které pro provoz webu používám:",
 		recipients: [
-			{ name: "Vercel", purpose: "provoz webu" },
+			{
+				name: "Vercel",
+				purpose: "provoz webu a anonymní měření návštěvnosti",
+			},
 			{
 				name: "Cloudflare Turnstile",
 				purpose: "ochrana formuláře proti spamu",

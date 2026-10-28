@@ -381,7 +381,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [ ] Zapni Vercel Web Analytics (v projektu i v adaptéru: https://docs.astro.build/en/guides/integrations-guide/vercel/#webanalytics).
 - [ ] Preview chrání Deployment Protection – pro Lighthouse proti preview URL buď měř přihlášený v prohlížeči, nebo použij bypass.
 - [ ] **Ověření na preview URL:** Lighthouse (mobil) ≥ 95 ve všech kategoriích na `/`, `/en/` a jedné case study; formulář odešle e-mail; obě témata; přepínač jazyka na všech stránkách; 404.
-- [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`).
+- [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`). GDPR stránka (Úkol 10) uvádí anonymní měření návštěvnosti přes Vercel – pokud Web Analytics nezapneš, odeber větu z `privacy.cookiesText` a účel u Vercelu v `privacy.recipients` (cs i en).
 - [ ] Commit + PR → merge do `main`.
 
 ---

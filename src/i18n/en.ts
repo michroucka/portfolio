@@ -214,7 +214,10 @@ export const en: Dictionary = {
 		recipientsIntro:
 			"I do not sell your data or share it for marketing. It is processed only by these services I use to run the website:",
 		recipients: [
-			{ name: "Vercel", purpose: "website hosting" },
+			{
+				name: "Vercel",
+				purpose: "website hosting and anonymous visitor statistics",
+			},
 			{
 				name: "Cloudflare Turnstile",
 				purpose: "spam protection for the form",
