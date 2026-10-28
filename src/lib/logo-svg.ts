@@ -4,67 +4,82 @@ export function removeTitleAndAttributes(svg: string): string {
 		.replace(/\s(?:width|height|role|aria-labelledby)="[^"]*"/g, "");
 }
 
-// The brand SVGs include a protective zone of one dot diameter (brand/source/build_final.py).
-// Cropping it from the viewBox makes the logo edge the artwork edge, so it aligns with the layout
-// at any width. The layout padding has to provide the protective zone instead.
-export function cropProtectiveZone(svg: string): string {
-	const viewBox = svg.match(/viewBox="([^"]+)"/);
-	const dotRadius = svg.match(/<circle[^>]*\sr="([^"]+)"/);
+type ViewBox = { x: number; y: number; width: number; height: number };
 
-	if (!viewBox?.[1] || !dotRadius?.[1]) {
-		throw new Error("Logo SVG is missing viewBox or the dot circle");
-	}
-
-	const [x, y, width, height] = viewBox[1].split(/\s+/).map(Number);
-	const padding = Number(dotRadius[1]) * 2;
+function parseViewBox(svg: string): ViewBox {
+	const value = svg.match(/viewBox="([^"]+)"/)?.[1];
+	const [x, y, width, height, ...rest] = (value ?? "")
+		.trim()
+		.split(/\s+/)
+		.map(Number);
 
 	if (
 		x === undefined ||
 		y === undefined ||
 		width === undefined ||
 		height === undefined ||
-		[x, y, width, height, padding].some(Number.isNaN)
+		rest.length > 0 ||
+		[x, y, width, height].some(Number.isNaN)
 	) {
-		throw new Error(`Logo SVG has an invalid viewBox: ${viewBox[1]}`);
+		throw new Error(`Logo SVG has a missing or invalid viewBox: ${value}`);
 	}
 
-	const cropped = [
-		x + padding,
-		y + padding,
-		width - 2 * padding,
-		height - 2 * padding,
-	].join(" ");
+	return { x, y, width, height };
+}
 
-	return svg.replace(viewBox[0], `viewBox="${cropped}"`);
+function setViewBox(svg: string, { x, y, width, height }: ViewBox): string {
+	const value = [x, y, width, height]
+		.map((number) => Number(number.toFixed(2)))
+		.join(" ");
+
+	return svg.replace(/viewBox="[^"]+"/, `viewBox="${value}"`);
+}
+
+// The brand SVGs include a protective zone of one dot diameter (brand/source/build_final.py).
+// Cropping it from the viewBox makes the logo edge the artwork edge, so it aligns with the layout
+// at any width. The layout padding has to provide the protective zone instead.
+export function cropProtectiveZone(svg: string): string {
+	const { x, y, width, height } = parseViewBox(svg);
+	const padding = 2 * findDot(svg).r;
+
+	return setViewBox(svg, {
+		x: x + padding,
+		y: y + padding,
+		width: width - 2 * padding,
+		height: height - 2 * padding,
+	});
 }
 
 // The symbol centres the mark in a square artboard: translate((size - w) / 2, size / 2 + h / 2),
 // see brand/source/build_final.py. Its padding is not one dot diameter, so cropProtectiveZone would
 // cut the "m"; the artwork bounds follow from the translation instead.
 export function fitViewBoxToCenteredMark(svg: string): string {
-	const viewBox = svg.match(/viewBox="0 0 ([\d.]+) \1"/);
+	const { x, y, width: size, height } = parseViewBox(svg);
 	const translation = svg.match(
 		/<g transform="translate\(([\d.]+) ([\d.]+)\)">/,
 	);
-	const size = Number(viewBox?.[1]);
 	const [left, baseline] = [translation?.[1], translation?.[2]].map(Number);
 
+	if (x !== 0 || y !== 0 || size !== height) {
+		throw new Error("Logo SVG is not a square artboard");
+	}
+
 	if (
-		!viewBox ||
 		left === undefined ||
 		baseline === undefined ||
-		[size, left, baseline].some(Number.isNaN)
+		[left, baseline].some(Number.isNaN)
 	) {
 		throw new Error(
-			"Logo SVG is not a square artboard with a centred mark",
+			"Logo SVG is missing the translation of its centred mark",
 		);
 	}
 
-	const fitted = [left, size - baseline, size - 2 * left, 2 * baseline - size]
-		.map((value) => Number(value.toFixed(2)))
-		.join(" ");
-
-	return svg.replace(viewBox[0], `viewBox="${fitted}"`);
+	return setViewBox(svg, {
+		x: left,
+		y: size - baseline,
+		width: size - 2 * left,
+		height: 2 * baseline - size,
+	});
 }
 
 type Dot = { tag: string; fill: string; cx: number; cy: number; r: number };

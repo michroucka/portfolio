@@ -28,6 +28,12 @@ describe("cropProtectiveZone", () => {
 		);
 	});
 
+	it("throws when the viewBox is missing", () => {
+		expect(() =>
+			cropProtectiveZone(logo.replace(/ viewBox="[^"]+"/, "")),
+		).toThrow(/viewBox/);
+	});
+
 	it("throws when the dot is missing", () => {
 		expect(() =>
 			cropProtectiveZone('<svg viewBox="0 0 10 10"></svg>'),
@@ -36,10 +42,10 @@ describe("cropProtectiveZone", () => {
 });
 
 describe("fitViewBoxToCenteredMark", () => {
-	it("fits the viewBox to a mark centred in a square artboard", () => {
-		const symbol =
-			'<svg viewBox="0 0 256 256"><g transform="translate(28.07 168.46)"><path d="M0 0Z"/></g></svg>';
+	const symbol =
+		'<svg viewBox="0 0 256 256"><g transform="translate(28.07 168.46)"><path d="M0 0Z"/></g></svg>';
 
+	it("fits the viewBox to a mark centred in a square artboard", () => {
 		expect(fitViewBoxToCenteredMark(symbol)).toContain(
 			'viewBox="28.07 87.54 199.86 80.92"',
 		);
@@ -48,9 +54,15 @@ describe("fitViewBoxToCenteredMark", () => {
 	it("throws when the artboard is not square", () => {
 		expect(() =>
 			fitViewBoxToCenteredMark(
-				logo.replace("0 0 256 256", "0 0 300 256"),
+				symbol.replace("0 0 256 256", "0 0 300 256"),
 			),
 		).toThrow(/square artboard/);
+	});
+
+	it("throws when the mark has no translation", () => {
+		expect(() =>
+			fitViewBoxToCenteredMark(symbol.replace(/ transform="[^"]+"/, "")),
+		).toThrow(/translation/);
 	});
 });
 
