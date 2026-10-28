@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import { getDictionary, type Locale } from "../../i18n";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { buildProfessionalService } from "../../lib/structured-data";
+import JsonLd from "../JsonLd.astro";
 import { getProjectsForLocale } from "../../lib/projects";
 import Hero from "../sections/Hero.astro";
 import Services from "../sections/Services.astro";
@@ -19,6 +21,10 @@ const dictionary = getDictionary(locale);
 const services = (await getCollection("services")).toSorted(
 	(a, b) => a.data.order - b.data.order,
 );
+if (!Astro.site) {
+	throw new Error("Astro.site is not defined, set it in astro.config.mjs");
+}
+const structuredData = buildProfessionalService(locale, Astro.site);
 const projects = getProjectsForLocale(await getCollection("projects"), locale, {
 	featuredOnly: true,
 });
@@ -30,6 +36,7 @@ const projects = getProjectsForLocale(await getCollection("projects"), locale, {
 	title={dictionary.home.title}
 	description={dictionary.home.description}
 >
+	<JsonLd slot="head" data={structuredData} />
 	<Hero locale={locale} />
 	<Services services={services} locale={locale} />
 	<FeaturedProjects projects={projects} locale={locale} />

@@ -1,0 +1,82 @@
+---
+import { getDictionary, type Locale } from "../../i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteDetails } from "../../lib/site";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const dictionary = getDictionary(locale);
+const privacy = dictionary.privacy;
+const { name, email, legal } = siteDetails;
+const emailLink = `mailto:${email}`;
+const dataProtectionOfficeUrl =
+	locale === "cs" ? "https://uoou.gov.cz/" : "https://uoou.gov.cz/en/";
+---
+
+<BaseLayout
+	locale={locale}
+	page="privacy"
+	title={`${privacy.title} – ${name}`}
+	description={privacy.description}
+>
+	<article class="py-16 md:py-24">
+		<header>
+			<h1 class="max-w-[20ch] text-4xl md:text-5xl">{privacy.title}</h1>
+			<p class="mt-6 text-muted">{privacy.updated}</p>
+		</header>
+
+		<div class="case-study">
+			<h2>{privacy.controllerTitle}</h2>
+			<p>
+				{privacy.controllerText}
+				<br />
+				{name}
+				{legal && (
+					<>
+						<br />
+						{dictionary.footer.companyId} {legal.ico}
+						<br />
+						{dictionary.footer.registeredOffice}:{" "}
+						{legal.registeredOffice}
+					</>
+				)}
+				<br />
+				<a href={emailLink}>{email}</a>
+			</p>
+
+			<h2>{privacy.dataTitle}</h2>
+			<p>{privacy.dataText}</p>
+			<p>{privacy.legalBasisText}</p>
+
+			<h2>{privacy.retentionTitle}</h2>
+			<p>{privacy.retentionText}</p>
+
+			<h2>{privacy.recipientsTitle}</h2>
+			<p>{privacy.recipientsIntro}</p>
+			<ul>
+				{privacy.recipients.map((recipient) => (
+					<li>
+						<strong>{recipient.name}</strong> – {recipient.purpose}
+					</li>
+				))}
+			</ul>
+			<p>{privacy.transferText}</p>
+
+			<h2>{privacy.cookiesTitle}</h2>
+			<p>{privacy.cookiesText}</p>
+
+			<h2>{privacy.rightsTitle}</h2>
+			<p>
+				{privacy.rightsText} <a href={emailLink}>{email}</a>.
+			</p>
+			<p>
+				{privacy.complaintBefore}
+				<a href={dataProtectionOfficeUrl}>{privacy.complaintLink}</a>
+				{privacy.complaintAfter}
+			</p>
+		</div>
+	</article>
+</BaseLayout>

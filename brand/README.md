@@ -21,6 +21,7 @@ hotovo“. Tečka je vepsaná pod rameno r se stejnou mezerou ke kmeni.
 | `logo/*-mono.svg` | jednobarevné verze (tečka bez akcentu) |
 | `logo/mr-favicon.svg`, `web/*` | favicon, ikony, `site.webmanifest`, `head-snippet.html` |
 | `motion/frame-*.svg` | storyboard animace tečka → kurzor |
+| `og/og-default.svg` | výchozí náhled pro sociální sítě 1200 × 630; `node brand/og/build-og-image.mjs` z něj vyrenderuje `public/og-default.png` |
 
 **Negativ ≠ přebarvený pozitiv.** Světlé tvary na tmavém působí tučněji (iradiace), proto má negativ
 tenčí řez písmen (Archivo wght 770 místo 800). Tečka má v obou verzích 44 % x-výšky – barevná tečka

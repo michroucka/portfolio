@@ -195,6 +195,46 @@ export const en: Dictionary = {
 			},
 		},
 	},
+	privacy: {
+		title: "Privacy policy",
+		description:
+			"What personal data I process when you contact me, why, for how long and what your rights are.",
+		updated: "Effective from 28 October 2026",
+		controllerTitle: "Who processes your data",
+		controllerText: "The data controller is me:",
+		dataTitle: "What data and why",
+		dataText:
+			"When you write to me through the form or by e-mail, I process your name, e-mail, phone number (if you provide it) and the text of your message. I use them only to reply to you and, if relevant, to prepare an offer.",
+		legalBasisText:
+			"The legal basis is my legitimate interest in answering your enquiry (Art. 6(1)(f) GDPR). If we agree to work together, it is entering into and performing a contract (Art. 6(1)(b) GDPR).",
+		retentionTitle: "For how long",
+		retentionText:
+			"I keep your message for no longer than one year after our last contact. If we sign a contract, I keep the data for as long as the law requires (e.g. accounting and tax rules).",
+		recipientsTitle: "Who has access to the data",
+		recipientsIntro:
+			"I do not sell your data or share it for marketing. It is processed only by these services I use to run the website:",
+		recipients: [
+			{ name: "Vercel", purpose: "website hosting" },
+			{
+				name: "Cloudflare Turnstile",
+				purpose: "spam protection for the form",
+			},
+			{ name: "Resend", purpose: "delivery of messages from the form" },
+			{ name: "Google (Gmail)", purpose: "e-mail inbox" },
+		],
+		transferText:
+			"These services may also process data in the USA, under the EU–US Data Privacy Framework or the EU Standard Contractual Clauses.",
+		cookiesTitle: "Cookies",
+		cookiesText:
+			"This website does not use cookies for tracking or advertising. Visits are measured anonymously without cookies. Your light or dark theme choice is remembered only by your browser.",
+		rightsTitle: "Your rights",
+		rightsText:
+			"You have the right to access your data, have it corrected or erased, restrict its processing, receive it in a portable format and object to its processing. Just write to me at",
+		complaintBefore:
+			"If you believe I handle your data unlawfully, you can lodge a complaint with the ",
+		complaintLink: "Czech Office for Personal Data Protection",
+		complaintAfter: ".",
+	},
 	languageSwitcher: {
 		label: "Language",
 	},

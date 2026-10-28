@@ -43,6 +43,41 @@ export function getPath(
 	return route.replace(slugToken, params.slug);
 }
 
+export type RouteMatch = {
+	page: Page;
+	locale: Locale;
+	params?: RouteParams;
+};
+
+function escapeRegExp(text: string): string {
+	return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function routeToRegExp(route: string): RegExp {
+	const [before, after] = route.split(slugToken).map(escapeRegExp);
+	return after === undefined
+		? new RegExp(`^${before}$`)
+		: new RegExp(`^${before}([^/]+)${after}$`);
+}
+
+// The reverse of getPath, for places that only know the URL (the sitemap serializer).
+export function matchPath(pathname: string): RouteMatch | undefined {
+	for (const page of pages) {
+		for (const [locale, route] of Object.entries(routes[page])) {
+			const match = routeToRegExp(route).exec(pathname);
+			if (match) {
+				const slug = match[1];
+				return {
+					page,
+					locale: locale as Locale,
+					...(slug && { params: { slug } }),
+				};
+			}
+		}
+	}
+	return undefined;
+}
+
 export function getAlternates(
 	page: Page,
 	params?: RouteParams,

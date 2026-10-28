@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { locales } from "./index";
-import { getAlternates, getPath, pages } from "./routes";
+import { getAlternates, getPath, matchPath, pages } from "./routes";
 
 const slug = "nohy-v-cajku";
 
@@ -85,5 +85,36 @@ describe("getAlternates", () => {
 
 	it("stránka bez parametrů vrátí cestu pro každý jazyk", () => {
 		expect(getAlternates("home")).toEqual({ cs: "/", en: "/en/" });
+	});
+});
+
+describe("matchPath", () => {
+	describe("vrátí stránku, ze které getPath cestu složil", () => {
+		const cases = pages.flatMap((page) =>
+			locales.map((locale) => {
+				const params = page === "project" ? { slug } : undefined;
+				return {
+					page,
+					locale,
+					params,
+					path: getPath(page, locale, params),
+				};
+			}),
+		);
+
+		it.each(cases)("$path -> $page ($locale)", ({ path, ...expected }) => {
+			expect(matchPath(path)).toEqual(expected);
+		});
+	});
+
+	it.each([
+		"/404/",
+		"/en",
+		"/projekty/",
+		"/projekty/a/b/",
+		"/en/projekty/nohy-v-cajku/",
+		"/ochrana-osobnich-udajuX/",
+	])("%s -> undefined", (path) => {
+		expect(matchPath(path)).toBeUndefined();
 	});
 });

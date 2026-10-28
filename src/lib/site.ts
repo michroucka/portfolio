@@ -38,6 +38,9 @@ export const siteDetails = {
 	launchYear: 2026,
 };
 
+// Shared preview for pages without their own image; 1200 × 630, source in brand/og/.
+export const defaultOgImage = "/og-default.png";
+
 // tel: links need the number without spaces (RFC 3966).
 export function telHref(phone: string): string {
 	return `tel:${phone.replaceAll(" ", "")}`;

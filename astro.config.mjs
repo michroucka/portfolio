@@ -7,9 +7,19 @@ import vercel from "@astrojs/vercel";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import { getSitemapLinks } from "./src/lib/sitemap.ts";
+
 // https://astro.build/config
 export default defineConfig({
-	integrations: [mdx(), sitemap()],
+	integrations: [
+		mdx(),
+		sitemap({
+			serialize: (item) => ({
+				...item,
+				links: getSitemapLinks(item.url),
+			}),
+		}),
+	],
 
 	// Pages stay prerendered; only the contact action runs as a Vercel Function.
 	adapter: vercel(),

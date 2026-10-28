@@ -6,7 +6,7 @@ import ThemeScript from "../components/ThemeScript.astro";
 import Seo from "../components/Seo.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { pageContainer } from "../lib/site.ts";
+import { defaultOgImage, pageContainer } from "../lib/site.ts";
 
 type BaseProps = {
 	locale: Locale;
@@ -25,8 +25,15 @@ type PageProps =
 
 type Props = BaseProps & PageProps;
 
-const { locale, title, description, page, params, ogImage, noindex } =
-	Astro.props;
+const {
+	locale,
+	title,
+	description,
+	page,
+	params,
+	ogImage = defaultOgImage,
+	noindex,
+} = Astro.props;
 const dictionary = getDictionary(locale);
 ---
 
@@ -51,6 +58,7 @@ const dictionary = getDictionary(locale);
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/site.webmanifest" />
+		<slot name="head" />
 	</head>
 	<body class="min-h-dvh flex flex-col">
 		<a
