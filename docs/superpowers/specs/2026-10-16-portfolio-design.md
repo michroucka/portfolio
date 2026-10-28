@@ -37,12 +37,15 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
   Sekce „Reference“ se přidá až při 2–3 zakázkách.
 - **Značka:** vystupování pod vlastním jménem + vlastní vizuální identita (monogram/logo, barvy, typografie).
 - **Doména:** `michalroucka.cz` – celé jméno se dobře diktuje a `.cz` působí na české zákazníky důvěryhodněji
-  než `.dev`. `michroucka.dev` zůstává jako osobní adresa a na webu se přesměrovává (301) na `.cz`.
+  než `.dev`. `michroucka.dev` se nenapojuje a nechá se vypršet.
   DNS u WEDOSu, pošta přes Seznam Email Profi (`michal@michalroucka.cz`).
+  Kanonická adresa je `www.michalroucka.cz` (výchozí a doporučené nastavení Vercelu: `www` jde přes `CNAME`),
+  kořenová doména na ni přesměrovává.
 - **Technické školní projekty** (InodeFS, Oko-Bere, …) na web nepatří.
 - Patička obsahuje identifikační údaje podnikatele podle § 435 občanského zákoníku: jméno, IČO, sídlo,
-  zápis v živnostenském rejstříku a údaj o DPH (`siteDetails.legal`). Do založení živnosti jsou to
-  ukázkové hodnoty – s nimi web nesmí jít do provozu (issue #17).
+  zápis v živnostenském rejstříku a údaj o DPH (`siteDetails.legal`). Do založení živnosti je
+  `legal` prázdné a blok se nezobrazuje – web už běží na produkční doméně, ukázkové hodnoty by tam
+  vypadaly jako skutečné (issue #17).
 - Patička: logo a krátká věta, sloupec Kontakt (e-mail, telefon, Plzeňský kraj, odkaz na formulář),
   sloupec Profily (GitHub, LinkedIn jako ikony), pod čarou ©, ochrana osobních údajů, právní údaje
   a přepínač jazyka a tématu.
@@ -256,7 +259,7 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 - Open Graph: výchozí obrázek; case studies používají svůj `cover`.
 - `@astrojs/sitemap` s i18n konfigurací, `robots.txt`.
 - JSON-LD `ProfessionalService` (jméno, oblast působení Plzeň a okolí, kontakt).
-- `site` v `astro.config` je `https://michalroucka.cz`.
+- `site` v `astro.config` je `https://www.michalroucka.cz`.
 - Mimo kód: založit Google Business Profile.
 
 ### Výkon
