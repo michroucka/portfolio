@@ -324,13 +324,25 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 
 **Soubory:** `src/components/sections/Hero.astro` (nebo samostatná `HeroMark.astro`), CSS v komponentě.
 
-- [ ] Velká značka „mr.“ v hero jako inline SVG, kde tečka je samostatný element, který jde animovat.
-- [ ] *(Připraveno v Úkolu 4: `@keyframes dot-cursor` a třída `animate-dot-cursor` v `global.css` – tečka jako `<rect>` s `--dot`/`--baseline`, převod kruhu viz `dotToRect` v `Logo.astro`. V hero ji stačí spustit po načtení.)*
-- [ ] Animace podle `brand/README.md` § 5: 0–280 ms tečka → podtržítko (ease-out), blikání ~530 ms, 3 bliknutí, návrat do tečky. Jednou po načtení. Nastuduj CSS `@keyframes` a animovatelné vlastnosti SVG (u `<rect>` jdou animovat `width`, `height`, `rx` přes CSS v moderních prohlížečích; alternativa je `transform: scale`). **Než začneš, projdeme koncept spolu.**
-- [ ] `@media (prefers-reduced-motion: reduce)` → žádná animace, statická tečka.
-- [ ] Klidový stav je vždy tečka (i když animace neproběhne nebo se přeruší).
-- [ ] **Ověření:** v DevTools zapni emulaci reduced motion → bez animace; v obou tématech odpovídá barva tečky (Signal / Signal Deep).
-- [ ] Commit: `feat: hero logo dot-to-cursor animation`
+- [x] Velká značka „mr.“ v hero jako inline SVG, kde tečka je samostatný element, který jde animovat.
+- [x] *(Připraveno v Úkolu 4: `@keyframes dot-cursor` a třída `animate-dot-cursor` v `global.css` – tečka jako `<rect>` s `--dot`/`--baseline`, převod kruhu viz `dotToRect` v `Logo.astro`. V hero ji stačí spustit po načtení.)*
+- [x] Animace podle `brand/README.md` § 5: 0–280 ms tečka → podtržítko (ease-out), blikání ~530 ms, 3 bliknutí, návrat do tečky. Jednou po načtení. Nastuduj CSS `@keyframes` a animovatelné vlastnosti SVG (u `<rect>` jdou animovat `width`, `height`, `rx` přes CSS v moderních prohlížečích; alternativa je `transform: scale`). **Než začneš, projdeme koncept spolu.**
+- [x] `@media (prefers-reduced-motion: reduce)` → žádná animace, statická tečka.
+- [x] Klidový stav je vždy tečka (i když animace neproběhne nebo se přeruší).
+- [x] **Ověření:** v DevTools zapni emulaci reduced motion → bez animace; v obou tématech odpovídá barva tečky (Signal / Signal Deep).
+- [x] Commit: `feat: hero logo dot-to-cursor animation`
+
+**Poznámky k provedení** (větev `feat/hero-logo-animation`):
+
+- *Rozhodnutí:*
+  - Samostatná `HeroMark.astro` se symbolem `mr.` vpravo od textu, jen od `md`. Na telefonu je skrytá, aby CTA zůstalo nahoře, takže tam animace není.
+  - Jedno SVG pro obě témata: barvy přepisuje CSS (písmena `--color-foreground`, tečka `--color-accent`), nevykreslují se dvě kopie jako v `Logo.astro`. Značka je `aria-hidden`: obsah nese `<h1>`, logo s popiskem je v hlavičce.
+  - Animaci spouští skript atributem `data-dot-cursor` (po načtení se zpožděním 600 ms, jen když je značka vidět a není zapnutý reduced motion), CSS ji pustí jen s tímto atributem uvnitř `@media (prefers-reduced-motion: no-preference)`. Bez JS i bez animace drží tečku atributy `<rect>`, takže klidový stav je vždy „mr.“.
+  - Po načtení proběhne jednou, pak znovu při najetí myší (volitelný hover z manuálu značky). Interval zamítnutý: manuál chce jedno přehrání a opakované blikání delší než 5 s by podle WCAG 2.2.2 potřebovalo ovládání pauzy.
+  - Hover nastaví stejný atribut bez zpoždění; běžící animaci nerestartuje, takže odjetí myši kurzor neusekne. Po `animationend` / `animationcancel` se atribut odebere. Čistě CSS animace (ani reference přes `getAnimations()`) nestačila: `hidden md:block` ji při přechodu přes `md` zruší a po zobrazení spustí znovu, a stránka načtená pod `md` by hover neměla vůbec.
+  - Plynulost: `@keyframes dot-cursor` z Úkolu 4 měly společný mezisnímek (frame 2, 140 ms) s vlastním `ease-out` pro oba úseky, takže se pohyb uprostřed proměny zastavil a výška se zhoupla (0,6 → 0,63). Teď má každá vlastnost jednu křivku: výška se zploští za 140 ms a drží, šířka a ostré rohy dorazí v 280 ms, návrat je jeden úsek `ease-out`. Mezitvar je dál zaoblené zploštění, jen nesedí přesně na rozměry frame 2 ze storyboardu.
+  - Symbol má jinou ochrannou zónu než horizontální logo (vycentrovaný na čtverci 256), proto se viewBox počítá z jeho `translate` (`fitViewBoxToCenteredMark`), ne přes `cropProtectiveZone`. Kurzor je širší než tečka a přesahuje viewBox doprava; `padding-inline-end: 14.3%` mu vyhrazuje místo uvnitř layoutu.
+- *Nad rámec plánu:* SVG helpery z `Logo.astro` přesunuté do `src/lib/logo-svg.ts` s testy, aby je sdílely obě komponenty.
 
 ### Úkol 10: GDPR stránka, sitemap, robots, strukturovaná data
 

@@ -3,6 +3,7 @@ import { getDictionary, type Locale } from "../../i18n";
 import { getSectionHref } from "../../lib/sections";
 import { splitLastWord } from "../../lib/text";
 import BrandDot from "../BrandDot.astro";
+import HeroMark from "../HeroMark.astro";
 
 interface Props {
 	locale: Locale;
@@ -13,21 +14,31 @@ const dictionary = getDictionary(locale);
 const titleParts = splitLastWord(dictionary.hero.title);
 ---
 
-<section data-hero class="relative isolate py-16 md:py-28">
-	<h1 class="max-w-[16ch] text-4xl md:text-5xl">
-		{titleParts.lead} <BrandDot>{titleParts.lastWord}</BrandDot>
-	</h1>
-	<p class="mt-6 max-w-[42ch] text-lg text-muted">
-		{dictionary.hero.subtitle}
-	</p>
-	<div class="mt-10 flex flex-wrap gap-4">
-		<a href={getSectionHref("contact", locale)} class="button-primary">
-			{dictionary.hero.primaryCta}
-		</a>
-		<a href={getSectionHref("projects", locale)} class="button-secondary">
-			{dictionary.hero.secondaryCta}
-		</a>
+<section
+	data-hero
+	class="relative isolate py-16 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center md:gap-12 md:py-28"
+>
+	<div>
+		<h1 class="max-w-[16ch] text-4xl md:text-5xl">
+			{titleParts.lead} <BrandDot>{titleParts.lastWord}</BrandDot>
+		</h1>
+		<p class="mt-6 max-w-[42ch] text-lg text-muted">
+			{dictionary.hero.subtitle}
+		</p>
+		<div class="mt-10 flex flex-wrap gap-4">
+			<a href={getSectionHref("contact", locale)} class="button-primary">
+				{dictionary.hero.primaryCta}
+			</a>
+			<a
+				href={getSectionHref("projects", locale)}
+				class="button-secondary"
+			>
+				{dictionary.hero.secondaryCta}
+			</a>
+		</div>
 	</div>
+	<!-- Hidden on phones so the CTA stays above the fold. -->
+	<HeroMark class="hidden w-[clamp(12rem,22vw,18rem)] md:block" />
 </section>
 
 <style>

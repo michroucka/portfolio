@@ -1,0 +1,94 @@
+---
+import symbol from "../../brand/logo/mr-symbol-negative.svg?raw";
+import {
+	dotToRect,
+	fitViewBoxToCenteredMark,
+	removeTitleAndAttributes,
+} from "../lib/logo-svg";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const mark = dotToRect(
+	fitViewBoxToCenteredMark(removeTitleAndAttributes(symbol)),
+);
+---
+
+<!-- Decorative: the heading carries the content and the header has the labelled logo. -->
+<div data-hero-mark class={className} aria-hidden="true" set:html={mark} />
+
+<style>
+	/* The viewBox ends at the dot, but the cursor is 1.933 dot wide and grows to the right
+	   (@keyframes dot-cursor). Its overhang of 0.933 × 35.7 = 33.3 units on a 199.9 wide mark is
+	   14.3 % of the whole, so the padding keeps the cursor inside the layout and the SVG may overflow into it. */
+	[data-hero-mark] {
+		padding-inline-end: 14.3%;
+	}
+
+	[data-hero-mark] :global(svg) {
+		display: block;
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+
+	/* One SVG for both themes: CSS fills override the brand file's presentation attributes,
+	   so the letters follow the text colour and the dot is Signal / Signal Deep. */
+	[data-hero-mark] :global(path) {
+		fill: var(--color-foreground);
+	}
+
+	[data-hero-mark] :global(rect) {
+		fill: var(--color-accent);
+	}
+
+	/* The script sets data-dot-cursor for one run, so the animation never restarts on its own
+	   (a CSS animation would replay whenever the mark comes back from display: none below md).
+	   Without the animation the <rect> attributes keep the dot, so the rest state is always "mr.". */
+	@media (prefers-reduced-motion: no-preference) {
+		[data-hero-mark][data-dot-cursor] :global(rect) {
+			animation: var(--animate-dot-cursor);
+		}
+
+		/* The delay after load lets the page settle so the morph is noticed. */
+		[data-hero-mark][data-dot-cursor="load"] :global(rect) {
+			animation-delay: 600ms;
+		}
+	}
+</style>
+
+<script>
+	// Plays the dot-to-cursor animation once after load and again on hover (brand/README.md § 5).
+	// A run is never restarted midway, so leaving the mark does not cut the cursor off.
+	type Trigger = "load" | "hover";
+
+	const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+	function play(mark: HTMLElement, trigger: Trigger): void {
+		if (reducedMotion.matches || mark.dataset.dotCursor) return;
+
+		mark.dataset.dotCursor = trigger;
+	}
+
+	function isRendered(mark: HTMLElement): boolean {
+		return mark.getClientRects().length > 0;
+	}
+
+	for (const mark of document.querySelectorAll<HTMLElement>(
+		"[data-hero-mark]",
+	)) {
+		const finish = (): void => {
+			delete mark.dataset.dotCursor;
+		};
+
+		// animationcancel fires when the mark is hidden below md mid-run.
+		mark.addEventListener("animationend", finish);
+		mark.addEventListener("animationcancel", finish);
+		mark.addEventListener("pointerenter", () => play(mark, "hover"));
+
+		if (isRendered(mark)) play(mark, "load");
+	}
+</script>
