@@ -229,7 +229,7 @@ export const en: Dictionary = {
 			"This website does not use cookies for tracking or advertising. Visits are measured anonymously without cookies. Your light or dark theme choice is remembered only by your browser.",
 		rightsTitle: "Your rights",
 		rightsText:
-			"You have the right to access your data, have it corrected or erased, restrict its processing, receive it in a portable format and object to its processing. Just write to me at",
+			"You have the right to access your data, have it corrected or erased, restrict its processing, receive it in a portable format and object to its processing. Just contact me at",
 		complaintBefore:
 			"If you believe I handle your data unlawfully, you can lodge a complaint with the ",
 		complaintLink: "Czech Office for Personal Data Protection",
