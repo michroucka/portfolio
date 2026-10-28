@@ -199,7 +199,7 @@ export const en: Dictionary = {
 		title: "Privacy policy",
 		description:
 			"What personal data I process when you contact me, why, for how long and what your rights are.",
-		updated: "Effective from 28 October 2026",
+		updated: "Effective as of 28 October 2026",
 		controllerTitle: "Who processes your data",
 		controllerText: "The data controller is me:",
 		dataTitle: "What data and why",
