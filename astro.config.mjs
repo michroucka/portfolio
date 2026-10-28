@@ -22,7 +22,9 @@ export default defineConfig({
 	],
 
 	// Pages stay prerendered; only the contact action runs as a Vercel Function.
-	adapter: vercel(),
+	adapter: vercel({
+		webAnalytics: { enabled: true },
+	}),
 
 	site: "https://example.com",
 
