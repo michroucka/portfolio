@@ -16,7 +16,7 @@ interface LegalDetails {
 
 export const siteDetails = {
 	name: "Michal Roučka",
-	email: "michroucka7@gmail.com",
+	email: "michal@michalroucka.cz",
 	phone: "+420 774 739 180",
 	profiles: [
 		{
