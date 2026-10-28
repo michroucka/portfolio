@@ -384,6 +384,14 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`). GDPR stránka (Úkol 10) uvádí anonymní měření návštěvnosti přes Vercel – pokud Web Analytics nezapneš, odeber větu z `privacy.cookiesText` a účel u Vercelu v `privacy.recipients` (cs i en).
 - [ ] Commit + PR → merge do `main`.
 
+**Poznámky k provedení** (větev `feat/vercel-deploy`):
+
+- *Rozhodnutí:*
+  - Web Analytics zapnuté v adaptéru (`webAnalytics: { enabled: true }`). Adaptér vloží do každé stránky malý inline stub a odložený `/_vercel/insights/script.js`; `@vercel/analytics` přichází jako jeho závislost, nic se nedoinstalovává. Mimo Vercel (lokální `preview`) skript vrátí 404 a nic nesbírá.
+  - `vercel.json` není potřeba: preset Astro, výstup `.vercel/output` i verzi Node (z `engines`) si Vercel vezme sám.
+  - Doména (#14) je `michalroucka.cz` (DNS u WEDOSu), `site` je nastavený na ni. Canonical, sitemapa, `robots.txt` a OG proto i na preview (`*.vercel.app`) míří na produkční doménu – záměrně, preview se nemá indexovat. `michroucka.dev` se na Vercelu přesměruje (301) na `.cz`. Pošta přes Seznam Email Profi (MX a SPF na kořenové doméně). V Resend je ověřená celá `michalroucka.cz` (region eu-west-1), jeho MX a SPF leží na subdoméně `send`, takže se se Seznamem nepletou, a odesílatel může být `web@michalroucka.cz`. DMARC zatím `p=none`.
+- *Ruční kroky na Vercelu* (projekt, Git integrace, proměnné prostředí, zapnutí Web Analytics v projektu, kontrola na preview URL) dělá Michal; Turnstile klíče musí povolovat hostname `*.vercel.app`, Resend před ověřením domény posílá jen z `onboarding@resend.dev` na adresu účtu. Integraci Resend z Vercel Marketplace nepoužívat – vytvořila by druhý Resend účet s vlastním klíčem.
+
 ---
 
 ## Mimo tento plán (blokováno otevřenými body spec § 10)

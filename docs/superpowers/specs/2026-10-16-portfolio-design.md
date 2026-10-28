@@ -36,7 +36,9 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
   Citát majitelky salonu je součástí case study, podepsaný názvem salonu.
   Sekce „Reference“ se přidá až při 2–3 zakázkách.
 - **Značka:** vystupování pod vlastním jménem + vlastní vizuální identita (monogram/logo, barvy, typografie).
-- **Doména:** otevřená. K dispozici `michroucka.dev`; zvažuje se dokoupení čitelnější `.cz` domény.
+- **Doména:** `michalroucka.cz` – celé jméno se dobře diktuje a `.cz` působí na české zákazníky důvěryhodněji
+  než `.dev`. `michroucka.dev` zůstává jako osobní adresa a na webu se přesměrovává (301) na `.cz`.
+  DNS u WEDOSu, pošta přes Seznam Email Profi (`michal@michalroucka.cz`).
 - **Technické školní projekty** (InodeFS, Oko-Bere, …) na web nepatří.
 - Patička obsahuje identifikační údaje podnikatele podle § 435 občanského zákoníku: jméno, IČO, sídlo,
   zápis v živnostenském rejstříku a údaj o DPH (`siteDetails.legal`). Do založení živnosti jsou to
@@ -242,8 +244,8 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 - Turnstile site key (`PUBLIC_TURNSTILE_SITE_KEY`) – veřejný, vkládá se při buildu.
 - `CONTACT_EMAIL_TO` (příjemce) a `CONTACT_EMAIL_FROM` (odesílatel na ověřené doméně) – serverové.
 - Všechny proměnné definované typově přes `astro:env` (chybějící proměnná = chyba).
-- Resend vyžaduje ověřenou doménu (DNS) – **doména musí být vyřešena před spuštěním formuláře**.
-  Do té doby testování s testovací adresou Resend.
+- Resend vyžaduje ověřenou doménu (DNS): `michalroucka.cz`, odesílatel `web@michalroucka.cz`.
+  Do ověření testování s testovací adresou Resend.
 
 ---
 
@@ -254,7 +256,7 @@ Pod formulářem: informace o zpracování osobních údajů s odkazem na GDPR s
 - Open Graph: výchozí obrázek; case studies používají svůj `cover`.
 - `@astrojs/sitemap` s i18n konfigurací, `robots.txt`.
 - JSON-LD `ProfessionalService` (jméno, oblast působení Plzeň a okolí, kontakt).
-- `site` v `astro.config` závisí na doméně – do té doby placeholder.
+- `site` v `astro.config` je `https://michalroucka.cz`.
 - Mimo kód: založit Google Business Profile.
 
 ### Výkon
@@ -298,7 +300,7 @@ E2E testy (Playwright) zatím ne – ruční průchod preview URL před mergem.
 
 ## 10. Otevřené body
 
-- **Doména** – výběr a nákup; blokuje ověření domény v Resend a hodnotu `site`.
+- ~~**Doména**~~ – vyřešeno: `michalroucka.cz` (viz § 1).
 - **Texty** – obsah sekcí, case study Nohy v čajku (CZ + EN), citát majitelky salonu, text GDPR.
 - **Ceny** – konkrétní částky „od“ pro jednotlivé služby.
 - **IČO v patičce** – po založení živnosti.

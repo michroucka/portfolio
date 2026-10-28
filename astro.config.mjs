@@ -22,9 +22,11 @@ export default defineConfig({
 	],
 
 	// Pages stay prerendered; only the contact action runs as a Vercel Function.
-	adapter: vercel(),
+	adapter: vercel({
+		webAnalytics: { enabled: true },
+	}),
 
-	site: "https://example.com",
+	site: "https://michalroucka.cz",
 
 	// One canonical URL form: every path ends with a slash.
 	trailingSlash: "always",
