@@ -345,8 +345,8 @@ GDPR stránka v obou jazycích, sitemap s jazykovými alternativami a validní J
 
 ### Hotovo, když
 
-- [ ] vše z úkolu 10 plánu
-- [ ] dokumentace odpovídá implementaci
+- [x] vše z úkolu 10 plánu
+- [x] dokumentace odpovídá implementaci
 
 ---
 
@@ -391,9 +391,9 @@ Preview i produkce se nasazují automaticky z GitHubu.
 
 ### Hotovo, když
 
-- [ ] nasazení z `main` i z PR funguje
-- [ ] kontrola výše projde
-- [ ] dokumentace odpovídá implementaci
+- [x] nasazení z `main` i z PR funguje
+- [x] kontrola výše projde
+- [x] dokumentace odpovídá implementaci
 
 ---
 
@@ -423,7 +423,7 @@ K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 ### Hotovo, když
 
 - [x] `site` má skutečnou doménu
-- [ ] Resend posílá z ověřené domény
+- [x] Resend posílá z ověřené domény
 - [x] Web ukazuje e-mail na vlastní doméně
 
 ---
