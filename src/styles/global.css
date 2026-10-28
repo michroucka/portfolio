@@ -104,7 +104,7 @@
 	     0–280 morph · 280–810 on · 810–1340 off · 1340–1870 on
 	     1870–2400 off · 2400–2930 on · 2930–3460 off · 3460–3740 back to the dot
 	   Needs a <rect> with --dot (dot diameter) and --baseline (y of its bottom edge).
-	   One-off animation (hero). */
+	   Runs in the hero once after load and again on hover (HeroMark.astro). */
 	--animate-dot-cursor: dot-cursor 3740ms;
 
 	@keyframes dot-cursor {
