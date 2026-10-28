@@ -356,7 +356,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [x] `robots.txt` s odkazem na sitemap.
 - [x] JSON-LD `ProfessionalService` (jméno, oblast Plzeň a okolí, kontakt, URL) na homepage obou jazyků.
 - [x] Výchozí OG obrázek 1200 × 630 v barvách značky (můžeš vyjít z brand boardu).
-- [ ] **Ověření:** `dist/sitemap-index.xml` obsahuje všechny stránky obou jazyků s `xhtml:link` alternativami; JSON-LD projde https://validator.schema.org/.
+- [x] **Ověření:** `dist/sitemap-index.xml` obsahuje všechny stránky obou jazyků s `xhtml:link` alternativami; JSON-LD projde https://validator.schema.org/.
 - [x] Commit: `feat: privacy page, sitemap, robots and structured data`
 
 **Poznámky k provedení** (větev `feat/privacy-seo`):
@@ -375,14 +375,14 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 
 **Soubory:** úprava `astro.config.mjs` (Web Analytics v adaptéru), případně `vercel.json`, pokud bude potřeba.
 
-- [ ] Projdi https://docs.astro.build/en/guides/deploy/vercel/ a založ projekt na Vercelu (tým s plánem Pro).
-- [ ] Propoj GitHub repo přes Git integraci Vercelu: `main` → produkce, větve → preview.
-- [ ] Nastav proměnné prostředí a secrets ve Vercelu (Production i Preview).
-- [ ] Zapni Vercel Web Analytics (v projektu i v adaptéru: https://docs.astro.build/en/guides/integrations-guide/vercel/#webanalytics).
-- [ ] Preview chrání Deployment Protection – pro Lighthouse proti preview URL buď měř přihlášený v prohlížeči, nebo použij bypass.
-- [ ] **Ověření na preview URL:** Lighthouse (mobil) ≥ 95 ve všech kategoriích na `/`, `/en/` a jedné case study; formulář odešle e-mail; obě témata; přepínač jazyka na všech stránkách; 404.
-- [ ] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`). GDPR stránka (Úkol 10) uvádí anonymní měření návštěvnosti přes Vercel – pokud Web Analytics nezapneš, odeber větu z `privacy.cookiesText` a účel u Vercelu v `privacy.recipients` (cs i en).
-- [ ] Commit + PR → merge do `main`.
+- [x] Projdi https://docs.astro.build/en/guides/deploy/vercel/ a založ projekt na Vercelu (tým s plánem Pro).
+- [x] Propoj GitHub repo přes Git integraci Vercelu: `main` → produkce, větve → preview.
+- [x] Nastav proměnné prostředí a secrets ve Vercelu (Production i Preview).
+- [x] Zapni Vercel Web Analytics (v projektu i v adaptéru: https://docs.astro.build/en/guides/integrations-guide/vercel/#webanalytics).
+- [x] Preview chrání Deployment Protection – pro Lighthouse proti preview URL buď měř přihlášený v prohlížeči, nebo použij bypass.
+- [x] **Ověření na preview URL:** Lighthouse (mobil) ≥ 95 ve všech kategoriích na `/`, `/en/` a jedné case study; formulář odešle e-mail; obě témata; přepínač jazyka na všech stránkách; 404.
+- [x] **Pravdivost obsahu:** case study Nohy v cajku popisuje online rezervace a SMS připomínky jako spuštěné (psáno dopředu v Úkolu 5). Před spuštěním ověř, že na pedikurakralovice.cz opravdu běží, jinak text uprav. Zkontroluj taky ceny služeb (placeholder) a cover (`home.png` místo `calendar.png`). GDPR stránka (Úkol 10) uvádí anonymní měření návštěvnosti přes Vercel – pokud Web Analytics nezapneš, odeber větu z `privacy.cookiesText` a účel u Vercelu v `privacy.recipients` (cs i en).
+- [x] Commit + PR → merge do `main`.
 
 **Poznámky k provedení** (větev `feat/vercel-deploy`):
 
@@ -393,6 +393,8 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - *Ruční kroky na Vercelu* (projekt, Git integrace, proměnné prostředí, zapnutí Web Analytics v projektu, kontrola na preview URL) dělá Michal; Turnstile klíče musí povolovat hostname `*.vercel.app`, Resend před ověřením domény posílá jen z `onboarding@resend.dev` na adresu účtu. Integraci Resend z Vercel Marketplace nepoužívat – vytvořila by druhý Resend účet s vlastním klíčem.
 - *Nastavení ve Vercelu mimo repo:* Function Region `fra1` (formulář volá Resend v eu-west-1 a data zůstanou v EU), pravidlo ve Firewallu `Form Rate Limit` (`POST` na `/_actions/contact` nebo s query `_action`, 5 požadavků za 10 minut na IP → 429; formulář bez rate limitu v kódu, protože by potřeboval úložiště), Spend Management s budgetem nad zahrnutý kredit.
 - *Ukázkové IČO a sídlo* z `siteDetails.legal` odstraněné (`legal: undefined`), protože web už běží na produkční doméně. Patička i GDPR stránka blok skryjí; skutečné údaje doplní #17.
+- *Ověření* proběhlo na produkci (`https://www.michalroucka.cz`), ne na preview URL. Lighthouse 12.8 (mobil): `/` 97 / 100 / 100 / 100, `/en/` 99 / 100 / 100 / 100, case study 97 / 100 / 100 / 100. Česká homepage má CLS 0,102 (posun `#services`, `/en/` má 0) – vědomě neřešeno, dokud nebudou data od skutečných návštěvníků. Adresa bez www má výkon 89 kvůli přesměrování. Formulář včetně rate limitu, témata, jazyky, 404, Analytics, JSON-LD (validator.schema.org) a sitemapa prošly; obsah case study odpovídá skutečnosti.
+- *Safari na iOS* (PR #33): menu a galerie po otevření fokusují samotný dialog, jinak Safari kreslí focus ring kolem loga / křížku; `::backdrop` v barvě pozadí zakrývá pruh pod `h-dvh` dialogem u plovoucí lišty. Customizable select v Safari nefunguje (`base-select` nepodporuje), zůstává nativní výběr bez animace.
 
 ---
 
