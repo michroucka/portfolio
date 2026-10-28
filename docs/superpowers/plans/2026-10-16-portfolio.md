@@ -171,10 +171,10 @@ přepínač tématu.
   - jen `cs/x` → hlásí `x` jako chybějící v `en`
   - řazení podle `order` vzestupně; filtr `featured` vrátí jen označené
 - [x] Spusť testy, selžou → implementuj `projects.ts` → projdou.
-- [ ] Kontrola párování při buildu: zavolej funkci hledání chybějících slugů tam, kde se generují stránky case studies (Úkol 7) a při nálezu vyhoď chybu s výčtem slugů.
+- [x] Kontrola párování při buildu: zavolej funkci hledání chybějících slugů tam, kde se generují stránky case studies (Úkol 7) a při nálezu vyhoď chybu s výčtem slugů.
 - [x] Naplň `services.yaml` třemi službami (ceny zatím placeholder – spec § 10) a jednu case study v obou jazycích s kostrou problém → řešení → výsledek → screenshoty → technologie (texty mohou být zatím pracovní).
-- [ ] **Ověření:** `astro check` + `npm test` projdou; dočasně smaž EN soubor → build spadne se srozumitelnou hláškou; vrať zpět.
-- [ ] Commit: `feat: content collections for services and case studies`
+- [x] **Ověření:** `astro check` + `npm test` projdou; dočasně smaž EN soubor → build spadne se srozumitelnou hláškou; vrať zpět.
+- [x] Commit: `feat: content collections for services and case studies`
 
 **Poznámky k provedení** (větev `feat/content`):
 
@@ -205,8 +205,8 @@ přepínač tématu.
 - [x] `About`: krátký text, fotka přes `<Image>`, okolí Plzně.
 - [x] `Contact`: zatím jen sekce s nadpisem a e-mailem/telefonem; formulář přijde v Úkolu 8.
 - [x] Každá sekce má `id` pro kotvy z hlavičky a nadpis `<h2>`; na stránce je jediný `<h1>` (v Hero).
-- [ ] **Ověření:** obě jazykové verze homepage na mobilu (375 px) i desktopu, obě témata; žádný text natvrdo mimo slovník (zkontroluj EN verzi, jestli v ní nezůstala čeština).
-- [ ] Commit: `feat: homepage sections`
+- [x] **Ověření:** obě jazykové verze homepage na mobilu (375 px) i desktopu, obě témata; žádný text natvrdo mimo slovník (zkontroluj EN verzi, jestli v ní nezůstala čeština).
+- [x] Commit: `feat: homepage sections`
 
 **Poznámky k provedení** (větev `feat/homepage`):
 

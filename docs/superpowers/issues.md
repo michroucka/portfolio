@@ -79,10 +79,10 @@ Kolekce `services` a `projects` jsou typované a pomocné funkce otestované.
 
 ### Hotovo, když
 
-- [ ] schémata odpovídají spec § 5
-- [ ] testy podle úkolu 5 plánu projdou
-- [ ] `services.yaml` má 3 služby, case study existuje v obou jazycích
-- [ ] dokumentace odpovídá implementaci
+- [x] schémata odpovídají spec § 5
+- [x] testy podle úkolu 5 plánu projdou
+- [x] `services.yaml` má 3 služby, case study existuje v obou jazycích
+- [x] dokumentace odpovídá implementaci
 
 ---
 
@@ -136,10 +136,10 @@ Homepage v obou jazycích zobrazuje všechny sekce s daty z kolekcí.
 
 ### Hotovo, když
 
-- [ ] všechny sekce podle úkolu 6 plánu
-- [ ] kotvy z hlavičky vedou na sekce
-- [ ] `npm run check`, `npm run lint`, `npm test`, `npm run build` projdou
-- [ ] dokumentace odpovídá implementaci
+- [x] všechny sekce podle úkolu 6 plánu
+- [x] kotvy z hlavičky vedou na sekce
+- [x] `npm run check`, `npm run lint`, `npm test`, `npm run build` projdou
+- [x] dokumentace odpovídá implementaci
 
 ---
 
@@ -186,9 +186,9 @@ Case study jako ukázka práce pro klienta, v obou jazycích na přeložených U
 
 ### Hotovo, když
 
-- [ ] obě stránky se vyrenderují, přepínač jazyka funguje
-- [ ] kontrola párování shodí build při chybějícím překladu
-- [ ] dokumentace odpovídá implementaci
+- [x] obě stránky se vyrenderují, přepínač jazyka funguje
+- [x] kontrola párování shodí build při chybějícím překladu
+- [x] dokumentace odpovídá implementaci
 
 ---
 
@@ -244,9 +244,9 @@ Formulář odešle e-mail s `reply-to` zákazníka a všechny chybové stavy pod
 
 ### Hotovo, když
 
-- [ ] testy schema/spam/turnstile/mail projdou
-- [ ] ruční ověření tří scénářů výše
-- [ ] dokumentace odpovídá implementaci
+- [x] testy schema/spam/turnstile/mail projdou
+- [x] ruční ověření tří scénářů výše
+- [x] dokumentace odpovídá implementaci
 
 ---
 
