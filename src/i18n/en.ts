@@ -201,7 +201,7 @@ export const en: Dictionary = {
 			"What personal data I process when you contact me, why, for how long and what your rights are.",
 		updated: "Effective as of 28 October 2026",
 		controllerTitle: "Who processes your data",
-		controllerText: "The data controller is me:",
+		controllerText: "I am the controller of your personal data:",
 		dataTitle: "What data and why",
 		dataText:
 			"When you write to me through the form or by e-mail, I process your name, e-mail, phone number (if you provide it) and the text of your message. I use them only to reply to you and, if relevant, to prepare an offer.",
