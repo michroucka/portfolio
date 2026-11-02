@@ -341,7 +341,7 @@ GDPR stránka v obou jazycích, sitemap s jazykovými alternativami a validní J
 
 ### Jak otestovat
 
-- `dist/sitemap-index.xml` obsahuje všechny stránky s `xhtml:link`; JSON-LD projde https://validator.schema.org/.
+- `dist/client/sitemap-index.xml` obsahuje všechny stránky s `xhtml:link`; JSON-LD projde https://validator.schema.org/.
 
 ### Hotovo, když
 

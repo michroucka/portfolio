@@ -36,4 +36,5 @@ a `verify:dist`.
 
 ## Nasazení
 
-TODO: Cloudflare Workers přes Workers Builds (`main` → produkce, PR → preview) – řeší #13.
+Vercel přes Git integraci: push do `main` → produkce na https://www.michalroucka.cz, větve a PR → preview URL.
+Kontaktní formulář běží jako Vercel Function (region `fra1`).
