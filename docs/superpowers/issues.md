@@ -411,7 +411,7 @@ Vybrat a koupit doménu – je potřeba pro `site`, ověření domény v Resend 
 
 K dispozici `michroucka.dev`, zvažuje se čitelnější `.cz` doména.
 
-**Rozhodnuto:** `michalroucka.cz` (WEDOS), kanonická je `www.michalroucka.cz` a kořenová doména na ni přesměrovává. `michroucka.dev` se nenapojuje a nechá se vypršet. Pošta Seznam Email Profi.
+**Rozhodnuto:** `michalroucka.cz`, kanonická je `www.michalroucka.cz` a kořenová doména na ni přesměrovává. `michroucka.dev` se nenapojuje a nechá se vypršet. Pošta na vlastní doméně.
 
 ### Co udělat
 
@@ -447,7 +447,7 @@ Nahradit pracovní texty finálními v obou jazycích (spec § 10).
 ### Hotovo, když
 
 - [x] žádný pracovní text v obou jazycích
-- [x] ~~citát odsouhlasený majitelkou salonu~~ – nebude, klientka je z rodiny (spec § 1)
+- [x] ~~citát odsouhlasený majitelkou salonu~~ – nebude (spec § 1)
 
 ---
 
