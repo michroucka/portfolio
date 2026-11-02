@@ -150,7 +150,7 @@ přepínač tématu.
   - Typografická škála z manuálu (`--text-*` v `@theme`, výchozí velikosti Tailwindu vypnuté) – využije Úkol 6.
   - Utilita `link-underline` (podtržení přijede zleva, odjede doprava) pro navigaci, patičku a přepínač jazyka.
   - Logo v hlavičce je bez animace: hover efekt (tečka → blikající kurzor) byl odebrán (větev `feat/home-header-tweaks`), animace tečky zůstává jen pro hero (Úkol 9).
-  - Patička přestavěná (větev `feat/404-and-footer`): logo a věta, sloupce Kontakt a Profily (`ProfileLinks` + ikony GitHub/LinkedIn ze `siteDetails.profiles`), pod čarou © a ochrana osobních údajů, právní údaje ze `siteDetails.legal` (zatím ukázkové, #17) a přepínače. Na mobilu je Kontakt s Profily vedle sebe ve flex řádku, od `lg` se obal rozpustí (`contents`) do třísloupcové mřížky. Logo v hlavičce je na mobilu `w-56`. Telefonní odkaz skládá sdílené `telHref()`. 404 má u odkazů zpět šipku (`icons/Arrow.astro` se směrem).
+  - Patička přestavěná (větev `feat/404-and-footer`): logo a věta, sloupce Kontakt a Profily (`ProfileLinks` + ikony GitHub/LinkedIn ze `siteDetails.profiles`), pod čarou © a ochrana osobních údajů, právní údaje ze `siteDetails.legal` (skryté, dokud je #17 otevřené) a přepínače. Na mobilu je Kontakt s Profily vedle sebe ve flex řádku, od `lg` se obal rozpustí (`contents`) do třísloupcové mřížky. Logo v hlavičce je na mobilu `w-56`. Telefonní odkaz skládá sdílené `telHref()`. 404 má u odkazů zpět šipku (`icons/Arrow.astro` se směrem).
 
 ### Úkol 5: Content collections – služby a case studies
 
@@ -218,7 +218,7 @@ přepínač tématu.
   - Tlačítka jako utility `button` / `button-primary` / `button-secondary` v `global.css` (fungují na `<a>` i `<button>` pro úkol 8). Obrys sekundárního je Ash / Ash Deep – Line má na Ink jen ~1,4 : 1.
   - Karta projektu: odkazem je jen nadpis, `::after` ho roztáhne přes kartu. Cover má `alt=""`, název je hned vedle.
   - Obsah je omezený na `max-w-7xl` (1280 px): `pagePaddingX` nahradil `pageContainer` (`mx-auto w-full max-w-7xl px-6`) v hlavičce, mobilním menu, `<main>` i patičce. Okraj patičky zůstává přes celou šířku, kontejner je vnitřní `div`.
-  - Fotka v About je `src/assets/about/portrait.jpg` (1600 px, zmenšený originál), texty sekcí jsou pracovní (#15).
+  - Fotka v About je `src/assets/about/portrait.jpg` (1600 px, zmenšený originál), texty sekcí byly pracovní, finální jsou z #15.
   - Kroky spolupráce tvoří časovou osu: od čísla vede čára k dalšímu číslu – na mobilu svisle po levém okraji, od `md` vodorovně ve dvou řadách po třech (šest v jedné řadě nechá textům málo místa). Čára na konci řady vybledne a další řada začíná krátkým náběhem v okraji stránky, takže osa působí souvisle. Poslední krok čáru nemá (větev `feat/branding-and-materials`).
   - Pozadí hero (větev `feat/hero-grid`): mřížka čtyřcípých hvězd s rovnými hranami (buňka 4 rem, jedna hvězda na levém okraji obsahu). SVG je jen maska, barva je token Line (`#2A2D32` / `#DDD9D0`), takže se přepíná s tématem. Mizí ke všem okrajům a pod textem, na mobilu je slabší. Prohnutá hvězda ✦ zamítnuta – čte se jako ikona AI. Pravá strana hero zůstává pro velkou značku z úkolu 9.
 - *Otevřené:* odkaz z karty projektu vede na stránku case study, která vznikne až v úkolu 7.
@@ -356,7 +356,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - [x] `robots.txt` s odkazem na sitemap.
 - [x] JSON-LD `ProfessionalService` (jméno, oblast Plzeň a okolí, kontakt, URL) na homepage obou jazyků.
 - [x] Výchozí OG obrázek 1200 × 630 v barvách značky (můžeš vyjít z brand boardu).
-- [x] **Ověření:** `dist/sitemap-index.xml` obsahuje všechny stránky obou jazyků s `xhtml:link` alternativami; JSON-LD projde https://validator.schema.org/.
+- [x] **Ověření:** `dist/client/sitemap-index.xml` obsahuje všechny stránky obou jazyků s `xhtml:link` alternativami; JSON-LD projde https://validator.schema.org/.
 - [x] Commit: `feat: privacy page, sitemap, robots and structured data`
 
 **Poznámky k provedení** (větev `feat/privacy-seo`):
@@ -364,7 +364,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 - *Rozhodnutí:*
   - `robots.txt` je endpoint `src/pages/robots.txt.ts`, ne soubor v `public/`: adresa sitemapy se skládá z `site`, takže po vyřešení domény (#14) se opraví sama.
   - Volba `i18n` u `@astrojs/sitemap` páruje jazyky jen podle prefixu (`/x/` ↔ `/en/x/`) a přeložené cesty (`/ochrana-osobnich-udaju/` ↔ `/en/privacy/`, `/projekty/…` ↔ `/en/projects/…`) by zůstaly bez alternativ. Místo ní `serialize` s `getSitemapLinks` (`src/lib/sitemap.ts`), která alternativy bere z mapy cest přes nové `matchPath` – stejné `hreflang` včetně `x-default` jako v `Seo.astro`. 404 sitemapa vynechává sama.
-  - GDPR stránka záměrně stručná: správce, údaje a právní titul, doba uchování, příjemci (Vercel, Cloudflare Turnstile, Resend, Gmail) s předáním do USA, cookies, práva a stížnost u ÚOOÚ. Texty ve slovnících (`privacy`), typografie sdílí utilitu `case-study`. Finální znění je #15 (doba uchování, seznam zpracovatelů po spuštění Web Analytics a domény).
+  - GDPR stránka záměrně stručná: správce, údaje a právní titul, doba uchování, příjemci (Vercel, Cloudflare Turnstile, Resend, Gmail) s předáním do USA, cookies, práva a stížnost u ÚOOÚ. Texty ve slovnících (`privacy`), typografie sdílí utilitu `case-study`. Finální znění je potvrzené v #15 (doba uchování, seznam zpracovatelů po spuštění Web Analytics a domény).
   - JSON-LD skládá `buildProfessionalService` (`src/lib/structured-data.ts`), `JsonLd.astro` ho vloží přes nový slot `head` v `BaseLayout`, jen na homepage. Bez adresy, dokud je sídlo placeholder (#17). `<` se escapuje, aby hodnota nemohla ukončit `<script>`.
   - OG obrázek pro každý jazyk: horizontální negativní logo na Ink a pod ním tlumený podnadpis (Ash) z `hero.title`. Skript `brand/og/build-og-image.mjs` text převede do křivek přes `fontkit` z `brand/source/fonts/Archivo.ttf` (sharp neumí načíst woff2, vykreslil by náhradní písmo), uloží SVG zdroje do `brand/og/` a PNG do `public/`. `BaseLayout` použije obrázek v jazyce stránky, když stránka nemá vlastní.
 - *Ověření JSON-LD v https://validator.schema.org/ je ruční krok* – výstup z `dist/client/index.html`.
@@ -400,7 +400,7 @@ funkci sestavení a odeslání e-mailu; action `contact`; mapování chyb na kl�
 
 ## Mimo tento plán (blokováno otevřenými body spec § 10)
 
-- Doména (a s ní `site`, ověření domény v Resend, produkční e-mail) – #14
-- Finální texty (sekce, case study, GDPR) – #15
-- Ceny služeb – #16
+- Doména (a s ní `site`, ověření domény v Resend, produkční e-mail) – #14, hotovo
+- Finální texty (sekce, case study, GDPR) – #15, hotovo
+- Ceny služeb – #16, hotovo
 - IČO v patičce – #17
