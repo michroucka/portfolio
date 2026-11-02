@@ -37,6 +37,8 @@ const ogImageAbsolute = ogImage ? buildUrl(ogImage) : undefined;
 <title>{title}</title>
 <meta name="description" content={description} />
 {noindex && <meta name="robots" content="noindex" />}
+{/* Seznam Webmaster re-checks ownership periodically, so the tag has to stay. */}
+<meta name="seznam-wmt" content="lirwxKtNED2EjbaCZNPECz9gLqwlvvlg" />
 
 {canonical && <link rel="canonical" href={canonical} />}
 

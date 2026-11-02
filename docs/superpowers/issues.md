@@ -441,13 +441,13 @@ Nahradit pracovní texty finálními v obou jazycích (spec § 10).
 ### Co udělat
 
 1. Texty sekcí homepage ve slovnících `src/i18n/cs.ts`, `src/i18n/en.ts`.
-2. Case study Nohy v cajku (CZ + EN) včetně citátu majitelky salonu.
+2. Case study Nohy v cajku (CZ + EN).
 3. Text GDPR (ověřit právní titul oprávněný zájem bez checkboxu).
 
 ### Hotovo, když
 
-- [ ] žádný pracovní text v obou jazycích
-- [ ] citát odsouhlasený majitelkou salonu
+- [x] žádný pracovní text v obou jazycích
+- [x] ~~citát odsouhlasený majitelkou salonu~~ – nebude, klientka je z rodiny (spec § 1)
 
 ---
 
@@ -467,7 +467,7 @@ Konkrétní částky „od“ pro jednotlivé služby (spec § 1, § 10).
 
 ### Hotovo, když
 
-- [ ] všechny služby mají skutečnou cenu místo placeholderu
+- [x] všechny služby mají skutečnou cenu místo placeholderu
 
 ---
 

@@ -33,7 +33,7 @@ Ozvat se – kontaktní formulář, případně e-mail/telefon.
 ### Rozhodnutí o obsahu a značce
 - **Ceny:** u každé služby orientační cena „od X Kč“ + „přesná cena po nezávazné konzultaci“.
 - **Reference:** projekt Nohy v cajku (pedicure-web) jako case study, ne samostatná sekce recenzí.
-  Citát majitelky salonu je součástí case study, podepsaný názvem salonu.
+  Bez citátu majitelky – klientka je z rodiny, citát by nebyl nezávislý.
   Sekce „Reference“ se přidá až při 2–3 zakázkách.
 - **Značka:** vystupování pod vlastním jménem + vlastní vizuální identita (monogram/logo, barvy, typografie).
 - **Doména:** `michalroucka.cz` – celé jméno se dobře diktuje a `.cz` působí na české zákazníky důvěryhodněji
@@ -313,6 +313,6 @@ E2E testy (Playwright) zatím ne – ruční průchod preview URL před mergem.
 ## 10. Otevřené body
 
 - ~~**Doména**~~ – vyřešeno: `michalroucka.cz` (viz § 1).
-- **Texty** – obsah sekcí, case study Nohy v čajku (CZ + EN), citát majitelky salonu, text GDPR.
-- **Ceny** – konkrétní částky „od“ pro jednotlivé služby.
+- ~~**Texty**~~ – vyřešeno: sekce, case study (CZ + EN) a GDPR jsou finální; citát majitelky nebude (viz § 1).
+- ~~**Ceny**~~ – vyřešeno: od 7 900 Kč (prezentační web), 19 900 Kč (web s rezervacemi), 39 900 Kč (aplikace na míru).
 - **IČO v patičce** – po založení živnosti.

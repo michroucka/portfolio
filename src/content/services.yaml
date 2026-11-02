@@ -1,4 +1,3 @@
-# Prices are placeholders until spec § 10 is resolved.
 - id: presentation-website
   title:
       cs: Prezentační web
@@ -6,7 +5,7 @@
   description:
       cs: Web, který vás představí, ukáže, co nabízíte, a usnadní zákazníkům ozvat se. Pro řemeslníky, salony, kavárny a malé firmy, které chtějí být k nalezení.
       en: A website that introduces you, shows what you offer and makes it easy for customers to get in touch. For tradespeople, salons, cafés and small businesses that want to be found.
-  priceFrom: 9900
+  priceFrom: 7900
   features:
       cs:
           - Design na míru vaší značce, žádná šablona
@@ -33,7 +32,7 @@
   description:
       cs: Prezentační web doplněný o systém, který za vás udělá rutinní práci. Zákazníci si sami zarezervují termín a vy ho hned vidíte v kalendáři.
       en: A business website with a system that takes routine work off your hands. Customers book an appointment themselves and you see it in your calendar right away.
-  priceFrom: 24900
+  priceFrom: 19900
   features:
       cs:
           - Online rezervace bez telefonování
@@ -56,7 +55,7 @@
   description:
       cs: Když vám tabulky a papírky přestávají stačit. Navrhnu a postavím aplikaci přesně pro to, jak vaše firma funguje.
       en: For when spreadsheets and paper notes are no longer enough. I design and build an application around the way your business actually works.
-  priceFrom: 49900
+  priceFrom: 39900
   features:
       cs:
           - Společný rozbor toho, co potřebujete
