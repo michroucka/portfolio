@@ -467,7 +467,7 @@ Konkrétní částky „od“ pro jednotlivé služby (spec § 1, § 10).
 
 ### Hotovo, když
 
-- [ ] všechny služby mají skutečnou cenu místo placeholderu
+- [x] všechny služby mají skutečnou cenu místo placeholderu
 
 ---
 

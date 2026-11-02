@@ -314,5 +314,5 @@ E2E testy (Playwright) zatím ne – ruční průchod preview URL před mergem.
 
 - ~~**Doména**~~ – vyřešeno: `michalroucka.cz` (viz § 1).
 - **Texty** – obsah sekcí, case study Nohy v čajku (CZ + EN), citát majitelky salonu, text GDPR.
-- **Ceny** – konkrétní částky „od“ pro jednotlivé služby.
+- ~~**Ceny**~~ – vyřešeno: od 7 900 Kč (prezentační web), 19 900 Kč (web s rezervacemi), 39 900 Kč (aplikace na míru).
 - **IČO v patičce** – po založení živnosti.
