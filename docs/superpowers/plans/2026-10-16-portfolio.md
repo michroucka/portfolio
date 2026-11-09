@@ -164,7 +164,7 @@ přepínač tématu.
 (volitelně jen `featured`); funkci, která ze seznamu záznamů najde slugy chybějící v některém jazyce.
 
 - [x] Schéma `services` přesně podle spec § 5 (lokalizované `title`, `description`, `features`; `priceFrom` číslo; `order`). Pro jeden soubor s více záznamy použij `file()` loader. Docs: https://docs.astro.build/en/guides/content-collections/#built-in-loaders
-- [x] Schéma `projects` podle spec § 5 (`cover` přes `image()`, `type` jako enum `web | web-app | app`, volitelné `liveUrl`, `repoUrl`, `testimonial`). `glob()` loader nad `projects/**/*.mdx`.
+- [x] Schéma `projects` podle spec § 5 (`cover` přes `image()`, `type` jako enum `web | web-app | app`, volitelné `liveUrl`, `demoUrl`, `repoUrl`, `testimonial`; `status` s výchozím `live`). `glob()` loader nad `projects/**/*.mdx`.
 - [x] Testy `projects.test.ts` (na ručně sestavených záznamech, ne na skutečné kolekci):
   - z id `cs/nohy-v-cajku` se správně odvodí jazyk `cs` a slug `nohy-v-cajku`
   - pár `cs/x` + `en/x` → žádné chybějící slugy
@@ -180,7 +180,7 @@ přepínač tématu.
 
 - *Rozhodnutí:*
   - Lokalizované pole přes `z.record(z.enum(locales), …)` – v Zodu 4 vyžaduje všechny klíče, takže nový jazyk shodí build u každého chybějícího překladu.
-  - `priceFrom` je kladné celé číslo, `order` celé číslo (spec § 5 upravena). `featured` má výchozí `false`, `liveUrl`/`repoUrl` validuje `z.url({ protocol: /^https?$/ })` – samotné `z.url()` pustí i `javascript:` nebo překlep `htps:`.
+  - `priceFrom` je kladné celé číslo, `order` celé číslo (spec § 5 upravena). `featured` má výchozí `false`, `liveUrl`/`demoUrl`/`repoUrl` validuje `z.url({ protocol: /^https?$/ })` – samotné `z.url()` pustí i `javascript:` nebo překlep `htps:`.
   - `parseProjectId` vyhodí chybu při neznámém jazyku, chybějícím jazyku nebo slugu i při víc než dvou segmentech (`cs/blog/x` – podsložka by jinak tiše vytvořila kolizi slugů). Hláška obsahuje celé id.
   - `getProjectsForLocale` určuje jazyk přes `parseProjectId` (pravidla pro id na jednom místě) a nemutuje vstup (`toSorted`).
   - Služby: prezentační web / web s rezervacemi / aplikace na míru (shodně se selectem formuláře, spec § 7). Ceny placeholder.
@@ -233,7 +233,7 @@ přepínač tématu.
 **Konzumuje:** kolekci `projects` a funkce z Úkolu 5, mapu cest z Úkolu 3.
 
 - [x] Obě page obálky generují `getStaticPaths` jen z projektů svého jazyka a před tím spustí kontrolu párování (Úkol 5).
-- [x] `ProjectPage`: titulek, typ, cover, tělo MDX (předej MDX komponenty `Gallery` a `Quote`), štítky technologií, odkazy `liveUrl`/`repoUrl` pokud existují, `testimonial` pokud existuje, CTA na kontakt.
+- [x] `ProjectPage`: titulek, typ, cover, tělo MDX (předej MDX komponenty `Gallery` a `Quote`), štítky technologií, odkazy `liveUrl`/`demoUrl`/`repoUrl` pokud existují, štítek „Ve vývoji“ u `status: in-development`, `testimonial` pokud existuje, CTA na kontakt.
 - [x] SEO: titulek a popis z frontmatteru, `og:image` = cover, alternativy přes mapu cest s parametrem `slug`.
 - [x] `Gallery`: mřížka obrázků přes `<Image>` s povinným `alt`. `Quote`: `<figure>` + `<blockquote>` + `<figcaption>`.
 - [x] **Ověření:** `/projekty/nohy-v-cajku/` a `/en/projects/nohy-v-cajku/` se vyrenderují, přepínač jazyka mezi nimi funguje, hreflang ukazuje na protějšek.
@@ -241,7 +241,7 @@ přepínač tématu.
 
 **Převzato z review Úkolu 5** (nálezy, které patří sem):
 
-- [x] **Shoda nelokalizovaných polí:** `cover`, `type`, `tags`, `liveUrl`, `repoUrl`, `featured` a `order` jsou v CS i EN souboru zvlášť a nic nehlídá, že se shodují. Ke kontrole párování přidej kontrolu, že se pár v těchto polích neliší (jinak build selže s výčtem slugů a polí). Alternativa: tato pole brát jen z výchozího jazyka – rozhodni před implementací.
+- [x] **Shoda nelokalizovaných polí:** `cover`, `type`, `tags`, `liveUrl`, `demoUrl`, `repoUrl`, `status`, `featured` a `order` jsou v CS i EN souboru zvlášť a nic nehlídá, že se shodují. Ke kontrole párování přidej kontrolu, že se pár v těchto polích neliší (jinak build selže s výčtem slugů a polí). Alternativa: tato pole brát jen z výchozího jazyka – rozhodni před implementací.
 - [x] **Unikátní `order`:** při shodě rozhoduje pořadí načtení souborů, takže se pořadí může lišit mezi jazyky nebo stroji. Buď kontrola unikátnosti při buildu, nebo druhé řadicí kritérium (slug) v `getProjectsForLocale` + test.
 - [x] **Testy `findMissingTranslations`:** doplnit víc chybějících slugů najednou, chybějící slugy v obou jazycích (`cs` bez `a`, `en` bez `b`) a prázdný vstup – na úplném výčtu stojí chybová hláška buildu.
 - [x] **Cover vs. screenshoty:** cover `calendar.png` je zároveň v sekci Screenshoty, na stránce projektu se zobrazí dvakrát. Až přijde `home.png` (viz Úkol 5), zmizí to samo; jinak cover v `ProjectPage` nezobrazuj nebo ho vyřaď ze sekce Screenshoty.
@@ -258,6 +258,12 @@ přepínač tématu.
   - Galerie se čtyřmi obrázky má od `md` čtyři sloupce, jinak tři.
   - Cover je úvodní stránka webu (`screens/web-home.png`). Stejný snímek je záměrně i první v galerii Web – v galerii jde zvětšit v lightboxu a patří k ostatním snímkům webu. Web je focený z produkce, rezervace a admin lokálně proti dev databázi se vzorovými daty (budoucí týden, aby rezervace nebyly ztlumené jako proběhlé).
   - Sekce Branding: logo, ikona webu, vizitka, dárkový poukaz (exporty v `src/assets/projects/nohy-v-cajku/branding/`, zdrojové soubory mimo repo).
+- *Doplněno s CareTrackerem* (větev `feat/caretracker-project`):
+  - Vlastní produkt ve vývoji, ne zakázka: místo sekce Výsledek je Stav, bez vymyšlených dopadů. Nové sdílené pole `status` (`live` | `in-development`, výchozí `live`) přidá na kartu i stránku štítek „Ve vývoji“.
+  - Nové sdílené pole `demoUrl` vedle `liveUrl`, aby projekt mohl mít web i demo. Popisky odkazů zkrácené na Web / Demo / Zdrojový kód.
+  - Nová hodnota `scope`: `app` (Webová aplikace).
+  - Náhled na kartě je 16:10 místo 4:3 – stejný poměr jako titulní screenshoty, takže se nic neořezává. Galerie zůstávají 4:3 s `object-contain` kvůli snímkům z mobilu.
+  - Branding CareTrackeru je nafocený z brand boardu v repu aplikace, web z lokální kopie `caretracker-web`.
 
 
 ### Úkol 8: Kontaktní formulář (Astro Action)
