@@ -25,7 +25,9 @@ const {
 	scope,
 	tags,
 	liveUrl,
+	demoUrl,
 	repoUrl,
+	status,
 	testimonial,
 } = project.data;
 const { Content } = await render(project);
@@ -45,6 +47,12 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 		<header>
 			<p class="text-sm font-semibold text-muted uppercase">
 				{dictionary.projects.types[type]}
+				{status === "in-development" && (
+					<span class="text-accent">
+						{" · "}
+						{dictionary.projects.inDevelopment}
+					</span>
+				)}
 			</p>
 			<h1 class="mt-2 max-w-[20ch] text-4xl md:text-5xl">{title}</h1>
 			<p class="mt-6 max-w-prose text-lg text-muted">{summary}</p>
@@ -88,7 +96,7 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 						<dd class="mt-2">{dictionary.projects.scope[item]}</dd>
 					))}
 				</div>
-				{(liveUrl || repoUrl) && (
+				{(liveUrl || demoUrl || repoUrl) && (
 					<div>
 						<dt class="project-fact-label">
 							{dictionary.projectPage.linksLabel}
@@ -102,6 +110,18 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 									class="font-semibold text-accent link-underline"
 								>
 									{dictionary.projectPage.liveLink}
+								</a>
+							</dd>
+						)}
+						{demoUrl && (
+							<dd class="mt-2">
+								<a
+									href={demoUrl}
+									target="_blank"
+									rel="noopener"
+									class="font-semibold text-accent link-underline"
+								>
+									{dictionary.projectPage.demoLink}
 								</a>
 							</dd>
 						)}

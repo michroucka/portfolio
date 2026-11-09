@@ -63,7 +63,9 @@ export const cs = {
 			booking: "Rezervační systém",
 			admin: "Administrace",
 			"local-seo": "Profil na Googlu a Firmy.cz",
+			app: "Webová aplikace",
 		},
+		inDevelopment: "Ve vývoji",
 	},
 	projectPage: {
 		factsLabel: "O projektu",
@@ -71,7 +73,8 @@ export const cs = {
 		scopeLabel: "Co vzniklo",
 		tagsLabel: "Použité technologie",
 		linksLabel: "Odkazy",
-		liveLink: "Živý web",
+		liveLink: "Web",
+		demoLink: "Demo",
 		repoLink: "Zdrojový kód",
 		ctaTitle: "Chcete něco podobného?",
 		ctaText:

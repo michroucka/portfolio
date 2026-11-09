@@ -64,7 +64,9 @@ export const en: Dictionary = {
 			booking: "Booking system",
 			admin: "Admin app",
 			"local-seo": "Google and Firmy.cz listings",
+			app: "Web application",
 		},
+		inDevelopment: "In development",
 	},
 	projectPage: {
 		factsLabel: "About the project",
@@ -72,7 +74,8 @@ export const en: Dictionary = {
 		scopeLabel: "What was built",
 		tagsLabel: "Technologies used",
 		linksLabel: "Links",
-		liveLink: "Live website",
+		liveLink: "Website",
+		demoLink: "Demo",
 		repoLink: "Source code",
 		ctaTitle: "Want something similar?",
 		ctaText:

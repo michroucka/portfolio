@@ -88,7 +88,9 @@ export const sharedProjectFields = [
 	"scope",
 	"tags",
 	"liveUrl",
+	"demoUrl",
 	"repoUrl",
+	"status",
 	"featured",
 	"order",
 ] as const;

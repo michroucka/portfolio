@@ -1,0 +1,111 @@
+---
+title: CareTracker
+summary: Vlastní aplikace, která v terénních pečovatelských službách nahrazuje papírové výkazy. Zatím ve vývoji, vyzkoušet si ji můžete v živém demu.
+cover: ../../../assets/projects/caretracker/screens/dashboard.png
+type: web-app
+year: 2026
+scope:
+    - branding
+    - website
+    - app
+tags:
+    - Java
+    - Spring Boot
+    - React
+    - PostgreSQL
+    - Tailwind CSS
+    - Docker
+liveUrl: https://caretracker.cz
+demoUrl: https://demo.caretracker.cz
+repoUrl: https://github.com/michroucka/caretracker
+status: in-development
+featured: true
+order: 2
+---
+
+import dashboard from "../../../assets/projects/caretracker/screens/dashboard.png";
+import performedTasks from "../../../assets/projects/caretracker/screens/performed-tasks.png";
+import clientDetail from "../../../assets/projects/caretracker/screens/client-detail.png";
+import individualPlan from "../../../assets/projects/caretracker/screens/individual-plan.png";
+import mobile from "../../../assets/projects/caretracker/screens/mobile.png";
+import webHome from "../../../assets/projects/caretracker/screens/web-home.png";
+import webHomePhone from "../../../assets/projects/caretracker/screens/web-home-phone.png";
+import logo from "../../../assets/projects/caretracker/branding/logo.png";
+import logoPlum from "../../../assets/projects/caretracker/branding/logo-plum.png";
+import icons from "../../../assets/projects/caretracker/branding/icons.png";
+import colors from "../../../assets/projects/caretracker/branding/colors.png";
+import typography from "../../../assets/projects/caretracker/branding/typography.png";
+import businessCard from "../../../assets/projects/caretracker/branding/business-card.png";
+
+## Problém
+
+Terénní pečovatelské služby často evidují péči na papíře a v tabulkách. Pečovatel u klienta zapíše úkony do sešitu nebo formuláře, koordinátor je pak na konci měsíce přepisuje, počítá z nich výkazy a vystavuje vyúčtování.
+
+Přepisování zabere hodiny a chyby se v něm snadno ztratí: úkon chybí, má špatný čas, nebo se započítá dvakrát. Přehled o tom, kolik péče který klient dostává a jak jsou vytížení pečovatelé, je k dispozici až zpětně.
+
+## Řešení
+
+CareTracker je můj vlastní produkt. Aplikace vznikla jako bakalářská práce a dál ji rozvíjím.
+
+- **Záznam péče přímo z mobilu.** Pečovatel zapíše úkon u klienta, s časem, množstvím a cenou. Nic se nepřepisuje.
+- **Klienti na jednom místě.** Osobní údaje, kontakty, přiřazení pečovatelé, stupeň příspěvku a poloha na mapě.
+- **Individuální plány péče.** Plány mají historii verzí, takže je vidět, co platilo kdy.
+- **Nástěnka podle role.** Koordinátor vidí tržby, vytížení pečovatelů, klienty bez nedávného záznamu a plány, které je potřeba aktualizovat.
+- **Výkazy a vyúčtování.** Měsíční výkazy a stvrzenky v PDF vznikají samy. Klient si svůj výkaz prohlédne a zaplatí přes QR kód.
+- **Víc organizací a středisek.** Každý vidí jen to, k čemu má přístup – od pečovatele po správce organizace.
+- **Logo a prezentační web.** K aplikaci jsem navrhl vizuální identitu a jednostránkový web [caretracker.cz](https://caretracker.cz).
+
+## Stav
+
+Aplikace je ve vývoji a zatím ji nepoužívá žádná pečovatelská služba. Všechno popsané výše funguje v [živém demu](https://demo.caretracker.cz) na vzorových datech, kde si ji můžete sami vyzkoušet v různých rolích.
+
+## Branding
+
+Logo je mřížka evidence, ve které je jedna buňka člověk. Tři zaoblené čtverce nesou administrativu – úkony, plány a výkazy – a meruňkový kruh je klient, kvůli kterému to celé existuje. Švestková a meruňková barva, písma Bricolage Grotesque a Figtree a stejné logo jsou v aplikaci, na webu i na vizitce.
+
+<Gallery
+	images={[
+		{ src: logo, alt: "Logo" },
+		{ src: logoPlum, alt: "Logo na švestkovém podkladu" },
+		{ src: icons, alt: "Symbol v malých velikostech a ikona aplikace" },
+		{
+			src: colors,
+			alt: "Barevná paleta: švestka, meruňka, levandule, inkoust a papír",
+		},
+		{ src: typography, alt: "Písmo nadpisů Bricolage Grotesque" },
+		{ src: businessCard, alt: "Vizitka, líc a rub" },
+	]}
+/>
+
+## Web
+
+<Gallery
+	images={[
+		{ src: webHome, alt: "Úvodní stránka caretracker.cz" },
+		{ src: webHomePhone, alt: "Úvodní stránka na mobilu" },
+	]}
+/>
+
+## Aplikace
+
+<Gallery
+	images={[
+		{
+			src: dashboard,
+			alt: "Nástěnka s měsíčním přehledem tržeb a vytížení pečovatelů",
+		},
+		{ src: performedTasks, alt: "Provedené úkony seskupené po dnech" },
+		{ src: clientDetail, alt: "Detail klienta s údaji, kontakty a péčí" },
+		{ src: individualPlan, alt: "Individuální plán péče" },
+		{ src: mobile, alt: "Záznam péče na mobilu" },
+	]}
+	note="Snímky jsou z dema na vzorových datech."
+/>
+
+## Technologie
+
+Backend je ve Spring Boot (Java 21) s databází PostgreSQL. Oprávnění podle rolí hlídá server, ne jen rozhraní, takže pečovatel ani klient se k cizím datům nedostanou ani přímým dotazem. Výkazy v PDF generuje server a e-maily odchází přes Spring Mail.
+
+Rozhraní je v Reactu s Tailwind CSS, funguje na mobilu i počítači a má světlý i tmavý režim. Mapa klientů běží na MapLibre s mapami od Mapy.com.
+
+Backend i rozhraní mají automatické testy, které se spouští u každé změny. Demo se po úspěšných testech nasazuje samo.

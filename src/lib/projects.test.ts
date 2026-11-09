@@ -82,7 +82,9 @@ const baseData: SharedData = {
 	scope: ["website", "booking"],
 	tags: ["Astro", "TypeScript"],
 	liveUrl: "https://example.com",
+	demoUrl: "https://demo.example.com",
 	repoUrl: "https://github.com/example/repo",
+	status: "live",
 	featured: true,
 	order: 1,
 };
@@ -123,7 +125,9 @@ describe("findMismatchedFields", () => {
 		scope: ["website"],
 		tags: ["Astro"],
 		liveUrl: "https://example.org",
+		demoUrl: "https://demo.example.org",
 		repoUrl: "https://github.com/example/other",
+		status: "in-development",
 		featured: false,
 		order: 2,
 	};
