@@ -74,8 +74,8 @@ export const en: Dictionary = {
 		scopeLabel: "What was built",
 		tagsLabel: "Technologies used",
 		linksLabel: "Links",
-		liveLink: "Live website",
-		demoLink: "Live demo",
+		liveLink: "Website",
+		demoLink: "Demo",
 		repoLink: "Source code",
 		ctaTitle: "Want something similar?",
 		ctaText:

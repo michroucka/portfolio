@@ -73,8 +73,8 @@ export const cs = {
 		scopeLabel: "Co vzniklo",
 		tagsLabel: "Použité technologie",
 		linksLabel: "Odkazy",
-		liveLink: "Živý web",
-		demoLink: "Živé demo",
+		liveLink: "Web",
+		demoLink: "Demo",
 		repoLink: "Zdrojový kód",
 		ctaTitle: "Chcete něco podobného?",
 		ctaText:
