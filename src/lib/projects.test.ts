@@ -83,6 +83,7 @@ const baseData: SharedData = {
 	tags: ["Astro", "TypeScript"],
 	liveUrl: "https://example.com",
 	repoUrl: "https://github.com/example/repo",
+	status: "live",
 	featured: true,
 	order: 1,
 };
@@ -124,6 +125,7 @@ describe("findMismatchedFields", () => {
 		tags: ["Astro"],
 		liveUrl: "https://example.org",
 		repoUrl: "https://github.com/example/other",
+		status: "in-development",
 		featured: false,
 		order: 2,
 	};

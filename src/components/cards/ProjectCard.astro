@@ -13,7 +13,7 @@ interface Props {
 const { project, locale } = Astro.props;
 const dictionary = getDictionary(locale);
 const { slug } = parseProjectId(project.id);
-const { title, summary, cover, type } = project.data;
+const { title, summary, cover, type, status } = project.data;
 // Image sizes follow the layout: two columns in max-w-7xl minus px-6 and gap-6 (≤ 604 px).
 // Only the title is a link; its ::after stretches over the card, so the whole card is clickable
 // while screen readers announce just the title instead of the whole card text.
@@ -30,6 +30,12 @@ const { title, summary, cover, type } = project.data;
 	<div class="flex flex-col p-6">
 		<p class="text-sm font-semibold text-muted uppercase">
 			{dictionary.projects.types[type]}
+			{status === "in-development" && (
+				<span class="text-accent">
+					{" · "}
+					{dictionary.projects.inDevelopment}
+				</span>
+			)}
 		</p>
 		<h3 class="mt-2 text-xl">
 			<a

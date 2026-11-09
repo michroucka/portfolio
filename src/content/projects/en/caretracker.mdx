@@ -1,0 +1,78 @@
+---
+title: CareTracker
+summary: My own application that replaces paper timesheets in home care services. Still in development – you can try it in the live demo.
+cover: ../../../assets/projects/caretracker/screens/dashboard.png
+type: web-app
+year: 2026
+scope:
+    - branding
+    - website
+    - app
+tags:
+    - Java
+    - Spring Boot
+    - React
+    - PostgreSQL
+    - Tailwind CSS
+    - Docker
+liveUrl: https://demo.caretracker.cz
+repoUrl: https://github.com/michroucka/caretracker
+status: in-development
+featured: true
+order: 2
+---
+
+import dashboard from "../../../assets/projects/caretracker/screens/dashboard.png";
+import performedTasks from "../../../assets/projects/caretracker/screens/performed-tasks.png";
+import clientDetail from "../../../assets/projects/caretracker/screens/client-detail.png";
+import individualPlan from "../../../assets/projects/caretracker/screens/individual-plan.png";
+import mobile from "../../../assets/projects/caretracker/screens/mobile.png";
+
+## The problem
+
+Home care services often keep track of care on paper and in spreadsheets. A carer writes down the tasks done at a client's home in a notebook or on a form, and at the end of the month a coordinator retypes them, calculates the timesheets and issues the bills.
+
+The retyping takes hours and mistakes slip through easily: a task is missing, has the wrong time, or is counted twice. An overview of how much care each client receives and how busy the carers are only comes after the fact.
+
+## The solution
+
+CareTracker is my own product. The application started as my bachelor's thesis and I keep developing it.
+
+- **Care recorded straight from a phone.** The carer logs a task at the client's home, with time, quantity and price. Nothing gets retyped.
+- **Clients in one place.** Personal details, contacts, assigned carers, care allowance level and a location on the map.
+- **Individual care plans.** Plans keep a version history, so it is clear what applied when.
+- **A dashboard for each role.** Coordinators see revenue, carer workload, clients without a recent record and plans that need updating.
+- **Timesheets and billing.** Monthly timesheets and receipts are generated as PDFs. Clients can view their own timesheet and pay with a QR code.
+- **Multiple organisations and branches.** Everyone sees only what they have access to, from a carer to an organisation admin.
+- **Logo and website.** I designed the visual identity and the one-page website [caretracker.cz](https://caretracker.cz).
+
+## Status
+
+The application is in development and no care service uses it yet. Everything described above works in the [live demo](https://demo.caretracker.cz) with sample data, where you can try it yourself in different roles.
+
+## The app
+
+<Gallery
+	images={[
+		{
+			src: dashboard,
+			alt: "Dashboard with a monthly overview of revenue and carer workload",
+		},
+		{ src: performedTasks, alt: "Performed tasks grouped by day" },
+		{
+			src: clientDetail,
+			alt: "Client detail with personal data, contacts and care",
+		},
+		{ src: individualPlan, alt: "Individual care plan" },
+		{ src: mobile, alt: "Recording care on a phone" },
+	]}
+	note="Screenshots are from the demo with sample data."
+/>
+
+## Technology
+
+The backend runs on Spring Boot (Java 21) with a PostgreSQL database. Role-based permissions are enforced on the server, not just in the interface, so carers and clients cannot reach other people's data even with a direct request. The server generates the PDF timesheets and sends emails through Spring Mail.
+
+The interface is built in React with Tailwind CSS, works on phones and computers, and has a light and a dark mode. The client map runs on MapLibre with maps from Mapy.com.
+
+Both the backend and the interface have automated tests that run on every change. Once they pass, the demo deploys itself.

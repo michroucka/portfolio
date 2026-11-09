@@ -26,6 +26,7 @@ const {
 	tags,
 	liveUrl,
 	repoUrl,
+	status,
 	testimonial,
 } = project.data;
 const { Content } = await render(project);
@@ -45,6 +46,12 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 		<header>
 			<p class="text-sm font-semibold text-muted uppercase">
 				{dictionary.projects.types[type]}
+				{status === "in-development" && (
+					<span class="text-accent">
+						{" · "}
+						{dictionary.projects.inDevelopment}
+					</span>
+				)}
 			</p>
 			<h1 class="mt-2 max-w-[20ch] text-4xl md:text-5xl">{title}</h1>
 			<p class="mt-6 max-w-prose text-lg text-muted">{summary}</p>
@@ -101,7 +108,9 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 									rel="noopener"
 									class="font-semibold text-accent link-underline"
 								>
-									{dictionary.projectPage.liveLink}
+									{status === "in-development"
+										? dictionary.projectPage.demoLink
+										: dictionary.projectPage.liveLink}
 								</a>
 							</dd>
 						)}
