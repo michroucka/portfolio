@@ -41,6 +41,7 @@ const projects = defineCollection({
 			),
 			tags: z.array(z.string()),
 			liveUrl: httpUrl.optional(),
+			demoUrl: httpUrl.optional(),
 			repoUrl: httpUrl.optional(),
 			status: z.enum(["live", "in-development"]).default("live"),
 			featured: z.boolean().default(false),

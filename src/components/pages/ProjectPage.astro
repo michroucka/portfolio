@@ -25,6 +25,7 @@ const {
 	scope,
 	tags,
 	liveUrl,
+	demoUrl,
 	repoUrl,
 	status,
 	testimonial,
@@ -95,7 +96,7 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 						<dd class="mt-2">{dictionary.projects.scope[item]}</dd>
 					))}
 				</div>
-				{(liveUrl || repoUrl) && (
+				{(liveUrl || demoUrl || repoUrl) && (
 					<div>
 						<dt class="project-fact-label">
 							{dictionary.projectPage.linksLabel}
@@ -108,9 +109,19 @@ const ogImage = await getImage({ src: cover, width: 1200, format: "jpg" });
 									rel="noopener"
 									class="font-semibold text-accent link-underline"
 								>
-									{status === "in-development"
-										? dictionary.projectPage.demoLink
-										: dictionary.projectPage.liveLink}
+									{dictionary.projectPage.liveLink}
+								</a>
+							</dd>
+						)}
+						{demoUrl && (
+							<dd class="mt-2">
+								<a
+									href={demoUrl}
+									target="_blank"
+									rel="noopener"
+									class="font-semibold text-accent link-underline"
+								>
+									{dictionary.projectPage.demoLink}
 								</a>
 							</dd>
 						)}

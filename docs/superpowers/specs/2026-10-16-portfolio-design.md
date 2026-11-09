@@ -144,13 +144,15 @@ a vykreslí sdílenou komponentu stránky. Žádná duplikace obsahu ani markupu
 - `cover` – obrázek přes `image()` (optimalizace při buildu)
 - `type` – `web` | `web-app` | `app`
 - `year` – rok realizace (celé číslo)
-- `scope` – co vzniklo: `branding` | `website` | `booking` | `admin` | `local-seo`, popisky ve slovníku
+- `scope` – co vzniklo: `branding` | `website` | `booking` | `admin` | `local-seo` | `app`, popisky ve slovníku
 - `tags` – technologie
-- `liveUrl?`, `repoUrl?` – jen `http(s)` URL
+- `liveUrl?`, `demoUrl?`, `repoUrl?` – jen `http(s)` URL; `demoUrl` je ukázka na vzorových datech
+- `status` – `live` | `in-development` (výchozí `live`); `in-development` přidá na kartu a stránku štítek „Ve vývoji“
 - `featured: boolean` (výchozí `false`), `order` – celé číslo
 - `testimonial?: { quote, author }`
 
 Tělo MDX má pevnou kostru: **problém → řešení → výsledek → (branding) → screenshoty → technologie**.
+Projekt ve vývoji (CareTracker) má místo výsledku sekci **stav** – žádné vymyšlené dopady, odkaz na demo.
 Screenshoty jsou rozdělené do sekcí podle části projektu (u Nohou v cajku Web, Rezervace, Administrace).
 Text je psaný jazykem klienta; technologie jsou sekundární vrstva.
 Screenshoty admin rozhraní a rezervace pouze s dummy daty; web může být z produkce.
@@ -160,7 +162,7 @@ Od `lg` sedí nadpisy sekcí v levé třetině a text vpravo v `max-w-prose`; ob
 
 ### Kontrola párování
 Při buildu se ověří, že každá case study existuje v obou jazycích a že se pár neliší v nelokalizovaných
-polích (`cover`, `type`, `year`, `scope`, `tags`, `liveUrl`, `repoUrl`, `featured`, `order`). Pokud ne, build selže
+polích (`cover`, `type`, `year`, `scope`, `tags`, `liveUrl`, `demoUrl`, `repoUrl`, `status`, `featured`, `order`). Pokud ne, build selže
 s výčtem slugů a polí.
 Kontrola běží tam, kde se generují stránky case studies (`getStaticPaths`, Úkol 7 plánu);
 funkce `assertProjectTranslations` (s `findMissingTranslations` a `findMismatchedFields`) je v `src/lib/projects.ts`.
