@@ -94,32 +94,32 @@ export const en: Dictionary = {
 			{
 				title: "Consultation",
 				description:
-					"We talk about what your business needs and what the website or app should solve. Free and with no obligation.",
+					"We talk about what your business needs and what the website should solve. We look at your customers and competitors, and I advise on the best solution for you. Free and with no obligation.",
 			},
 			{
 				title: "Proposal",
 				description:
-					"I prepare a proposal and a fixed price. I only start once you agree with both.",
+					"I prepare a proposal with a precise scope, a deadline and a fixed price, so you know up front what you get and what you pay. I only start work once you are happy with everything.",
 			},
 			{
 				title: "Materials",
 				description:
-					"Texts, photos and a logo. Don’t have them? No problem. I write the texts from a short conversation or questionnaire, take or pick the photos, and can design a logo for you.",
+					"Texts, photos and a logo. Don’t have them? No problem. I write the texts after a short chat, take the photos and design the logo. Everything fits together and you just approve the result.",
 			},
 			{
 				title: "Development",
 				description:
-					"I show you how the work is going along the way and take your feedback on board right away.",
+					"You get a link to the work-in-progress website right at the start, so you can follow the progress and click through it on your phone too. I take your feedback on board right away, not at the end.",
 			},
 			{
 				title: "Launch",
 				description:
-					"I help you choose a domain and hosting and set everything up. Both are in your name and you pay the providers directly. Then I launch the website and show you how to edit the content yourself.",
+					"I help you choose hosting and buy a domain. Both are in your name and you pay the providers directly, so the website is yours. Then I launch it, set it up for Google and show you how to edit the content.",
 			},
 			{
 				title: "Support",
 				description:
-					"I don’t disappear after launch. Fixes, changes and new features – we handle them together.",
+					"I don’t disappear after launch. We handle fixes, changes and further development together, whenever you need. Just write or call and we agree on what to do and when.",
 			},
 		],
 	},

@@ -74,3 +74,16 @@ const dictionary = getDictionary(locale);
 		<Footer locale={locale} page={page} params={params} />
 	</body>
 </html>
+
+<script>
+	// Smooth scrolling (global.css) is switched on only after load: the browser jumps to the
+	// #fragment of a page opened from another page around load, and that jump should be instant.
+	const enableSmoothScroll = (): void => {
+		requestAnimationFrame(() => {
+			document.documentElement.dataset.smoothScroll = "";
+		});
+	};
+
+	if (document.readyState === "complete") enableSmoothScroll();
+	else window.addEventListener("load", enableSmoothScroll, { once: true });
+</script>

@@ -1,0 +1,69 @@
+---
+// Line icons for the collaboration timeline, drawn on a 24-unit grid. Decorative: the step
+// title next to the icon carries the meaning.
+export type ProcessStepIconName =
+	| "consultation"
+	| "proposal"
+	| "materials"
+	| "development"
+	| "launch"
+	| "support";
+
+interface Props {
+	name: ProcessStepIconName;
+	class?: string;
+}
+
+const { name, class: className } = Astro.props;
+---
+
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 24 24"
+	width="1em"
+	height="1em"
+	fill="none"
+	stroke="currentColor"
+	stroke-width="1.5"
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	aria-hidden="true"
+	focusable="false"
+	class={className}
+>
+	{name === "consultation" && (
+		<>
+			<path d="M20 11.5a7.5 7.5 0 0 1-10.9 6.7L4 19.5l1.3-4.6A7.5 7.5 0 1 1 20 11.5Z" />
+			<path d="M9 10.5h6M9 13.5h4" />
+		</>
+	)}
+	{name === "proposal" && (
+		<>
+			<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" />
+			<path d="M14 3v5h5M9 13h6M9 17h4" />
+		</>
+	)}
+	{name === "materials" && (
+		<>
+			<rect x="3" y="4" width="18" height="16" rx="2" />
+			<circle cx="9" cy="10" r="1.5" />
+			<path d="m21 15-5-5-10 10" />
+		</>
+	)}
+	{name === "development" && (
+		<path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14" />
+	)}
+	{name === "launch" && (
+		<>
+			<circle cx="12" cy="12" r="9" />
+			<path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+		</>
+	)}
+	{name === "support" && (
+		<>
+			<circle cx="12" cy="12" r="9" />
+			<circle cx="12" cy="12" r="4" />
+			<path d="m5.6 5.6 3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6" />
+		</>
+	)}
+</svg>
