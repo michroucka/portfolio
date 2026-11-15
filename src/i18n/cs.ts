@@ -93,32 +93,32 @@ export const cs = {
 			{
 				title: "Konzultace",
 				description:
-					"Probereme, co vaše firma potřebuje a co má web nebo aplikace vyřešit. Nezávazně a zdarma.",
+					"Probereme, co vaše firma potřebuje a co má web vyřešit. Poradím, co dává smysl, nezávazně a zdarma.",
 			},
 			{
 				title: "Návrh",
 				description:
-					"Připravím návrh a pevnou cenu. Pracovat začnu, až s obojím budete souhlasit.",
+					"Připravím návrh řešení s pevnou cenou a termínem. Do práce se pustím, až když se vším budete spokojení.",
 			},
 			{
 				title: "Podklady",
 				description:
-					"Texty, fotky a logo. Nemáte je? Nevadí. Texty napíšu podle krátkého rozhovoru nebo dotazníku, fotky nafotím nebo vyberu a logo vám můžu navrhnout.",
+					"Texty, fotky a logo. Nemáte je? Nevadí. Texty napíšu podle krátkého rozhovoru, fotky nafotím a logo navrhnu.",
 			},
 			{
 				title: "Vývoj",
 				description:
-					"Průběžně vám ukazuji, jak práce postupuje, a vaše připomínky zapracuji hned.",
+					"Na rozpracované verzi webu uvidíte, jak práce postupuje. Připomínky zapracuji hned, ne až na konci.",
 			},
 			{
 				title: "Spuštění",
 				description:
-					"Poradím s výběrem domény a hostingu a všechno nastavím. Doména i hosting budou na vaše jméno a platíte je přímo poskytovateli. Pak web spustím a ukážu vám, jak si obsah upravit.",
+					"Doménu a hosting zařídím na vaše jméno, platíte je přímo poskytovateli. Web spustím a ukážu vám, jak ho upravovat.",
 			},
 			{
 				title: "Podpora",
 				description:
-					"Po spuštění se nikam neztratím. Opravy, úpravy i další rozvoj řešíme spolu.",
+					"Po spuštění se nikam neztratím. Opravy, úpravy i další rozvoj webu řešíme spolu, kdykoli bude potřeba.",
 			},
 		],
 	},
