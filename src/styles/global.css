@@ -172,6 +172,10 @@ body {
 
 	html {
 		scroll-padding-top: var(--header-height);
+
+		@media (prefers-reduced-motion: no-preference) {
+			scroll-behavior: smooth;
+		}
 	}
 
 	h1,
