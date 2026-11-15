@@ -32,7 +32,9 @@ const stepIcons: ProcessStepIconName[] = [
 		<div aria-hidden="true" class="timeline-track bg-line">
 			<div class="timeline-fill bg-accent"></div>
 		</div>
-		<ol class="relative grid gap-10 md:gap-y-8">
+		{/* auto-rows-fr gives every step the height of the tallest one, so the icons sit at
+		     equal distances whatever the length of each text. */}
+		<ol class="relative grid auto-rows-fr gap-6 md:gap-y-8">
 			{dictionary.process.steps.map((step, index) => (
 				<li
 					data-timeline-step
@@ -45,21 +47,24 @@ const stepIcons: ProcessStepIconName[] = [
 					>
 						<ProcessStepIcon name={stepIcons[index]} />
 					</div>
-					<div class="relative col-start-2 row-start-1 md:col-start-1 md:pr-10 md:text-right md:group-even:col-start-3 md:group-even:pr-0 md:group-even:pl-10 md:group-even:text-left">
+					<div class="relative col-start-2 row-start-1 md:col-start-1 md:pr-14 md:group-even:col-start-3 md:group-even:pr-0 md:group-even:pl-14">
+						{/* Joins the icon to the card across the gap; top matches the icon centre. */}
 						<span
 							aria-hidden="true"
-							class="absolute top-6 right-2 hidden h-px w-6 bg-line transition-colors duration-300 group-data-reached:bg-accent md:block md:group-even:right-auto md:group-even:left-2"
+							class="absolute top-5 -left-5 h-px w-5 bg-line transition-colors duration-300 group-data-reached:bg-accent md:top-6 md:right-0 md:left-auto md:w-14 md:group-even:right-auto md:group-even:left-0"
 						/>
-						<div class="flex items-baseline gap-3 pt-2 md:justify-end md:pt-3 md:group-even:justify-start">
-							<span
-								aria-hidden="true"
-								class="text-sm font-semibold text-muted transition-colors duration-300 font-stretch-expanded group-data-reached:text-accent md:group-odd:order-last"
-							>
-								{String(index + 1).padStart(2, "0")}
-							</span>
-							<h3 class="text-lg">{step.title}</h3>
-						</div>
-						<p class="mt-2 text-muted">{step.description}</p>
+						<article class="h-full border border-line bg-surface p-5 md:p-6">
+							<div class="flex items-baseline gap-3">
+								<span
+									aria-hidden="true"
+									class="text-sm font-semibold text-muted transition-colors duration-300 font-stretch-expanded group-data-reached:text-accent"
+								>
+									{String(index + 1).padStart(2, "0")}
+								</span>
+								<h3 class="text-lg">{step.title}</h3>
+							</div>
+							<p class="mt-2 text-muted">{step.description}</p>
+						</article>
 					</div>
 				</li>
 			))}
