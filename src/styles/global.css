@@ -172,7 +172,10 @@ body {
 
 	html {
 		scroll-padding-top: var(--header-height);
+	}
 
+	/* The attribute is set by BaseLayout.astro once the page has loaded. */
+	html[data-smooth-scroll] {
 		@media (prefers-reduced-motion: no-preference) {
 			scroll-behavior: smooth;
 		}
