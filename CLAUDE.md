@@ -24,7 +24,7 @@ the only server part is the contact form action running as a Vercel Function.
 
 ## Commands
 
-Node ≥ 22.22 (CI uses Node 24).
+Node 24 (CI and the Vercel build use it too).
 
 ```
 npm run dev            # dev server
@@ -33,7 +33,7 @@ npm run lint           # ESLint
 npm run format:check   # Prettier (npm run format to fix)
 npm test               # Vitest
 npm run build          # static build into dist/
-npm run verify:dist    # checks the inline theme script in dist/ (run after build)
+npm run verify:dist    # checks dist/: theme script, CSP hashes, scroll timelines (run after build)
 ```
 
 CI (`.github/workflows/ci.yml`) runs all of these except `dev` on every PR and push to `main`.

@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "0.0.1",
 	"engines": {
-		"node": ">=22.22.0"
+		"node": "24.x"
 	},
 	"scripts": {
 		"dev": "astro dev",
@@ -16,7 +16,7 @@
 		"format:check": "prettier --check .",
 		"test": "vitest run",
 		"test:watch": "vitest",
-		"verify:dist": "node scripts/verify-theme-script.mjs && node scripts/verify-csp.mjs"
+		"verify:dist": "node scripts/verify-theme-script.mjs && node scripts/verify-csp.mjs && node scripts/verify-scroll-timelines.mjs"
 	},
 	"dependencies": {
 		"@astrojs/markdown-satteri": "^0.4.4",

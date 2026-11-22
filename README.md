@@ -66,7 +66,7 @@ formatting and structured data live in [`src/lib/`](src/lib) with Vitest tests n
 
 ## Getting started
 
-Requires Node.js ≥ 22.22 (CI uses Node 24) and npm.
+Requires Node.js 24 (the same as CI and the Vercel build) and npm.
 
 ```sh
 npm ci
