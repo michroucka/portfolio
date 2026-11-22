@@ -24,7 +24,7 @@ the only server part is the contact form action running as a Vercel Function.
 
 ## Commands
 
-Node ≥ 22.22 (CI uses Node 24).
+Node 24 (CI and the Vercel build use it too).
 
 ```
 npm run dev            # dev server
