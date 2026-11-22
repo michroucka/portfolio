@@ -98,12 +98,53 @@ const stepIcons: ProcessStepIconName[] = [
 		transform-origin: top;
 		scale: 1 var(--timeline-progress, 1);
 	}
+
+	/* Where supported, the fill follows a scroll-driven animation instead of the script's
+	   --timeline-progress: it runs with the scroll itself, so on touch scrolling it does not
+	   lag a frame behind the finger. The 50% insets shrink the viewport to its middle line,
+	   so the cover range runs from the track's top reaching the middle to its bottom passing it. */
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			.timeline-track {
+				view-timeline: --timeline-track block;
+				view-timeline-inset: 50% 50%;
+			}
+
+			.timeline-fill {
+				animation: timeline-fill linear both;
+				animation-timeline: --timeline-track;
+			}
+		}
+	}
+
+	@keyframes timeline-fill {
+		from {
+			scale: 1 0;
+		}
+		to {
+			scale: 1 1;
+		}
+	}
 </style>
 
 <script>
 	// Fills the timeline up to the middle of the viewport and marks the steps whose icon the
 	// fill has passed. Scrolling back up empties it again.
 	const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+	// The fill itself is then driven by CSS (style below); the script only marks reached steps.
+	const scrollDrivenFill = CSS.supports("animation-timeline", "view()");
+
+	// A custom property set on the timeline restyles everything inside it, even when the
+	// value is the same, so the per-frame update writes only what actually changed.
+	function setPropertyIfChanged(
+		element: HTMLElement,
+		name: string,
+		value: string,
+	): void {
+		if (element.style.getPropertyValue(name) !== value) {
+			element.style.setProperty(name, value);
+		}
+	}
 
 	function verticalCenter(element: Element): number {
 		const { top, height } = element.getBoundingClientRect();
@@ -121,18 +162,28 @@ const stepIcons: ProcessStepIconName[] = [
 		const length = nodeCenters[nodeCenters.length - 1] - start;
 		const timelineTop = timeline.getBoundingClientRect().top;
 
-		timeline.style.setProperty(
+		setPropertyIfChanged(
+			timeline,
 			"--timeline-start",
 			`${start - timelineTop}px`,
 		);
-		timeline.style.setProperty("--timeline-length", `${length}px`);
+		setPropertyIfChanged(timeline, "--timeline-length", `${length}px`);
 
 		const fillEnd = reducedMotion.matches
 			? Infinity
 			: window.innerHeight / 2;
-		const progress = Math.min(Math.max((fillEnd - start) / length, 0), 1);
 
-		timeline.style.setProperty("--timeline-progress", String(progress));
+		if (!scrollDrivenFill) {
+			const progress = Math.min(
+				Math.max((fillEnd - start) / length, 0),
+				1,
+			);
+			setPropertyIfChanged(
+				timeline,
+				"--timeline-progress",
+				String(progress),
+			);
+		}
 		steps.forEach((step, index) =>
 			step.toggleAttribute("data-reached", nodeCenters[index] <= fillEnd),
 		);
