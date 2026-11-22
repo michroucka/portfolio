@@ -86,4 +86,57 @@ const dictionary = getDictionary(locale);
 
 	if (document.readyState === "complete") enableSmoothScroll();
 	else window.addEventListener("load", enableSmoothScroll, { once: true });
+
+	// Elements that enter the viewport together (cards in one grid row) appear one after another;
+	// the cap keeps a tall screen or a long jump from leaving the last ones waiting.
+	const revealStaggerMs = 80;
+	const maxRevealStaggerSteps = 4;
+	// Reveal a little after the element's top edge crosses the bottom of the viewport.
+	const revealLineRatio = 0.92;
+
+	function reveal(element: HTMLElement, staggerStep = 0): void {
+		const delay =
+			Math.min(staggerStep, maxRevealStaggerSteps) * revealStaggerMs;
+		element.style.setProperty("--reveal-delay", `${delay}ms`);
+		element.dataset.revealed = "";
+		revealObserver.unobserve(element);
+	}
+
+	const revealObserver = new IntersectionObserver(
+		(entries) => {
+			entries
+				.filter((entry) => entry.isIntersecting)
+				.forEach(({ target }, index) =>
+					reveal(target as HTMLElement, index),
+				);
+		},
+		{ rootMargin: `0px 0px -${(1 - revealLineRatio) * 100}% 0px` },
+	);
+
+	const revealElements = [
+		...document.querySelectorAll<HTMLElement>("[data-reveal]"),
+	];
+	// What is already on screen (or scrolled past by an anchor jump) has been painted visible
+	// before this module ran; hiding it now would make it blink, so it stays as it is.
+	for (const element of revealElements) {
+		if (
+			element.getBoundingClientRect().top <
+			window.innerHeight * revealLineRatio
+		) {
+			element.dataset.revealed = "";
+		} else {
+			revealObserver.observe(element);
+		}
+	}
+	document.documentElement.dataset.revealReady = "";
+
+	// Tabbing can land on an element the observer never reports (scrolled into the band below
+	// the reveal line), so focus reveals it too.
+	document.addEventListener("focusin", (event) => {
+		if (!(event.target instanceof Element)) return;
+		const hidden = event.target.closest<HTMLElement>(
+			"[data-reveal]:not([data-revealed])",
+		);
+		if (hidden) reveal(hidden);
+	});
 </script>

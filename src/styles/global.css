@@ -181,6 +181,23 @@ body {
 		}
 	}
 
+	/* Scroll reveal: [data-reveal] elements fade and slide in once they enter the viewport.
+	   BaseLayout.astro sets data-reveal-ready on <html> only once its observer runs, so if the
+	   script never loads, the content simply shows. Screen only – a printed page shows everything. */
+	@media screen and (prefers-reduced-motion: no-preference) {
+		html[data-reveal-ready] [data-reveal] {
+			transition-property: opacity, translate;
+			transition-duration: 500ms;
+			transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+			transition-delay: var(--reveal-delay, 0ms);
+		}
+
+		html[data-reveal-ready] [data-reveal]:not([data-revealed]) {
+			opacity: 0;
+			translate: 0 1rem;
+		}
+	}
+
 	h1,
 	h2,
 	h3 {
