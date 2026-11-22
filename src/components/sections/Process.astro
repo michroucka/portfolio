@@ -111,7 +111,11 @@ const stepIcons: ProcessStepIconName[] = [
 			}
 
 			.timeline-fill {
-				animation: timeline-fill linear both;
+				/* Longhands on purpose: the production CSS minifier folds animation + animation-timeline
+				   into one shorthand, which Chrome and Safari reject, leaving the line fully coloured. */
+				animation-name: timeline-fill;
+				animation-timing-function: linear;
+				animation-fill-mode: both;
 				animation-timeline: --timeline-track;
 			}
 		}
