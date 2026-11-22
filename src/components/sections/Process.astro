@@ -47,16 +47,16 @@ const stepIcons: ProcessStepIconName[] = [
 					>
 						<ProcessStepIcon name={stepIcons[index]} />
 					</div>
-					<div
-						data-reveal
-						class="relative col-start-2 row-start-1 md:col-start-1 md:pr-14 md:group-even:col-start-3 md:group-even:pr-0 md:group-even:pl-14"
-					>
+					<div class="relative col-start-2 row-start-1 md:col-start-1 md:pr-14 md:group-even:col-start-3 md:group-even:pr-0 md:group-even:pl-14">
 						{/* Joins the icon to the card across the gap; top matches the icon centre. */}
 						<span
 							aria-hidden="true"
 							class="absolute top-5 -left-5 h-px w-5 bg-line transition-colors duration-300 group-data-reached:bg-accent md:top-6 md:right-0 md:left-auto md:w-14 md:group-even:right-auto md:group-even:left-0"
 						/>
-						<article class="h-full border border-line bg-surface p-5 md:p-6">
+						<article
+							data-reveal
+							class="h-full border border-line bg-surface p-5 md:p-6"
+						>
 							<div class="flex items-baseline gap-3">
 								<span
 									aria-hidden="true"
