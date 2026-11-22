@@ -29,8 +29,10 @@ const messagesJson = toInlineJson(
 ---
 
 <Section id="contact" title={dictionary.contact.title}>
-	<p class="max-w-[60ch] text-lg">{dictionary.contact.intro}</p>
-	<dl class="mt-8 grid gap-6 sm:grid-cols-2 md:max-w-2xl">
+	<p data-reveal class="max-w-[60ch] text-lg">
+		{dictionary.contact.intro}
+	</p>
+	<dl data-reveal class="mt-8 grid gap-6 sm:grid-cols-2 md:max-w-2xl">
 		<div>
 			<dt class="text-sm font-semibold text-muted uppercase">
 				{dictionary.contact.emailLabel}
@@ -64,6 +66,7 @@ const messagesJson = toInlineJson(
 		set:html={messagesJson}
 	/>
 	<form
+		data-reveal
 		method="POST"
 		action={actions.contact}
 		class="mt-12 md:max-w-2xl grid gap-6"

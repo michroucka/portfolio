@@ -19,7 +19,10 @@ const { title, summary, cover, type, status } = project.data;
 // while screen readers announce just the title instead of the whole card text.
 ---
 
-<article class="relative flex flex-col border border-line bg-surface">
+<article
+	data-reveal
+	class="relative flex flex-col border border-line bg-surface"
+>
 	<Image
 		src={cover}
 		alt=""

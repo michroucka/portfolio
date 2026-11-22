@@ -15,7 +15,7 @@ const dictionary = getDictionary(locale);
 
 <Section id="about" title={dictionary.about.title}>
 	<div class="grid items-start gap-8 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-12">
-		<div data-portrait class="relative w-full max-w-80">
+		<div data-portrait data-reveal class="relative w-full max-w-80">
 			<Image
 				src={portrait}
 				alt={dictionary.about.photoAlt}
@@ -32,7 +32,7 @@ const dictionary = getDictionary(locale);
 				class="-right-[29px] -bottom-[29px] hidden opacity-50 sm:block"
 			></span>
 		</div>
-		<div class="max-w-[60ch]">
+		<div data-reveal class="max-w-[60ch]">
 			<div class="space-y-4 text-lg">
 				{dictionary.about.text.map((paragraph) => (
 					<p>{paragraph}</p>
@@ -49,10 +49,12 @@ const dictionary = getDictionary(locale);
 			</p>
 		</div>
 	</div>
-	<h3 class="mt-16 text-lg md:mt-20">{dictionary.about.valuesTitle}</h3>
+	<h3 data-reveal class="mt-16 text-lg md:mt-20">
+		{dictionary.about.valuesTitle}
+	</h3>
 	<dl class="mt-6 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
 		{dictionary.about.values.map((value) => (
-			<div class="border-t border-line pt-4">
+			<div data-reveal class="border-t border-line pt-4">
 				<dt class="font-semibold">{value.title}</dt>
 				<dd class="mt-2 text-muted">{value.description}</dd>
 			</div>

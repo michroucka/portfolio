@@ -86,4 +86,25 @@ const dictionary = getDictionary(locale);
 
 	if (document.readyState === "complete") enableSmoothScroll();
 	else window.addEventListener("load", enableSmoothScroll, { once: true });
+
+	// Elements that enter the viewport together (cards in one grid row) appear one after another.
+	const revealStaggerMs = 80;
+
+	const revealObserver = new IntersectionObserver(
+		(entries, observer) => {
+			const entering = entries.filter((entry) => entry.isIntersecting);
+			entering.forEach(({ target }, index) => {
+				if (!(target instanceof HTMLElement)) return;
+				target.style.transitionDelay = `${index * revealStaggerMs}ms`;
+				target.dataset.revealed = "";
+				observer.unobserve(target);
+			});
+		},
+		// Reveal a little after the element's top edge crosses the bottom of the viewport.
+		{ rootMargin: "0px 0px -8% 0px" },
+	);
+
+	document
+		.querySelectorAll("[data-reveal]")
+		.forEach((element) => revealObserver.observe(element));
 </script>

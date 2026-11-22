@@ -20,8 +20,10 @@ const dictionary = getDictionary(locale);
 			<ServiceCard service={service} locale={locale} />
 		))}
 	</div>
-	<p class="mt-8 text-muted">{dictionary.services.priceNote}</p>
-	<p class="mt-4">
+	<p data-reveal class="mt-8 text-muted">
+		{dictionary.services.priceNote}
+	</p>
+	<p data-reveal class="mt-4">
 		{dictionary.services.somethingElse}{" "}
 		<a
 			href={getSectionHref("contact", locale)}
